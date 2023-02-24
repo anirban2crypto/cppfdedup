@@ -15,7 +15,9 @@ int main(int argc, char** argv)
 
     vector<long> locatn;
     vector<uint8_t> parity; 
+    unsigned char *oparity;
     vector<uint8_t> subsample;
+    bool rowfound=false;
 
     long loc;
 
@@ -46,7 +48,9 @@ int main(int argc, char** argv)
     infile.clear();   //  Since ignore will have set eof.
 	infile.seekg( 0, std::ios_base::beg );
     genparity(infile,parity);    
-    insertParity((unsigned char *)&subsample[0],subsample.size(), (unsigned char *)&parity[0],parity.size())
+    insertParity((unsigned char *)&subsample[0],(int)subsample.size(), (unsigned char *)&parity[0],(int)parity.size());
+    checkSimilarity((unsigned char *)&subsample[0],(int)subsample.size(),&rowfound,oparity);    
+    cerr << "size in main"<<strlen((char *)oparity)<<endl;
     infile.close();
 
 }

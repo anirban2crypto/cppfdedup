@@ -1,5 +1,7 @@
 #include <iostream>
 #include <sqlite3.h>
+#include <cstring>
+#include <vector> 
 #include "dedup.h"
 
 using namespace std; 
@@ -38,95 +40,68 @@ void  setup()
     }    
     sqlite3_close(DB);    
 }
-/*static int callback(void* data, int argc, char** argv, char** azColName)
-{
-    int i;
-    fprintf(stderr, "%s: ", (const char*)data);
-  
-    for (i = 0; i < argc; i++) {
-        printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-    }
-  
-    printf("\n");
-    return 0;
-}
-  
-static 
-void  checkSimilarity()
-{
-    sqlite3* DB;
-    int exit = 0;
-    string data("CALLBACK FUNCTION");  
-    string sql("SELECT FPRINT,PARITY FROM HSIMILARITY WHERE FPRINT=?");
-
-    // Open database
-    exit = sqlite3_open("similarity.db", &DB);
-    if (exit)
-    {
-        std::cerr << "Error open DB " << sqlite3_errmsg(DB) << std::endl;
-        return (-1);
-    }
-    else
-    {
-        std::cout << "Opened Database Successfully!" << std::endl;
-    }
-
-    //execute select query
-    int rc = sqlite3_exec(DB, sql.c_str(), callback, (void*)data.c_str(), NULL);  
-    if (rc != SQLITE_OK)
-    {    
-        cerr << "Error SELECT" << endl;
-    }    
-    else
-    {
-        cout << "Operation OK!" << endl;
-    }
-    
-    sqlite3_close(DB);
-    return (0);
-}
-static 
-void  insertParity(unsigned char* fprint,int fsizes, unsigned char *parity,int psizes)
-{           
-    int ret = sqlite_bind_array
-    (
-        db,                                                            // sqlite3* 
-        "INSERT INTO HSIMILARITY(FPRINT ,PARITY) VALUES (?,?)"  
-        1,                                                             // rows to insert
-        SQLITE_BIND_ARRAY_BLOB(fprint, fsizes),                        // array of fprint and sizes for each
-        SQLITE_BIND_ARRAY_BLOB(parity, psizes),                        // array of parity and sizes for each
-        SQLITE_BIND_ARRAY_END                                          // end of variable args marker 
-    );                                                                
-}*/
-void Access_Database::insertAirportJobs(float pay, int expire, float weight, Airport ap, Airport source)
+void checkSimilarity(unsigned char* ofprint, int ofsizes,bool* ofound,unsigned char * oparity)
 {
     char* zErrMsg = 0; // Error message var
-    const char* sql = "INSERT INTO JOBS (airport_ID,dest,pay,expire,weight) VALUES (?, ?, ?, ?, ?)";
-    sqlite3_stmt* stmt;
-    const char* pszTest;
-    int rc = sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, &pszTest);
+    const char* sql = "SELECT FPRINT,PARITY FROM HSIMILARITY WHERE FPRINT=?";
+    sqlite3_stmt* stmt=NULL;
+    int exit = 0;
+    sqlite3* DB;
+
+
+    exit = sqlite3_open("similarity.db", &DB);
+    int rc = sqlite3_prepare_v2(DB, sql, -1, &stmt, NULL);
     if (rc == SQLITE_OK)
-    {
-        sqlite3_bind_int(stmt, 1, source.airport_ID);
-        sqlite3_bind_int(stmt, 2, ap.airport_ID);
-        sqlite3_bind_double(stmt, 3, pay);
-        sqlite3_bind_int(stmt, 4, expire);
-        sqlite3_bind_double(stmt, 5, weight);
+    {        
+        rc = sqlite3_bind_blob(stmt, 1, ofprint, ofsizes, SQLITE_STATIC);        
+    }    
+
+    // execute sql statement, and while there are rows returned, print ID
+    int ret_code = 0;
+    while((ret_code = sqlite3_step(stmt)) == SQLITE_ROW) {    
+        int size=sqlite3_column_bytes(stmt, 1);
+        oparity=(unsigned char *) malloc(size* sizeof *oparity);
+        oparity=(unsigned char *)sqlite3_column_blob(stmt, 1);
+        
+        *ofound = true;
+    }
+    if(ret_code != SQLITE_DONE) {
+        std::cerr << "Error in inserting Table" << std::endl;
+        sqlite3_free(zErrMsg);
+    }
+
+    //release resources
+    sqlite3_finalize(stmt);
+    sqlite3_close(DB);    
+}
+void  insertParity(unsigned char* fprint,int fsizes, unsigned char *parity,int psizes)
+{
+    char* zErrMsg = 0; // Error message var
+    const char* sql = "INSERT INTO HSIMILARITY(FPRINT ,PARITY) VALUES (?,?)";
+    sqlite3_stmt* stmt=NULL;
+    int exit = 0;
+    sqlite3* DB;
+    exit = sqlite3_open("similarity.db", &DB);
+    int rc = sqlite3_prepare_v2(DB, sql, -1, &stmt, NULL);
+    if (rc == SQLITE_OK)
+    {        
+        rc = sqlite3_bind_blob(stmt, 1, fprint, fsizes, SQLITE_STATIC);
+        rc = sqlite3_bind_blob(stmt, 2, parity, psizes, SQLITE_STATIC);
         
         // Commit the binds
 
         sqlite3_step(stmt);
         sqlite3_finalize(stmt);
 
-    }
-    
+    }    
     if (rc != SQLITE_OK)
     {
-        fprintf(stderr, "\nSQL error: %s\n\n", zErrMsg);
+        std::cerr << "Error in inserting Table" << std::endl;
         sqlite3_free(zErrMsg);
     }
     else
     {
-        fprintf(stdout, "Operation done successfully\n");
+        std::cerr << "Insertion OK!" << endl;
     }
+    sqlite3_close(DB);    
 }
