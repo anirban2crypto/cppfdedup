@@ -1,7 +1,9 @@
 #include <iostream>
 #include <sqlite3.h>
-  
-static 
+#include "dedup.h"
+
+using namespace std; 
+ 
 void  setup()
 {
     sqlite3* DB;
@@ -28,13 +30,15 @@ void  setup()
   
     if (exit != SQLITE_OK)
     {
-        std::cerr << "Error Create Table" << std::endl;
+        std::cerr << "Error in Create Table" << std::endl;
         sqlite3_free(messaggeError);
+    }
+    else{
+        std::cout << "Table created Successfully!" << std::endl;
     }    
-    sqlite3_close(DB);
-    return (0);
+    sqlite3_close(DB);    
 }
-static int callback(void* data, int argc, char** argv, char** azColName)
+/*static int callback(void* data, int argc, char** argv, char** azColName)
 {
     int i;
     fprintf(stderr, "%s: ", (const char*)data);
@@ -93,4 +97,36 @@ void  insertParity(unsigned char* fprint,int fsizes, unsigned char *parity,int p
         SQLITE_BIND_ARRAY_BLOB(parity, psizes),                        // array of parity and sizes for each
         SQLITE_BIND_ARRAY_END                                          // end of variable args marker 
     );                                                                
+}*/
+void Access_Database::insertAirportJobs(float pay, int expire, float weight, Airport ap, Airport source)
+{
+    char* zErrMsg = 0; // Error message var
+    const char* sql = "INSERT INTO JOBS (airport_ID,dest,pay,expire,weight) VALUES (?, ?, ?, ?, ?)";
+    sqlite3_stmt* stmt;
+    const char* pszTest;
+    int rc = sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, &pszTest);
+    if (rc == SQLITE_OK)
+    {
+        sqlite3_bind_int(stmt, 1, source.airport_ID);
+        sqlite3_bind_int(stmt, 2, ap.airport_ID);
+        sqlite3_bind_double(stmt, 3, pay);
+        sqlite3_bind_int(stmt, 4, expire);
+        sqlite3_bind_double(stmt, 5, weight);
+        
+        // Commit the binds
+
+        sqlite3_step(stmt);
+        sqlite3_finalize(stmt);
+
+    }
+    
+    if (rc != SQLITE_OK)
+    {
+        fprintf(stderr, "\nSQL error: %s\n\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    }
+    else
+    {
+        fprintf(stdout, "Operation done successfully\n");
+    }
 }
