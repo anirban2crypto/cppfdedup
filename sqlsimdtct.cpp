@@ -60,7 +60,9 @@ void checkSimilarity(unsigned char* ofprint, int ofsizes,bool* ofound,unsigned c
     int ret_code = 0;
     while((ret_code = sqlite3_step(stmt)) == SQLITE_ROW) {    
         int size=sqlite3_column_bytes(stmt, 1);
-        oparity=(unsigned char *) malloc(size* sizeof *oparity);
+        printf("size = %d\n",size);
+
+        oparity=(unsigned char *) new char[256];
         oparity=(unsigned char *)sqlite3_column_blob(stmt, 1);
         
         *ofound = true;
