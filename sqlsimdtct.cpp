@@ -3,6 +3,7 @@
 #include <cstring>
 #include <vector> 
 #include "dedup.h"
+#include "rscode.h"
 
 using namespace std; 
  
@@ -40,13 +41,14 @@ void  setup()
     }    
     sqlite3_close(DB);    
 }
-void checkSimilarity(unsigned char* ofprint, int ofsizes,bool* ofound,unsigned char * oparity)
+void checkSimilarity(unsigned char* ofprint, int ofsizes,bool* ofound,vector<uint8_t> &paritydata)
 {
     char* zErrMsg = 0; // Error message var
     const char* sql = "SELECT FPRINT,PARITY FROM HSIMILARITY WHERE FPRINT=?";
     sqlite3_stmt* stmt=NULL;
     int exit = 0;
     sqlite3* DB;
+    char * dbvalue;
 
 
     exit = sqlite3_open("similarity.db", &DB);
@@ -58,12 +60,12 @@ void checkSimilarity(unsigned char* ofprint, int ofsizes,bool* ofound,unsigned c
 
     // execute sql statement, and while there are rows returned, print ID
     int ret_code = 0;
-    while((ret_code = sqlite3_step(stmt)) == SQLITE_ROW) {    
-        int size=sqlite3_column_bytes(stmt, 1);
-        oparity=(unsigned char *) malloc(size* sizeof *oparity);
-        oparity=(unsigned char *)sqlite3_column_blob(stmt, 1);
-        
-        *ofound = true;
+    while((ret_code = sqlite3_step(stmt)) == SQLITE_ROW) {  
+        *ofound=true;  
+        long size=sqlite3_column_bytes(stmt, 1);
+        dbvalue=(char *)sqlite3_column_blob(stmt, 1);
+        for(long i=0;i<size;i++)
+            paritydata.push_back(dbvalue[i]);        
     }
     if(ret_code != SQLITE_DONE) {
         std::cerr << "Error in inserting Table" << std::endl;

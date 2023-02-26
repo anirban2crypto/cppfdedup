@@ -9,15 +9,22 @@ int main(int argc, char** argv)
 {
 
     int i,j,count,asciiVal,size;
-    string filename;
+    string filename,simname;
     char cht;
     char *a = argv[1];
     int num = atoi(a);
     if (num > 0)
     {        
-        filename= "randfile_" + std::to_string(num)+".txt";
+        filename= "randfile_" + std::to_string(num);
         ofstream outfile(filename, ios::out | ios::trunc);
         if (!outfile)
+        {
+              cerr << "Could not open file for writing!\n";
+              return -1;
+        }
+        simname= "randsim_" + std::to_string(num);
+        ofstream simfile(simname, ios::out | ios::trunc);
+        if (!simfile)
         {
               cerr << "Could not open file for writing!\n";
               return -1;
@@ -28,7 +35,16 @@ int main(int argc, char** argv)
         {
             asciiVal=33+(rand()%92);
             cht = char(asciiVal);		
-		    outfile <<cht; 
+            outfile <<cht; 
+            if (i==11)
+                cht='A';   
+            if (i==98)
+                cht='B';   
+            if (i==150)
+                cht='C';
+            if (i==959)
+                cht='D';   
+            simfile <<cht;                            
         }
         outfile.close();
     }

@@ -1,0 +1,8 @@
+def mle_encrypt(message):
+    salt ="189718249464418881260702612913442349824"  
+    has_inp=bytearray(salt)+bytearray(s)
+    key=hashlib.sha256(has_inp).digest()[0:16]
+    iv = get_iv()
+    ctr = Crypto.Util.Counter.new(128, initial_value=int(iv, 16))
+    cipher = Crypto.Cipher.AES.new(key, Crypto.Cipher.AES.MODE_CTR, counter=ctr)
+    return cipher.encrypt(message)	    

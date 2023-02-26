@@ -6,7 +6,9 @@
 #include<cmath> 
 #include <fstream>
 #include <ezpwd/rs>
+#include <vector> 
 #include <chrono>
 using namespace std; 
-void genparity(istream &infile,vector<uint8_t> &parity);
+void genparity(istream &infile,vector<uint8_t> &paritydata);
+void reconst(vector<uint8_t> &erronsdata,vector<uint8_t> &paritydata,vector<uint8_t> &recovdata,vector<int> &intoffset);
 #endif
