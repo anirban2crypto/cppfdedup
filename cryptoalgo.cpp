@@ -1,17 +1,25 @@
 #include <string>
 #include <cstdlib>
 #include <iostream>
-#include <cmath> 
+#include <cmath>
 #include <fstream>
-#include <ezpwd/rs>
 #include <chrono>
+#include <vector>
+#include <memory.h>
 #include <openssl/sha.h>
+#include <openssl/conf.h>
+#include <openssl/evp.h>
+#include <openssl/err.h>
+#include <string.h>
+#include "mlecrypto.h"
 using namespace std;
-uint8_t* saltGen(vector<uint8_t> &message);
-#define SALT_SIZE 32 int main(int argc, char** argv)
+// g++ -Wall -std=c++11 evp-encrypt.cxx -o evp-encrypt.exe -lcrypto
+int main(int argc, char* argv[])
 {
     vector<uint8_t> message;
-    if (argc <3){
+    vector<uint8_t> mlecipher;
+    vector<uint8_t> recovmsg;
+    if (argc < 2){
         cerr << "Please enter the file name\n";
         return -1;
     }
@@ -27,53 +35,16 @@ uint8_t* saltGen(vector<uint8_t> &message);
             break;
         message.push_back(c);
     }
-    uint8_t *a = saltGen(message);
-    printf("The salted hashString is: \n");
-    for(int i = 0; i < SHA256_DIGEST_LENGTH; i ++)
-    printf("%2X",a[i]);
-    cout << endl;
-    delete [] a;
+    uint8_t *mlekey = mleKeygen(message);
+    std::cout << "Original message:\n" ;
+    for (char i: message)
+        std::cout << i;
+    std::cout << endl;    
+    mleEncrypt(mlekey,message,mlecipher);    
+    mleDecrypt(mlekey,mlecipher,recovmsg);
+    for (char i: recovmsg)
+        std::cout << i;
+    std::cout << endl;
+    std::cout << "Recovered message:\n";    
+    return 0;
 }
-uint8_t* saltGen(vector<uint8_t> &message)
-{
-    int size = message.size() + SALT_SIZE;
-    uint8_t array[size];
-    uint8_t *hashString = new uint8_t[SHA256_DIGEST_LENGTH];
-    copy(message.begin(), message.end(), array);
-    memcpy(&array[size-SALT_SIZE], "01234567",SALT_SIZE);
-    SHA256(array, size, hashString);
-    return hashString;
-}
-
-
-#ifdef COMMENT
-#include <string>
-#include <cstdlib>
-#include <iostream>
-#include <cmath> 
-#include <fstream>
-#include <ezpwd/rs>
-#include <chrono>
-using namespace std;
-int main(int argc, char** argv)
-{
-
-    vector<uint8_t> message;
-    if (argc <3){
-        cerr << "Please enter the file name\n";
-        return -1;
-    }    
-	ifstream datafile (argv[1], ios::binary);
-    if (!datafile) {
-        cerr << "Could not open data file for reading!\n";
-        return -1;
-    } 
-    char c;
-    while (true) {
-        c = datafile.get();
-        if (!datafile) 
-            break;
-        message.push_back(c);
-    }
-}   
-#endif

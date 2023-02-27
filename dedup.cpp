@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream> 
 #include<cmath>
-#include <vector> 
+#include <vector>
 #include <ezpwd/rs>
 #include "dedup.h"
 #include "rscode.h"
@@ -36,6 +36,7 @@ int main(int argc, char** argv)
 
     // create database
     //setup();
+    auto st_start = std::chrono::high_resolution_clock::now();
 
     // read location from param file - subsampling 
     ifstream parfile("param.txt");
@@ -122,4 +123,7 @@ int main(int argc, char** argv)
     infile.close();
     outfile.close();
     offsetfile.close();
+    auto st_end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double, std::milli> st_float_ms = st_end - st_start;
+    std::cout << "Total  elapsed time is " <<  st_float_ms.count() << " milliseconds" << std::endl;
 }

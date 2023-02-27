@@ -29,7 +29,7 @@ int main(int argc, char** argv)
               cerr << "Could not open file for writing!\n";
               return -1;
         }
-        size=pow(2,num);    
+        size=num;    
         count=size*1024;
         for (i = 0; i < count; i++)
         {

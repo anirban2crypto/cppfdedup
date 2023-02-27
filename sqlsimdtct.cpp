@@ -52,6 +52,11 @@ void checkSimilarity(unsigned char* ofprint, int ofsizes,bool* ofound,vector<uin
 
 
     exit = sqlite3_open("similarity.db", &DB);
+    if (exit != SQLITE_OK)
+    {
+        std::cerr << "Open database error" << std::endl;
+        sqlite3_free(zErrMsg);
+    }
     int rc = sqlite3_prepare_v2(DB, sql, -1, &stmt, NULL);
     if (rc == SQLITE_OK)
     {        
