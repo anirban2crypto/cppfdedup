@@ -10,16 +10,15 @@ rstest: rstest.cpp
 randFile: randFile.cpp
 	g++   randFile.cpp -o randFile
 rsencode: rsencode.cpp rsgenparity.cpp
-	g++ $(CXXFLAGS)  rsgenparity.cpp rsencode.cpp -o rsencode	
+	g++ $(CXXFLAGS)   rsgenparity.cpp rsencode.cpp -o rsencode	
 rsdecode: rsdecode.cpp reconstruct.cpp
-	g++ $(CXXFLAGS)  reconstruct.cpp rsdecode.cpp -o rsdecode
+	g++ $(CXXFLAGS)   reconstruct.cpp rsdecode.cpp -o rsdecode
 dbsetup: dbsetup.cpp sqlsimdtct.cpp 
-	g++  $(CXXFLAGS) dbsetup.cpp sqlsimdtct.cpp  -lsqlite3 -o dbsetup	
-cryptoalgo: cryptoalgo.cpp evpaes.cpp
-	g++ evpaes.cpp cryptoalgo.cpp  -o cryptoalgo -lssl -Wall -std=c++11 -lcrypto
+	g++  $(CXXFLAGS)  dbsetup.cpp sqlsimdtct.cpp  -lsqlite3 -o dbsetup	
+cryptoalgo: cryptoalgo.cpp encsub.cpp
+	g++               encsub.cpp cryptoalgo.cpp  -o cryptoalgo -lssl  -lcrypto
 dedup: dedup.cpp sqlsimdtct.cpp rsgenparity.cpp reconstruct.cpp
-	g++  $(CXXFLAGS) evpaes.cpp sqlsimdtct.cpp rsgenparity.cpp reconstruct.cpp dedup.cpp -lsqlite3 -lssl  -std=c++11 -lcrypto -o dedup
-
+	g++  $(CXXFLAGS) encsub.cpp sqlsimdtct.cpp rsgenparity.cpp reconstruct.cpp dedup.cpp -lsqlite3 -lssl -lcrypto -o dedup
 
 clean:
 	rm  rsencode.o rsdecode.o randFile.o  upload.o rstest.o  sqlsimdtct.o

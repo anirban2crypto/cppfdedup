@@ -1,1 +1,11 @@
-Now is the tixxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx aide of their country
+
+thx! and also, this will show the dynamic file descriptors FUNC(){ echo "$@"; "$@"; }; FUNC diff <(echo a) <(echo b); – 
+Aquarius Power
+Apr 16, 2015 at 1:30
+I was looking for that for compairing two shasums. Not sure if there is a more elegant way to do that, but it works. – 
+fuma
+Aug 23, 2016 at 8:29
+This seems to work if there are multiple lines in $string1 and $string2, and diff outputs the lines that were added or subtracted. What if the string is a single line, and line and there is some difference between the two strings? – 
+alpha_989
+Aug 10, 2017 at 15:28
+@alpha_989 , here's your answer: $ diff <(echo "Here are the letters in String One.") <(echo "Here are the characters in String Two.") \n 1c1 \n < Here are the letters in String One. \n --- \n > Here are the characters in String Two. \n Using the pipe is similar, except it shows a process number, starts with the 1c1 after the next $, and waits 

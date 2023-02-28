@@ -17,8 +17,10 @@ using namespace std;
 int main(int argc, char* argv[])
 {
     vector<uint8_t> message;
-    vector<uint8_t> mlecipher;
-    vector<uint8_t> recovmsg;
+    uint8_t *cpakey=new uint8_t[KEY_SIZE];
+    uint8_t *cpaiv=new uint8_t[BLOCK_SIZE];
+    int ciph_len,msg_len,dec_len;
+    auto st_start = std::chrono::high_resolution_clock::now();
     if (argc < 2){
         cerr << "Please enter the file name\n";
         return -1;
@@ -36,15 +38,47 @@ int main(int argc, char* argv[])
         message.push_back(c);
     }
     uint8_t *mlekey = mleKeygen(message);
+    /*
+    std::cout << "Original message:\n" ;
+    for (char i: message)
+        std::cout << i;
+    std::cout << endl; 
+    */
+    msg_len=message.size();   
+    unsigned char *mlecipher=new unsigned char[msg_len+BLOCK_SIZE];
+    mleEncrypt(mlekey,(unsigned char *)&message[0],mlecipher,ciph_len,msg_len);  
+    unsigned char *recovmsg=new unsigned char[ciph_len+BLOCK_SIZE];  
+    mleDecrypt(mlekey,mlecipher,recovmsg,ciph_len,dec_len);
+    /*cout << "MLE Decryption"<<endl;
+    for(int i=0 ; i<dec_len ; i++)
+    {
+        cout << recovmsg[i];
+    }
+    cout << endl;*/
+    /*for (char i: recovmsg)
+        std::cout << recovmsg[i];
+    std::cout << endl;
+    std::cout << "Recovered message:\n";  
+
+    //cpa encryption
+
     std::cout << "Original message:\n" ;
     for (char i: message)
         std::cout << i;
     std::cout << endl;    
-    mleEncrypt(mlekey,message,mlecipher);    
-    mleDecrypt(mlekey,mlecipher,recovmsg);
-    for (char i: recovmsg)
-        std::cout << i;
-    std::cout << endl;
-    std::cout << "Recovered message:\n";    
+    msg_len=message.size();*/
+    unsigned char *cpacipher=new unsigned char[msg_len+BLOCK_SIZE];  
+    cpaEncrypt(cpakey,cpaiv,(unsigned char *)&message[0],cpacipher,ciph_len,msg_len);   
+    unsigned char *cparecovmsg=new unsigned char [ciph_len+BLOCK_SIZE];  
+    cpaDecrypt(cpakey,cpaiv,cpacipher,cparecovmsg,dec_len,ciph_len);
+    /*cout <<"CPA Decryption:"<< endl;
+    for(int i=0 ; i<dec_len ; i++)
+    {
+        cout << cparecovmsg[i];
+    }
+    cout << endl;*/
+    auto st_end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double, std::milli> st_float_ms = st_end - st_start;
+    std::cout << "Total  elapsed time is " <<  st_float_ms.count() << " milliseconds" << std::endl;
     return 0;
 }
