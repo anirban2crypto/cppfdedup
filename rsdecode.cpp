@@ -52,9 +52,9 @@ int main(int argc, char** argv)
     } 
     reconst(erronsdata,paritydata,recovdata,intoffset);     
     cerr << "Reconstruct Size: " <<recovdata.size()<<endl;
+    outfile.write((char *)&recovdata[0],recovdata.size());    
     datafile.close();
     parityfile.close();
-    outfile.write((char *)&recovdata[0],recovdata.size());    
     outfile.close();
     auto st_end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> st_float_ms = st_end - st_start;

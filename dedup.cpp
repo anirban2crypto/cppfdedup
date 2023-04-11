@@ -8,6 +8,7 @@
 #include <ezpwd/rs>
 #include "dedup.h"
 #include "rscode.h"
+#include "mlecrypto.h"
 
 using namespace std;
 
@@ -25,7 +26,7 @@ int main(int argc, char** argv)
     vector<long> locatn;
     vector<uint8_t> paritydata;
     vector<uint8_t> recovdata;
-    vector<uint8_t> erronsdata; 
+    vector<uint8_t> inputdata; 
     vector<uint8_t> subsample;
     vector<uint8_t> offsetdata;
     vector<int> intoffset;
@@ -33,6 +34,7 @@ int main(int argc, char** argv)
     char c;
     long loc;
     char cbyte[BYTES_PER_INT];
+    int ciph_len,msg_len;
 
     // create database
     //setup();
@@ -84,10 +86,12 @@ int main(int argc, char** argv)
         c = infile.get();
         if (!infile) 
             break;
-        erronsdata.push_back(c);
+        inputdata.push_back(c);
     }
     infile.clear();   //  Since ignore will have set eof.
 	infile.seekg( 0, std::ios_base::beg ); 
+    msg_len=inputdata.size();   
+    unsigned char *mlecipher=new unsigned char[msg_len+BLOCK_SIZE];
 
     // check parity table in database if any parity symbols exists for the file
     checkSimilarity((unsigned char *)&subsample[0],(int)subsample.size(),&rowfound,paritydata);        
@@ -96,30 +100,38 @@ int main(int argc, char** argv)
         //subsequent encryption
         //Run decode algorithm to deduplicate the file
         cerr << "Parity found: "<<rowfound<<endl;
-        reconst(erronsdata,paritydata,recovdata,intoffset);     
+        reconst(inputdata,paritydata,recovdata,intoffset);     
         cerr << "Reconstruct Size: " <<recovdata.size()<<endl;
-        outfile.write((char *)&recovdata[0],recovdata.size());
-        for(auto k=0;k<recovdata.size();k++){
-            if (erronsdata[k]!=recovdata[k]){	                
-	            intToCharArray(cbyte, k);
+        int offsize=intoffset.size();
+        int ix=0;
+        while( ix < offsize){            
+            int noerr=intoffset[ix++];        
+            for(auto k=0;k<noerr;k++){
+                int loc=intoffset[ix++];        
+	            intToCharArray(cbyte, loc);                    
                 for(int i=0;i<BYTES_PER_INT;i++){
                     offsetdata.push_back(cbyte[i]);
                 }
-                offsetdata.push_back(erronsdata[k]);
-            }
-                
+                offsetdata.push_back(inputdata[loc]);
+            }                                           
         }
         offsetfile.write((char *)&offsetdata[0],offsetdata.size());
+        uint8_t *mlekey = mleKeygen(recovdata);
+        mleEncrypt(mlekey,(unsigned char *)&recovdata[0],mlecipher,ciph_len,msg_len); 
         //MLE Encrypt the recovdata - code file
     }
     else
     {
         //initial encryption - when no parity exists for fingerprint
-        genparity(infile,paritydata);    
+        genparity(inputdata,paritydata);    
         insertParity((unsigned char *)&subsample[0],(int)subsample.size(), (unsigned char *)&paritydata[0],(int)paritydata.size());
-        //MLE Encrypt the input file - initial encryption - erronsdata
+        //MLE Encrypt the input file - initial encryption - inputdata
+        uint8_t *mlekey = mleKeygen(inputdata);
+        mleEncrypt(mlekey,(unsigned char *)&inputdata[0],mlecipher,ciph_len,msg_len);  
         
-    }    
+    }
+
+    outfile.write((char *)mlecipher,ciph_len);
     infile.close();
     outfile.close();
     offsetfile.close();

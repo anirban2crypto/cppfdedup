@@ -9,6 +9,7 @@
 int main(int argc, char** argv)
 {
     vector<uint8_t> parity;    
+    vector<uint8_t> msgdata;    
     auto st_start = std::chrono::high_resolution_clock::now();
     if (argc <3){
         cerr << "Please enter the file name\n";
@@ -24,7 +25,15 @@ int main(int argc, char** argv)
         cerr << "Could not open file for reading!\n";
         return -1;
     } 
-    genparity(infile,parity);
+    char c;
+    while (true) {
+        c = infile.get();
+        if (!infile) 
+            break;
+        msgdata.push_back(c);
+    }
+    cerr << "Input Data Size: " <<msgdata.size()<<endl;
+    genparity(msgdata,parity);
     outfile.write((char *)&parity[0],parity.size());               
     infile.close();
     outfile.close();

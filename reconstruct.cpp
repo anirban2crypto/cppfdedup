@@ -1,4 +1,3 @@
-
 #include <string>
 #include <cstdlib>
 #include <iostream>
@@ -21,7 +20,7 @@ void reconst(vector<uint8_t> &erronsdata,vector<uint8_t> &paritydata,vector<uint
     long data_remain=erronsdata.size();
     while(data_remain > 0) 
     {   
-        block_no++;   
+  
         if (data_remain >= rs_k)        
             data_size=rs_k;
         else
@@ -37,17 +36,19 @@ void reconst(vector<uint8_t> &erronsdata,vector<uint8_t> &paritydata,vector<uint
             pdata_cnt++;            
         }
         int fixed = rs.decode(data,erasures,&position );
-        
         for (i=0;i<data_size;i++)
         {
             recovdata.push_back(data[i]);
-        }
-        intoffset.push_back(block_no);
-        intoffset.push_back(position.size());
-        for (i=0;i<position.size();i++)
-        {
-            intoffset.push_back(position[i]);
-        }
+        }        
+        if(position.size() > 0)
+        {            
+            intoffset.push_back(position.size());
+            for (i=0;i<position.size();i++)
+            {
+                intoffset.push_back((block_no*rs_k) + position[i]);
+            }    
+        }    
         data_remain=data_remain-rs_k;
+        block_no++; 
     } 
 }

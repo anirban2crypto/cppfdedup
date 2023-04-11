@@ -9,6 +9,6 @@
 #include <vector> 
 #include <chrono>
 using namespace std; 
-void genparity(istream &infile,vector<uint8_t> &paritydata);
+void genparity(vector<uint8_t> &msgdata,vector<uint8_t> &paritydata);
 void reconst(vector<uint8_t> &erronsdata,vector<uint8_t> &paritydata,vector<uint8_t> &recovdata,vector<int> &intoffset);
 #endif
