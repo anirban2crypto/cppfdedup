@@ -39,10 +39,10 @@ int main(int argc, char* argv[])
         message.push_back(c);
     }
     uint8_t *mlekey = mleKeygen(message);
-    std::cout << "Original message:\n" ;
-    for (char i: message)
-        std::cout << i;
-    std::cout << endl; 
+    //std::cout << "Original message:\n" ;
+    //for (char i: message)
+    //    std::cout << i;
+    //std::cout << endl; 
     
     msg_len=message.size();   
     unsigned char *mlecipher=new unsigned char[msg_len+BLOCK_SIZE];
@@ -69,19 +69,21 @@ int main(int argc, char* argv[])
     msg_len=message.size();*/
     unsigned char *cpacipher=new unsigned char[msg_len+BLOCK_SIZE];  
     cpaEncrypt(cpakey,cpaiv,(unsigned char *)&message[0],cpacipher,ciph_len,msg_len); 
+    cout <<"Ciph len:"<<ciph_len <<endl;
+    cout <<"Message len:"<<msg_len <<endl;
 
     //  cancatenate cpaiv cpacipher  == final cipher
-    unsigned char* final_cipher = new unsigned char [BLOCK_SIZE + msg_len+BLOCK_SIZE];
+    unsigned char* final_cipher = new unsigned char [BLOCK_SIZE + ciph_len+BLOCK_SIZE];
     std::copy(cpaiv, cpaiv+BLOCK_SIZE, final_cipher);
-    std::copy(cpacipher, cpacipher+msg_len+BLOCK_SIZE, final_cipher + BLOCK_SIZE);
+    std::copy(cpacipher, cpacipher+ciph_len+BLOCK_SIZE, final_cipher + BLOCK_SIZE);
 
     //  some thing 
     //  seperate out  final cipher ===> cpaiv cpacipher 
-    unsigned char *deccipher=new unsigned char[msg_len+BLOCK_SIZE];  
+    unsigned char *deccipher=new unsigned char[ciph_len+BLOCK_SIZE];  
     unsigned char *deciv=new unsigned char[BLOCK_SIZE];
     unsigned char *cparecovmsg=new unsigned char [ciph_len+BLOCK_SIZE];  
     std::copy(final_cipher, final_cipher+BLOCK_SIZE, deciv);
-    std::copy(final_cipher+BLOCK_SIZE, final_cipher+msg_len+BLOCK_SIZE+BLOCK_SIZE, deccipher);
+    std::copy(final_cipher+BLOCK_SIZE, final_cipher+ciph_len+BLOCK_SIZE+BLOCK_SIZE, deccipher);
     cpaDecrypt(cpakey,deciv,deccipher,cparecovmsg,dec_len,ciph_len);
     cout <<"CPA Decryption:"<< endl;
     for(int i=0 ; i<dec_len ; i++)

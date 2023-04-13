@@ -4,66 +4,57 @@
 #include <fstream> 
 #include<cmath>
 #include <vector>
-#include <ezpwd/rs>
-#include "dedup.h"
-#include "rscode.h"
 #include "mlecrypto.h"
+#include <chrono>
 
 using namespace std;
-
-const size_t BYTES_PER_INT = sizeof(int); 
-void intToCharArray(char* buffer, int in)
+const size_t BYTES_PER_INT = sizeof(int);
+int buffToInteger(char *buffer)
 {
-	for (size_t i = 0; i < BYTES_PER_INT; i++) {
-		size_t shift = 8 * (BYTES_PER_INT - 1 - i);
-		buffer[i] = (in >> shift) & 0xff;
-	}	
+    int out = int((unsigned char)(buffer[0]) << 24 |
+              (unsigned char)(buffer[1]) << 16 |
+              (unsigned char)(buffer[2]) << 8  |
+              (unsigned char)(buffer[3]));
+    return out;              
 }
+
 int main(int argc, char** argv)
 {
 
-    vector<long> locatn;
-    vector<uint8_t> paritydata;
-    vector<uint8_t> recovdata;
-    vector<uint8_t> inputdata; 
-    vector<uint8_t> subsample;
-    vector<uint8_t> offsetdata;
-    vector<int> intoffset;
+    vector<uint8_t> bcipher;
+    vector<uint8_t> kcipher;
+    vector<uint8_t> ocipher; 
     bool rowfound=false;
     char c;
     long loc;
     char cbyte[BYTES_PER_INT];
-    int ociph_len,kciph_len,ciph_len,msg_len,offset_len,mlekey_len;
+    int ociph_len,kciph_len,bciph_len,cpa_ciph_len,cpa_dec_len,offset_len,msg_len,ciph_len,dec_len;
     uint8_t *cpakey=(unsigned char *)"dsMLtHNGAiNgRTwY"; 
-    uint8_t *cpaiv=new uint8_t[BLOCK_SIZE];
-    uint8_t *k_cpakey=new uint8_t[KEY_SIZE];
-    uint8_t *k_cpaiv=new uint8_t[BLOCK_SIZE];
+    unsigned char *inpcipher;
+    unsigned char *deccipher;
+    unsigned char *deciv;
     
-
-    // create database
-    //setup();
     auto st_start = std::chrono::high_resolution_clock::now();
-
     //---------------------------------------------------------------------   
     //                    IO OPEN FILE
     //---------------------------------------------------------------------   
 
     // open the file for read   - basefile/code file/mle ciphertext
-    ifstream basefile (argv[1], ios::binary);
-    if (!basefile){
-        cerr << "Could not open base file for reading!\n";
+    ifstream bcfile (argv[1], ios::binary);
+    if (!bcfile){
+        cerr << "Could not open base cipher file for reading!\n";
         return -1;
     }    
     // offset file
-    ofstream offsetfile(argv[2], ios::binary);
-    if (!offsetfile) {
-        cerr << "Could not open offset file for reading!\n";
+    ifstream ocfile(argv[2], ios::binary);
+    if (!ocfile) {
+        cerr << "Could not open offset cipher file for reading!\n";
         return -1;
     }  
     // store mlekey file
-    ofstream stormlekey(argv[3], ios::binary);
-    if (!stormlekey) {
-        cerr << "Could not open encrypted mlekey file for reading!\n";
+    ifstream kcfile(argv[3], ios::binary);
+    if (!kcfile) {
+        cerr << "Could not open key cipher file for reading!\n";
         return -1;
     } 
     //final output file/ message file/ reconstructed file
@@ -77,68 +68,111 @@ int main(int argc, char** argv)
     //                   IO READ FILE 
     //---------------------------------------------------------------------   
 
-    // Re read the input file for deduplication
+    // Read the base cipher
     while (true) {
-        c = infile.get();
-        if (!infile) 
+        c = bcfile.get();
+        if (!bcfile) 
             break;
-        inputdata.push_back(c);
+        bcipher.push_back(c);
     }
-    msg_len=inputdata.size();
+    bciph_len=bcipher.size();
+    // Read the offset cipher
+    while (true) {
+        c = ocfile.get();
+        if (!ocfile) 
+            break;
+        ocipher.push_back(c);
+    }
+    ociph_len=ocipher.size();
+    // Read the mle key cipher
+    while (true) {
+        c = kcfile.get();
+        if (!kcfile) 
+            break;
+        kcipher.push_back(c);
+    }
+    kciph_len=kcipher.size();
+    //---------------------------------------------------------------------   
+    //                  KEY DECRYPTION 
+    //---------------------------------------------------------------------   
+
+    // CPA Decrypt encrypted mlekey         
+    //  seperate iv from cipher
+    //  seperate out  final cipher ===> cpaiv cpacipher 
+    inpcipher=(unsigned char *)&kcipher[0];
+    cpa_ciph_len=kciph_len-BLOCK_SIZE-BLOCK_SIZE;
+    deccipher=new unsigned char[cpa_ciph_len+BLOCK_SIZE];  
+    deciv=new unsigned char[BLOCK_SIZE];
+    unsigned char *mlekey=new unsigned char [cpa_ciph_len+BLOCK_SIZE];  
+    std::copy(inpcipher, inpcipher+BLOCK_SIZE, deciv);
+    std::copy(inpcipher+BLOCK_SIZE, inpcipher+cpa_ciph_len+BLOCK_SIZE+BLOCK_SIZE, deccipher);
+    cpaDecrypt(cpakey,deciv,deccipher,mlekey,cpa_dec_len,cpa_ciph_len);
+    //---------------------------------------------------------------------   
+    //                  OFFSET DECRYPTION 
+    //---------------------------------------------------------------------       
+    // CPA Decrypt offset file 
+    //  seperate iv from cipher
+    //  seperate out  final cipher ===> cpaiv cpacipher 
+    inpcipher=(unsigned char *)&ocipher[0];
+    cpa_ciph_len=ociph_len-BLOCK_SIZE-BLOCK_SIZE;
+    deccipher=new unsigned char[cpa_ciph_len+BLOCK_SIZE];  
+    deciv=new unsigned char[BLOCK_SIZE];
+    unsigned char *offset=new unsigned char [cpa_ciph_len+BLOCK_SIZE];  
+    std::copy(inpcipher, inpcipher+BLOCK_SIZE, deciv);
+    std::copy(inpcipher+BLOCK_SIZE, inpcipher+cpa_ciph_len+BLOCK_SIZE+BLOCK_SIZE, deccipher);
+    cpaDecrypt(cpakey,deciv,deccipher,offset,cpa_dec_len,cpa_ciph_len);
+    offset_len=cpa_dec_len;    
+    //cout <<"OFFSET Decryption:OFFSET LENTH"<< offset_len<<endl;
+    //for(int i=0 ; i<offset_len ; i++)
+    //{
+    //    cout << int(offset[i]);
+    //}
+    //cout <<endl;
+    //---------------------------------------------------------------------   
+    //                  BASE FILE DECRYPTION 
+    //---------------------------------------------------------------------  
+    // MLE decrypt the base file
+    inpcipher=(unsigned char *)&bcipher[0];
+    unsigned char *recovmsg=new unsigned char[bciph_len]; 
+    ciph_len=bciph_len-BLOCK_SIZE; 
+    mleDecrypt(mlekey,inpcipher,recovmsg,ciph_len,dec_len);
+    //cout <<"MLE Decryption:"<< endl;
+    //for(int i=0 ; i<dec_len ; i++)
+    //{
+    //    cout << recovmsg[i];
+    //}
+    //cout <<endl;
+    //---------------------------------------------------------------------   
+    //                  RECONSTRUCTION OF MESSAGE
+    //---------------------------------------------------------------------                  
+    //Reconstruction original file from basefile and offset file
+
+    int count=0;
+    while(count < offset_len)
+    {
+        std::copy(offset+count, offset+count+BYTES_PER_INT, cbyte);
+        int loc=buffToInteger(cbyte);        
+        //cerr << "Location : " <<loc <<endl;
+        count=count+4;
+        recovmsg[loc]=offset[count];
+       // cerr << "Symbol : " <<symbol <<endl;
+        count=count+1;  
+    }
 
     //---------------------------------------------------------------------   
-    //                   DEDUPLICATION PROCESSING
+    //                  RECONSTRUCTION OF MESSAGE
+    //---------------------------------------------------------------------  
+
+    outfile.write((char *)recovmsg,dec_len);
+    //---------------------------------------------------------------------   
+    //                   IO CLOSE
     //---------------------------------------------------------------------   
 
-        
-        // seperate iv from cipher
-        // CPA Decrypt encrypted mlekey 
-        // get the mle key
-
-
-        // MLE decrypt the base file
-
-        // seperate iv from cipher
-        // CPA Decrypt offset file 
-        
-        //Reconstruction original file from basefile and offset file 
-
-
-        uint8_t *mlekey = mleKeygen(recovdata);
-        //initialize MLE ciphertext lenth   
-        unsigned char *mlecipher=new unsigned char[msg_len+BLOCK_SIZE];
-        mleEncrypt(mlekey,(unsigned char *)&recovdata[0],mlecipher,ciph_len,msg_len); 
-        outfile.write((char *)mlecipher,ciph_len);
-
-        // CPA encrypt the offset file 
-        offset_len=offsetdata.size();
-        unsigned char *offcipher=new unsigned char[offset_len+BLOCK_SIZE];  
-        cpaEncrypt(cpakey,cpaiv,(unsigned char *)&offsetdata[0],offcipher,ociph_len,offset_len);  
-        // add the random iv to cpa cipher
-        unsigned char* final_cipher = new unsigned char [BLOCK_SIZE + msg_len+BLOCK_SIZE];
-        std::copy(cpaiv, cpaiv+BLOCK_SIZE, final_cipher);
-        std::copy(offcipher, offcipher+msg_len+BLOCK_SIZE, final_cipher + BLOCK_SIZE);
-        // write offset file
-        offsetfile.write((char *)final_cipher,ociph_len+BLOCK_SIZE);
-
-
-        //cpa encrypt mle key
-        mlekey_len=KEY_SIZE;
-        unsigned char *keycipher=new unsigned char[KEY_SIZE+BLOCK_SIZE];  
-        cpaEncrypt(k_cpakey,k_cpaiv,mlekey,keycipher,kciph_len,mlekey_len); 
-        // add the random iv to cpa cipher
-        final_cipher = new unsigned char [BLOCK_SIZE + msg_len+BLOCK_SIZE];
-        std::copy(cpaiv, cpaiv+BLOCK_SIZE, final_cipher);
-        std::copy(keycipher, keycipher+msg_len+BLOCK_SIZE, final_cipher + BLOCK_SIZE);
-        stormlekey.write((char *)keycipher,kciph_len+BLOCK_SIZE);   
-
-    }
-
-
-    infile.close();
+    bcfile.close();
+    ocfile.close();
+    kcfile.close();
     outfile.close();
-    offsetfile.close();
-    stormlekey.close();
+
     auto st_end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> st_float_ms = st_end - st_start;
     std::cout << "Total  elapsed time is " <<  st_float_ms.count() << " milliseconds" << std::endl;

@@ -34,19 +34,19 @@ int main(int argc, char** argv)
     char c;
     long loc;
     char cbyte[BYTES_PER_INT];
-    int ociph_len,kciph_len,ciph_len,msg_len,offset_len,mlekey_len;
+    int ciph_len,msg_len,cpa_msg_len,cpa_ciph_len;
     uint8_t *cpakey=(unsigned char *)"dsMLtHNGAiNgRTwY"; 
     uint8_t *cpaiv=new uint8_t[BLOCK_SIZE];
-    uint8_t *k_cpakey=new uint8_t[KEY_SIZE];
-    uint8_t *k_cpaiv=new uint8_t[BLOCK_SIZE];
+    uint8_t *mlekey;
+    unsigned char *cpacipher;
+    unsigned char *final_cipher;
     
 
-    // create database
-    //setup();
+
     auto st_start = std::chrono::high_resolution_clock::now();
 
     //---------------------------------------------------------------------   
-    //                    IO
+    //                    IO OPEN
     //---------------------------------------------------------------------   
 
     // read location from param file - subsampling 
@@ -79,7 +79,7 @@ int main(int argc, char** argv)
         return -1;
     }  
     // store mlekey file
-    ofstream stormlekey(argv[3], ios::out | ios::trunc);
+    ofstream stormlekey(argv[4], ios::out | ios::trunc);
     if (!stormlekey) {
         cerr << "Could not open file for writing!\n";
         return -1;
@@ -101,7 +101,7 @@ int main(int argc, char** argv)
 
 
     //---------------------------------------------------------------------   
-    //                   IO
+    //                   INPUT READ
     //---------------------------------------------------------------------   
 
     // Re read the input file for deduplication
@@ -127,10 +127,12 @@ int main(int argc, char** argv)
     {
         //subsequent encryption
         //Run decode algorithm to deduplicate the file
-        cerr << "Parity found: "<<rowfound<<endl;
+        //cerr << "Parity found: "<<rowfound<<endl;
         reconst(inputdata,paritydata,recovdata,intoffset);     
-        cerr << "Reconstruct Size: " <<recovdata.size()<<endl;
-        //format the offset as byte string
+        //cerr << "Reconstruct Size: " <<recovdata.size()<<endl;
+        //---------------------------------------------------------------------   
+        //                   OFFSET GENERATION
+        //--------------------------------------------------------------------- 
         int offsize=intoffset.size();
         int ix=0;
         // read offset for block by block
@@ -151,71 +153,75 @@ int main(int argc, char** argv)
                 offsetdata.push_back(inputdata[loc]);
             }                                           
         }
+        //---------------------------------------------------------------------   
+        //                   BASE ENCRYPTION
+        //---------------------------------------------------------------------         
         // encrypt the base file , get from decode
-        uint8_t *mlekey = mleKeygen(recovdata);
+        mlekey = mleKeygen(recovdata);
         //initialize MLE ciphertext lenth   
         unsigned char *mlecipher=new unsigned char[msg_len+BLOCK_SIZE];
-        mleEncrypt(mlekey,(unsigned char *)&recovdata[0],mlecipher,ciph_len,msg_len); 
-        outfile.write((char *)mlecipher,ciph_len);
-        // CPA encrypt the offset file 
-        offset_len=offsetdata.size();
-        unsigned char *offcipher=new unsigned char[offset_len+BLOCK_SIZE];  
-        cpaEncrypt(cpakey,cpaiv,(unsigned char *)&offsetdata[0],offcipher,ociph_len,offset_len);  
-        // add the random iv to cpa cipher
-        unsigned char* final_cipher = new unsigned char [BLOCK_SIZE + msg_len+BLOCK_SIZE];
-        std::copy(cpaiv, cpaiv+BLOCK_SIZE, final_cipher);
-        std::copy(offcipher, offcipher+msg_len+BLOCK_SIZE, final_cipher + BLOCK_SIZE);
-        // write offset file
-        offsetfile.write((char *)final_cipher,ociph_len+BLOCK_SIZE);
-        //cpa encrypt mle key
-        mlekey_len=KEY_SIZE;
-        unsigned char *keycipher=new unsigned char[KEY_SIZE+BLOCK_SIZE];  
-        cpaEncrypt(k_cpakey,k_cpaiv,mlekey,keycipher,kciph_len,mlekey_len); 
-        // add the random iv to cpa cipher
-        final_cipher = new unsigned char [BLOCK_SIZE + msg_len+BLOCK_SIZE];
-        std::copy(cpaiv, cpaiv+BLOCK_SIZE, final_cipher);
-        std::copy(keycipher, keycipher+msg_len+BLOCK_SIZE, final_cipher + BLOCK_SIZE);
-        stormlekey.write((char *)keycipher,kciph_len+BLOCK_SIZE);   
+        mleEncrypt(mlekey,(unsigned char *)&recovdata[0],mlecipher,ciph_len,msg_len);         
+        final_cipher = new unsigned char [BLOCK_SIZE + ciph_len]; 
+        std::copy(mlecipher, mlecipher+ciph_len+BLOCK_SIZE, final_cipher); 
+        outfile.write((char *)final_cipher,BLOCK_SIZE + ciph_len);
     }
     else
     {
+
+        //---------------------------------------------------------------------   
+        //                   OFFSET GENERATION
+        //--------------------------------------------------------------------- 
+        // fill zero in offset file
+        int offset_f_len=ERR_H_CAP*5;
+        for(auto ss=0;ss<offset_f_len;ss++)    
+            offsetdata.push_back(0x00);
+        //---------------------------------------------------------------------   
+        //                   BASE ENCRYPTION
+        //--------------------------------------------------------------------- 
         //initial encryption - when no parity exists for fingerprint
         //generate parity
         genparity(inputdata,paritydata);    
         // update the parity in database
         insertParity((unsigned char *)&subsample[0],(int)subsample.size(), (unsigned char *)&paritydata[0],(int)paritydata.size());
         //MLE Encrypt the input file  which is base file 
-        uint8_t *mlekey = mleKeygen(inputdata);
+        mlekey = mleKeygen(inputdata);
         //initialize MLE ciphertext lenth
         unsigned char *mlecipher=new unsigned char[msg_len+BLOCK_SIZE];
-        mleEncrypt(mlekey,(unsigned char *)&inputdata[0],mlecipher,ciph_len,msg_len);  
-        outfile.write((char *)mlecipher,ciph_len);
-        // fill zero in offset file
-        int offset_f_len=ERR_H_CAP*5;
-        for(auto ss=0;ss<offset_f_len;ss++)    
-            offsetdata.push_back(0x00);
-        //CPA Encrypt the offset file 
-        offset_len=offsetdata.size();
-        unsigned char *offcipher=new unsigned char[offset_len+BLOCK_SIZE];  
-        cpaEncrypt(cpakey,cpaiv,(unsigned char *)&offsetdata[0],offcipher,ociph_len,offset_len); 
-        // add the random iv to cpa cipher
-        unsigned char* final_cipher = new unsigned char [BLOCK_SIZE + msg_len+BLOCK_SIZE];
-        std::copy(cpaiv, cpaiv+BLOCK_SIZE, final_cipher);
-        std::copy(offcipher, offcipher+msg_len+BLOCK_SIZE, final_cipher + BLOCK_SIZE);
-        // write offset file
-        offsetfile.write((char *)final_cipher,ociph_len+BLOCK_SIZE);   
-        //cpa encrypt mle key
-        mlekey_len=KEY_SIZE;
-        unsigned char *keycipher=new unsigned char[KEY_SIZE+BLOCK_SIZE];  
-        cpaEncrypt(k_cpakey,k_cpaiv,mlekey,keycipher,kciph_len,mlekey_len); 
-        // add the random iv to cpa cipher
-        final_cipher = new unsigned char [BLOCK_SIZE + msg_len+BLOCK_SIZE];
-        std::copy(cpaiv, cpaiv+BLOCK_SIZE, final_cipher);
-        std::copy(keycipher, keycipher+msg_len+BLOCK_SIZE, final_cipher + BLOCK_SIZE);
-        stormlekey.write((char *)keycipher,kciph_len+BLOCK_SIZE);      
+        mleEncrypt(mlekey,(unsigned char *)&inputdata[0],mlecipher,ciph_len,msg_len);
+        final_cipher = new unsigned char [BLOCK_SIZE + ciph_len]; 
+        std::copy(mlecipher, mlecipher+ciph_len+BLOCK_SIZE, final_cipher); 
+        outfile.write((char *)final_cipher,BLOCK_SIZE + ciph_len);
+           
     }
+    // CPA encrypt the offset file 
+    //---------------------------------------------------------------------   
+    //                   OFFSET ENCRYPTION
+    //--------------------------------------------------------------------- 
+    cpa_msg_len=offsetdata.size();
+    cpacipher=new unsigned char[cpa_msg_len+BLOCK_SIZE];  
+    cpaEncrypt(cpakey,cpaiv,(unsigned char *)&offsetdata[0],cpacipher,cpa_ciph_len,cpa_msg_len);  
+    // cancatenate cpaiv cpacipher  == final cipher
+    final_cipher = new unsigned char [BLOCK_SIZE + cpa_ciph_len+BLOCK_SIZE];
+    std::copy(cpaiv, cpaiv+BLOCK_SIZE, final_cipher);
+    std::copy(cpacipher, cpacipher+cpa_ciph_len+BLOCK_SIZE, final_cipher + BLOCK_SIZE);
+    // write offset file
+    offsetfile.write((char *)final_cipher,BLOCK_SIZE + cpa_ciph_len+BLOCK_SIZE);
+    //cpa encrypt mle key
+    //---------------------------------------------------------------------   
+    //                   KEY ENCRYPTION
+    //--------------------------------------------------------------------- 
+    cpa_msg_len=KEY_SIZE;
+    cpacipher=new unsigned char[cpa_msg_len+BLOCK_SIZE];  
+    cpaEncrypt(cpakey,cpaiv,mlekey,cpacipher,cpa_ciph_len,cpa_msg_len); 
+    // cancatenate cpaiv cpacipher  == final cipher
+    final_cipher = new unsigned char [BLOCK_SIZE + cpa_ciph_len+BLOCK_SIZE];
+    std::copy(cpaiv, cpaiv+BLOCK_SIZE, final_cipher);
+    std::copy(cpacipher, cpacipher+cpa_ciph_len+BLOCK_SIZE, final_cipher + BLOCK_SIZE);
+    stormlekey.write((char *)final_cipher,BLOCK_SIZE + cpa_ciph_len+BLOCK_SIZE);   
 
-
+    //---------------------------------------------------------------------   
+    //                    IO CLOSE
+    //---------------------------------------------------------------------   
     infile.close();
     outfile.close();
     offsetfile.close();

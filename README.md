@@ -30,8 +30,13 @@ Usage :
 
 dedup: take input file and output three ciphertext file (base - mle cihertext file, offset - cpa ciphertext file, key - cpa ciphertext file )
 Usage :
-./dedup inputfile out_code_file out_offset_file
+./dedup inputfile out_base_ciph_file out_offset_ciph_file out_key_ciph_file
 command:
-./dedup randfile_1 code_1 off_1
+./dedup randfile_1 code_r_1 off_r_1 key_r_1
 ./dedup randsim_1 code_s_1 off_s_1 key_s_1
 
+decrypt: Decrypt and reconstruct file from base ciphertext and offset ciphertext
+Usage :
+./decrypt in_base_ciph_file in_offset_ciph_file in_key_ciph_file out_reconstructed_file
+command:
+./decrypt code_s_1 off_s_1 key_s_1 msg_s_1
