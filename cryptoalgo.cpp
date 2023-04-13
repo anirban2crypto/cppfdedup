@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cmath>
 #include <fstream>
+#include <algorithm>
 #include <chrono>
 #include <vector>
 #include <memory.h>
@@ -38,12 +39,11 @@ int main(int argc, char* argv[])
         message.push_back(c);
     }
     uint8_t *mlekey = mleKeygen(message);
-    /*
     std::cout << "Original message:\n" ;
     for (char i: message)
         std::cout << i;
     std::cout << endl; 
-    */
+    
     msg_len=message.size();   
     unsigned char *mlecipher=new unsigned char[msg_len+BLOCK_SIZE];
     mleEncrypt(mlekey,(unsigned char *)&message[0],mlecipher,ciph_len,msg_len);  
@@ -68,15 +68,27 @@ int main(int argc, char* argv[])
     std::cout << endl;    
     msg_len=message.size();*/
     unsigned char *cpacipher=new unsigned char[msg_len+BLOCK_SIZE];  
-    cpaEncrypt(cpakey,cpaiv,(unsigned char *)&message[0],cpacipher,ciph_len,msg_len);   
+    cpaEncrypt(cpakey,cpaiv,(unsigned char *)&message[0],cpacipher,ciph_len,msg_len); 
+
+    //  cancatenate cpaiv cpacipher  == final cipher
+    unsigned char* final_cipher = new unsigned char [BLOCK_SIZE + msg_len+BLOCK_SIZE];
+    std::copy(cpaiv, cpaiv+BLOCK_SIZE, final_cipher);
+    std::copy(cpacipher, cpacipher+msg_len+BLOCK_SIZE, final_cipher + BLOCK_SIZE);
+
+    //  some thing 
+    //  seperate out  final cipher ===> cpaiv cpacipher 
+    unsigned char *deccipher=new unsigned char[msg_len+BLOCK_SIZE];  
+    unsigned char *deciv=new unsigned char[BLOCK_SIZE];
     unsigned char *cparecovmsg=new unsigned char [ciph_len+BLOCK_SIZE];  
-    cpaDecrypt(cpakey,cpaiv,cpacipher,cparecovmsg,dec_len,ciph_len);
-    /*cout <<"CPA Decryption:"<< endl;
+    std::copy(final_cipher, final_cipher+BLOCK_SIZE, deciv);
+    std::copy(final_cipher+BLOCK_SIZE, final_cipher+msg_len+BLOCK_SIZE+BLOCK_SIZE, deccipher);
+    cpaDecrypt(cpakey,deciv,deccipher,cparecovmsg,dec_len,ciph_len);
+    cout <<"CPA Decryption:"<< endl;
     for(int i=0 ; i<dec_len ; i++)
     {
         cout << cparecovmsg[i];
     }
-    cout << endl;*/
+    cout << endl;
     auto st_end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> st_float_ms = st_end - st_start;
     std::cout << "Total  elapsed time is " <<  st_float_ms.count() << " milliseconds" << std::endl;
