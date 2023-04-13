@@ -154,7 +154,8 @@ int main(int argc, char** argv)
         int loc=buffToInteger(cbyte);        
         //cerr << "Location : " <<loc <<endl;
         count=count+4;
-        recovmsg[loc]=offset[count];
+        if (loc>0)
+            recovmsg[loc]=offset[count];
        // cerr << "Symbol : " <<symbol <<endl;
         count=count+1;  
     }

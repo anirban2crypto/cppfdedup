@@ -105,10 +105,6 @@ void  insertParity(unsigned char* fprint,int fsizes, unsigned char *parity,int p
     {
         std::cerr << "Error in inserting Table" << std::endl;
         sqlite3_free(zErrMsg);
-    }
-    else
-    {
-        std::cerr << "Insertion OK!" << endl;
-    }
+    }   
     sqlite3_close(DB);    
 }

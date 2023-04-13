@@ -39,4 +39,6 @@ decrypt: Decrypt and reconstruct file from base ciphertext and offset ciphertext
 Usage :
 ./decrypt in_base_ciph_file in_offset_ciph_file in_key_ciph_file out_reconstructed_file
 command:
+./decrypt code_r_1 off_r_1 key_r_1 msg_r_1
 ./decrypt code_s_1 off_s_1 key_s_1 msg_s_1
+
