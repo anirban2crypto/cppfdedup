@@ -34,11 +34,20 @@ int main(int argc, char** argv)
     char c;
     long loc;
     char cbyte[BYTES_PER_INT];
-    int ciph_len,msg_len;
+    int ociph_len,kciph_len,ciph_len,msg_len,offset_len,mlekey_len;
+    uint8_t *cpakey=new uint8_t[KEY_SIZE];
+    uint8_t *cpaiv=new uint8_t[BLOCK_SIZE];
+    uint8_t *k_cpakey=new uint8_t[KEY_SIZE];
+    uint8_t *k_cpaiv=new uint8_t[BLOCK_SIZE];
+    
 
     // create database
     //setup();
     auto st_start = std::chrono::high_resolution_clock::now();
+
+    //---------------------------------------------------------------------   
+    //                    IO
+    //---------------------------------------------------------------------   
 
     // read location from param file - subsampling 
     ifstream parfile("param.txt");
@@ -68,9 +77,18 @@ int main(int argc, char** argv)
     if (!offsetfile) {
         cerr << "Could not open file for writing!\n";
         return -1;
-    }    
+    }  
+    // store mlekey file
+    ofstream stormlekey(argv[3], ios::out | ios::trunc);
+    if (!stormlekey) {
+        cerr << "Could not open file for writing!\n";
+        return -1;
+    } 
+    //---------------------------------------------------------------------   
+    //                   LABEL GENERATION - FIXED SUBSAMPLING
+    //---------------------------------------------------------------------     
 
-    // Create fingerprint of the file using subsampling   
+    // Create fingerprint of the file using subsampling. Fixed subsample used. Location of subsample is in parfile   
     int index = 0;
     while ( index < locatn.size() && (!infile.eof())) {
         loc = locatn.at(index);
@@ -81,7 +99,12 @@ int main(int argc, char** argv)
     infile.clear();   
 	infile.seekg( 0, std::ios_base::beg );
 
-    // Read input file 
+
+    //---------------------------------------------------------------------   
+    //                   IO
+    //---------------------------------------------------------------------   
+
+    // Re read the input file for deduplication
     while (true) {
         c = infile.get();
         if (!infile) 
@@ -90,10 +113,15 @@ int main(int argc, char** argv)
     }
     infile.clear();   //  Since ignore will have set eof.
 	infile.seekg( 0, std::ios_base::beg ); 
-    msg_len=inputdata.size();   
-    unsigned char *mlecipher=new unsigned char[msg_len+BLOCK_SIZE];
+    msg_len=inputdata.size();
+
+    //---------------------------------------------------------------------   
+    //                   DEDUPLICATION PROCESSING
+    //---------------------------------------------------------------------   
+
 
     // check parity table in database if any parity symbols exists for the file
+    // subsampling is used to generate the label
     checkSimilarity((unsigned char *)&subsample[0],(int)subsample.size(),&rowfound,paritydata);        
     if (rowfound ==true)
     {
@@ -102,39 +130,78 @@ int main(int argc, char** argv)
         cerr << "Parity found: "<<rowfound<<endl;
         reconst(inputdata,paritydata,recovdata,intoffset);     
         cerr << "Reconstruct Size: " <<recovdata.size()<<endl;
+        //format the offset as byte string
         int offsize=intoffset.size();
         int ix=0;
-        while( ix < offsize){            
-            int noerr=intoffset[ix++];        
+        // read offset for block by block
+        // read offset block by block, block length is EC parameter - message length   
+        while( ix < offsize){
+            // number of flip/error symbol of a block bound by EC parameter - correction capability        
+            int noerr=intoffset[ix++];
+            // read all offset one by one, offset is position and flip symbol         
             for(auto k=0;k<noerr;k++){
+                //get the position
                 int loc=intoffset[ix++];        
+                //convert the position from int to byte
 	            intToCharArray(cbyte, loc);                    
                 for(int i=0;i<BYTES_PER_INT;i++){
                     offsetdata.push_back(cbyte[i]);
                 }
+                //get the flip symbol
                 offsetdata.push_back(inputdata[loc]);
             }                                           
         }
-        offsetfile.write((char *)&offsetdata[0],offsetdata.size());
+        // encrypt the base file , get from decode
         uint8_t *mlekey = mleKeygen(recovdata);
+        //initialize MLE ciphertext lenth   
+        unsigned char *mlecipher=new unsigned char[msg_len+BLOCK_SIZE];
         mleEncrypt(mlekey,(unsigned char *)&recovdata[0],mlecipher,ciph_len,msg_len); 
-        //MLE Encrypt the recovdata - code file
+        outfile.write((char *)mlecipher,ciph_len);
+        // CPA encrypt the offset file 
+        offset_len=offsetdata.size();
+        unsigned char *offcipher=new unsigned char[offset_len+BLOCK_SIZE];  
+        cpaEncrypt(cpakey,cpaiv,(unsigned char *)&offsetdata[0],offcipher,ociph_len,offset_len);  
+        offsetfile.write((char *)offcipher,ociph_len);
+        //cpa encrypt mle key
+        mlekey_len=KEY_SIZE;
+        unsigned char *keycipher=new unsigned char[KEY_SIZE+BLOCK_SIZE];  
+        cpaEncrypt(K_cpakey,K_cpaiv,mlekey,keycipher,kciph_len,mlekey_len); 
+        offsetfile.write((char *)keycipher,kciph_len);   
     }
     else
     {
         //initial encryption - when no parity exists for fingerprint
+        //generate parity
         genparity(inputdata,paritydata);    
+        // update the parity in database
         insertParity((unsigned char *)&subsample[0],(int)subsample.size(), (unsigned char *)&paritydata[0],(int)paritydata.size());
-        //MLE Encrypt the input file - initial encryption - inputdata
+        //MLE Encrypt the input file  which is base file 
         uint8_t *mlekey = mleKeygen(inputdata);
+        //initialize MLE ciphertext lenth
+        unsigned char *mlecipher=new unsigned char[msg_len+BLOCK_SIZE];
         mleEncrypt(mlekey,(unsigned char *)&inputdata[0],mlecipher,ciph_len,msg_len);  
-        
+        outfile.write((char *)mlecipher,ciph_len);
+        // fill zero in offset file
+        int offset_f_len=ERR_H_CAP*5;
+        for(auto ss=0;ss<offset_f_len;ss++)    
+            offsetdata.push_back(0x00);
+        //CPA Encrypt the offset file 
+        offset_len=offsetdata.size();
+        unsigned char *offcipher=new unsigned char[offset_len+BLOCK_SIZE];  
+        cpaEncrypt(cpakey,cpaiv,(unsigned char *)&offsetdata[0],offcipher,ociph_len,offset_len); 
+        offsetfile.write((char *)offcipher,ociph_len);    
+        //cpa encrypt mle key
+        mlekey_len=KEY_SIZE;
+        unsigned char *keycipher=new unsigned char[KEY_SIZE+BLOCK_SIZE];  
+        cpaEncrypt(k_cpakey,K_cpaiv,mlekey,keycipher,kciph_len,mlekey_len); 
+        offsetfile.write((char *)keycipher,kciph_len);      
     }
 
-    outfile.write((char *)mlecipher,ciph_len);
+
     infile.close();
     outfile.close();
     offsetfile.close();
+    stormlekey.close();
     auto st_end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> st_float_ms = st_end - st_start;
     std::cout << "Total  elapsed time is " <<  st_float_ms.count() << " milliseconds" << std::endl;
