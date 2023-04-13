@@ -33,4 +33,5 @@ Usage :
 ./dedup inputfile out_code_file out_offset_file
 command:
 ./dedup randfile_1 code_1 off_1
-./dedup randsim_1 code_s_1 off_s_1 
+./dedup randsim_1 code_s_1 off_s_1 key_s_1
+

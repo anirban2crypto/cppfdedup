@@ -41,6 +41,13 @@ void gen_params(unsigned char* key, unsigned char* iv)
       throw std::runtime_error("RAND_bytes for iv failed");
 }
 
+void gen_iv(unsigned char* iv)
+{
+    int rc = RAND_bytes(iv, BLOCK_SIZE);
+    if (rc != 1)
+      throw std::runtime_error("RAND_bytes for iv failed");
+}
+
 void  cpaDecrypt(uint8_t *cpakey,uint8_t *cpaiv,unsigned char *cpacipher,unsigned char *recovmsg,int &dec_len,int &ciph_len){
     unsigned char key[KEY_SIZE];
     unsigned char iv[BLOCK_SIZE];
@@ -68,14 +75,13 @@ void  cpaEncrypt(uint8_t *cpakey,uint8_t *cpaiv,unsigned char *message,unsigned 
     unsigned char key[KEY_SIZE];
     unsigned char iv[BLOCK_SIZE];
     /*  gen random iv and key */
-    gen_params(key, iv);
-    /*  save the key  */
+    gen_iv(iv);
+
+    /*  get the key  */
     for(int i = 0; i < KEY_SIZE; i ++){
-         cpakey[i]=key[i];
+         key[i]=cpakey[i];
     }
-    for(int i = 0; i < BLOCK_SIZE; i ++){
-         cpaiv[i]=iv[i];
-    }
+
     /* get the message  */
     unsigned char *plaintext =(unsigned char *)&message[0];
     /*
@@ -86,7 +92,11 @@ void  cpaEncrypt(uint8_t *cpakey,uint8_t *cpaiv,unsigned char *message,unsigned 
   
     /* Encrypt the plaintext */
     ciph_len = encrypt (plaintext, msg_len, key, iv, cpacipher);
-    
+
+    // return the iv
+    for(int i = 0; i < BLOCK_SIZE; i ++){
+         cpaiv[i]=iv[i];
+    }
 
 }
 void  mleEncrypt(uint8_t *mlekey,unsigned char *message,unsigned char *mlecipher,int &ciph_len,int &msg_len){
