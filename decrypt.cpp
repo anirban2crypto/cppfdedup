@@ -8,13 +8,29 @@
 #include <chrono>
 
 using namespace std;
-const size_t BYTES_PER_INT = sizeof(int);
-int buffToInteger(char *buffer)
+int buffToInteger(char *buffer,int BYTES_PER_INT)
 {
-    int out = int((unsigned char)(buffer[0]) << 24 |
+    int out;
+    switch (BYTES_PER_INT) {
+        case 1:
+            out = int((unsigned char)(buffer[0]));
+            break;
+        case 2:
+            out = int((unsigned char)(buffer[0]) << 8 |
+              (unsigned char)(buffer[1]));
+            break;
+        case 3:
+            out = int((unsigned char)(buffer[0]) << 16 |
+              (unsigned char)(buffer[1]) << 8 |
+              (unsigned char)(buffer[2]));
+            break;
+        case 4:
+            out = int((unsigned char)(buffer[0]) << 24 |
               (unsigned char)(buffer[1]) << 16 |
               (unsigned char)(buffer[2]) << 8  |
               (unsigned char)(buffer[3]));
+            break;
+    }    
     return out;              
 }
 
@@ -27,7 +43,6 @@ int main(int argc, char** argv)
     bool rowfound=false;
     char c;
     long loc;
-    char cbyte[BYTES_PER_INT];
     int ociph_len,kciph_len,bciph_len,cpa_ciph_len,cpa_dec_len,offset_len,msg_len,ciph_len,dec_len;
     uint8_t *cpakey=(unsigned char *)"dsMLtHNGAiNgRTwY"; 
     unsigned char *inpcipher;
@@ -146,14 +161,15 @@ int main(int argc, char** argv)
     //                  RECONSTRUCTION OF MESSAGE
     //---------------------------------------------------------------------                  
     //Reconstruction original file from basefile and offset file
-
+    int BYTE_SIZE_LOC=ceil(ceil(log2(dec_len))/8);
     int count=0;
     while(count < offset_len)
     {
-        std::copy(offset+count, offset+count+BYTES_PER_INT, cbyte);
-        int loc=buffToInteger(cbyte);        
+        char cbyte[BYTE_SIZE_LOC];
+        std::copy(offset+count, offset+count+BYTE_SIZE_LOC, cbyte);
+        int loc=buffToInteger(cbyte,BYTE_SIZE_LOC);        
         //cerr << "Location : " <<loc <<endl;
-        count=count+4;
+        count=count+BYTE_SIZE_LOC;
         if (loc>0)
             recovmsg[loc]=offset[count];
        // cerr << "Symbol : " <<symbol <<endl;

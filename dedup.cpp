@@ -1,6 +1,7 @@
 
 #include <string>
 #include <cstdlib>
+#include <cmath>
 #include <iostream>
 #include <fstream> 
 #include<cmath>
@@ -12,8 +13,8 @@
 
 using namespace std;
 
-const size_t BYTES_PER_INT = sizeof(int); 
-void intToCharArray(char* buffer, int in)
+//const size_t BYTES_PER_INT = sizeof(int); 
+void intToCharArray(char* buffer, int in,int BYTES_PER_INT)
 {
 	for (size_t i = 0; i < BYTES_PER_INT; i++) {
 		size_t shift = 8 * (BYTES_PER_INT - 1 - i);
@@ -33,7 +34,6 @@ int main(int argc, char** argv)
     bool rowfound=false;
     char c;
     long loc;
-    char cbyte[BYTES_PER_INT];
     int ciph_len,msg_len,cpa_msg_len,cpa_ciph_len;
     uint8_t *cpakey=(unsigned char *)"dsMLtHNGAiNgRTwY"; 
     uint8_t *cpaiv=new uint8_t[BLOCK_SIZE];
@@ -114,20 +114,25 @@ int main(int argc, char** argv)
     infile.clear();   //  Since ignore will have set eof.
 	infile.seekg( 0, std::ios_base::beg ); 
     msg_len=inputdata.size();
+    int BYTE_SIZE_LOC=ceil(ceil(log2(msg_len))/8);
+    int MAX_OFF_LEN=ECC_ERR_LMT*(BYTE_SIZE_LOC+1);
 
     //---------------------------------------------------------------------   
     //                   DEDUPLICATION PROCESSING
     //---------------------------------------------------------------------   
-
-
     // check parity table in database if any parity symbols exists for the file
     // subsampling is used to generate the label
     checkSimilarity((unsigned char *)&subsample[0],(int)subsample.size(),&rowfound,paritydata);        
     if (rowfound ==true)
     {
-        //subsequent encryption
-        //Run decode algorithm to deduplicate the file
+        //---------------------------------------------------------------------   
+        //                   SUBSEQUENT ENCRYPTION
+        //---------------------------------------------------------------------  
         //cerr << "Parity found: "<<rowfound<<endl;
+        //---------------------------------------------------------------------   
+        //                   BASE GENERATION
+        //---------------------------------------------------------------------  
+        //Run decode algorithm to deduplicate the file
         reconst(inputdata,paritydata,recovdata,intoffset);     
         //cerr << "Reconstruct Size: " <<recovdata.size()<<endl;
         //---------------------------------------------------------------------   
@@ -145,14 +150,19 @@ int main(int argc, char** argv)
                 //get the position
                 int loc=intoffset[ix++];        
                 //convert the position from int to byte
-	            intToCharArray(cbyte, loc);                    
-                for(int i=0;i<BYTES_PER_INT;i++){
+                char cbyte[BYTE_SIZE_LOC];
+	            intToCharArray(cbyte, loc,BYTE_SIZE_LOC);                    
+                for(int i=0;i<BYTE_SIZE_LOC;i++){
                     offsetdata.push_back(cbyte[i]);
                 }
                 //get the flip symbol
                 offsetdata.push_back(inputdata[loc]);
             }                                           
         }
+        // PAD THE OFFSET
+        int OFF_PAD_SIZE=MAX_OFF_LEN - offsetdata.size();
+        for(auto ss=0;ss<OFF_PAD_SIZE;ss++)    
+            offsetdata.push_back(0x00);
         //---------------------------------------------------------------------   
         //                   BASE ENCRYPTION
         //---------------------------------------------------------------------         
@@ -167,13 +177,14 @@ int main(int argc, char** argv)
     }
     else
     {
-
+        //---------------------------------------------------------------------   
+        //                   INITIAL ENCRYPTION
+        //---------------------------------------------------------------------  
         //---------------------------------------------------------------------   
         //                   OFFSET GENERATION
         //--------------------------------------------------------------------- 
         // fill zero in offset file
-        int offset_f_len=ERR_H_CAP*5;
-        for(auto ss=0;ss<offset_f_len;ss++)    
+        for(auto ss=0;ss<MAX_OFF_LEN;ss++)    
             offsetdata.push_back(0x00);
         //---------------------------------------------------------------------   
         //                   BASE ENCRYPTION
