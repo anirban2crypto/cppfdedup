@@ -45,10 +45,15 @@ int main(int argc, char* argv[])
     //std::cout << endl; 
     
     msg_len=message.size();   
+    cout <<"MLE Message len:"<<msg_len <<endl;
     unsigned char *mlecipher=new unsigned char[msg_len+BLOCK_SIZE];
     mleEncrypt(mlekey,(unsigned char *)&message[0],mlecipher,ciph_len,msg_len);  
+    cout <<"MLE Ciph len:"<<ciph_len <<endl;
+    unsigned char *mledeccipher=new unsigned char[ciph_len];
     unsigned char *recovmsg=new unsigned char[ciph_len+BLOCK_SIZE];  
-    mleDecrypt(mlekey,mlecipher,recovmsg,ciph_len,dec_len);
+    std::copy(mlecipher, mlecipher+ciph_len, mledeccipher);
+    mleDecrypt(mlekey,mledeccipher,recovmsg,ciph_len,dec_len);
+    cout <<"MLE Decryption len:"<<dec_len <<endl;
     /*cout << "MLE Decryption"<<endl;
     for(int i=0 ; i<dec_len ; i++)
     {
@@ -69,15 +74,15 @@ int main(int argc, char* argv[])
     msg_len=message.size();*/
     unsigned char *cpacipher=new unsigned char[msg_len+BLOCK_SIZE];  
     cpaEncrypt(cpakey,cpaiv,(unsigned char *)&message[0],cpacipher,ciph_len,msg_len); 
-    cout <<"Ciph len:"<<ciph_len <<endl;
-    cout <<"Message len:"<<msg_len <<endl;
+    cout <<"CPA Ciph len:"<<ciph_len <<endl;
+    cout <<"CPA Message len:"<<msg_len <<endl;
 
     //  cancatenate cpaiv cpacipher  == final cipher
     unsigned char* final_cipher = new unsigned char [BLOCK_SIZE + ciph_len+BLOCK_SIZE];
     std::copy(cpaiv, cpaiv+BLOCK_SIZE, final_cipher);
     std::copy(cpacipher, cpacipher+ciph_len+BLOCK_SIZE, final_cipher + BLOCK_SIZE);
 
-    //  some thing 
+    //  Do some thing 
     //  seperate out  final cipher ===> cpaiv cpacipher 
     unsigned char *deccipher=new unsigned char[ciph_len+BLOCK_SIZE];  
     unsigned char *deciv=new unsigned char[BLOCK_SIZE];
@@ -85,12 +90,13 @@ int main(int argc, char* argv[])
     std::copy(final_cipher, final_cipher+BLOCK_SIZE, deciv);
     std::copy(final_cipher+BLOCK_SIZE, final_cipher+ciph_len+BLOCK_SIZE+BLOCK_SIZE, deccipher);
     cpaDecrypt(cpakey,deciv,deccipher,cparecovmsg,dec_len,ciph_len);
-    cout <<"CPA Decryption:"<< endl;
-    for(int i=0 ; i<dec_len ; i++)
-    {
-        cout << cparecovmsg[i];
-    }
-    cout << endl;
+
+    //cout <<"CPA Decryption:"<< endl;
+    //for(int i=0 ; i<dec_len ; i++)
+    //{
+    //    cout << cparecovmsg[i];
+    //}
+    //cout << endl;
     auto st_end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> st_float_ms = st_end - st_start;
     std::cout << "Total  elapsed time is " <<  st_float_ms.count() << " milliseconds" << std::endl;

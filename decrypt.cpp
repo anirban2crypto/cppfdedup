@@ -7,6 +7,7 @@
 #include "mlecrypto.h"
 #include <chrono>
 
+
 using namespace std;
 int buffToInteger(char *buffer,int BYTES_PER_INT)
 {
@@ -115,12 +116,12 @@ int main(int argc, char** argv)
     //  seperate iv from cipher
     //  seperate out  final cipher ===> cpaiv cpacipher 
     inpcipher=(unsigned char *)&kcipher[0];
-    cpa_ciph_len=kciph_len-BLOCK_SIZE-BLOCK_SIZE;
-    deccipher=new unsigned char[cpa_ciph_len+BLOCK_SIZE];  
+    cpa_ciph_len=kciph_len-BLOCK_SIZE;
+    deccipher=new unsigned char[cpa_ciph_len];  
     deciv=new unsigned char[BLOCK_SIZE];
     unsigned char *mlekey=new unsigned char [cpa_ciph_len+BLOCK_SIZE];  
     std::copy(inpcipher, inpcipher+BLOCK_SIZE, deciv);
-    std::copy(inpcipher+BLOCK_SIZE, inpcipher+cpa_ciph_len+BLOCK_SIZE+BLOCK_SIZE, deccipher);
+    std::copy(inpcipher+BLOCK_SIZE, inpcipher+cpa_ciph_len+BLOCK_SIZE, deccipher);
     cpaDecrypt(cpakey,deciv,deccipher,mlekey,cpa_dec_len,cpa_ciph_len);
     //---------------------------------------------------------------------   
     //                  OFFSET DECRYPTION 
@@ -129,12 +130,12 @@ int main(int argc, char** argv)
     //  seperate iv from cipher
     //  seperate out  final cipher ===> cpaiv cpacipher 
     inpcipher=(unsigned char *)&ocipher[0];
-    cpa_ciph_len=ociph_len-BLOCK_SIZE-BLOCK_SIZE;
-    deccipher=new unsigned char[cpa_ciph_len+BLOCK_SIZE];  
+    cpa_ciph_len=ociph_len-BLOCK_SIZE;
+    deccipher=new unsigned char[cpa_ciph_len];  
     deciv=new unsigned char[BLOCK_SIZE];
     unsigned char *offset=new unsigned char [cpa_ciph_len+BLOCK_SIZE];  
     std::copy(inpcipher, inpcipher+BLOCK_SIZE, deciv);
-    std::copy(inpcipher+BLOCK_SIZE, inpcipher+cpa_ciph_len+BLOCK_SIZE+BLOCK_SIZE, deccipher);
+    std::copy(inpcipher+BLOCK_SIZE, inpcipher+cpa_ciph_len+BLOCK_SIZE, deccipher);
     cpaDecrypt(cpakey,deciv,deccipher,offset,cpa_dec_len,cpa_ciph_len);
     offset_len=cpa_dec_len;    
     //cout <<"OFFSET Decryption:OFFSET LENTH"<< offset_len<<endl;
@@ -149,7 +150,7 @@ int main(int argc, char** argv)
     // MLE decrypt the base file
     inpcipher=(unsigned char *)&bcipher[0];
     unsigned char *recovmsg=new unsigned char[bciph_len]; 
-    ciph_len=bciph_len-BLOCK_SIZE; 
+    ciph_len=bciph_len; 
     mleDecrypt(mlekey,inpcipher,recovmsg,ciph_len,dec_len);
     //cout <<"MLE Decryption:"<< endl;
     //for(int i=0 ; i<dec_len ; i++)

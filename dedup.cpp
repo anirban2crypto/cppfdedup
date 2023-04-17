@@ -170,10 +170,8 @@ int main(int argc, char** argv)
         mlekey = mleKeygen(recovdata);
         //initialize MLE ciphertext lenth   
         unsigned char *mlecipher=new unsigned char[msg_len+BLOCK_SIZE];
-        mleEncrypt(mlekey,(unsigned char *)&recovdata[0],mlecipher,ciph_len,msg_len);         
-        final_cipher = new unsigned char [BLOCK_SIZE + ciph_len]; 
-        std::copy(mlecipher, mlecipher+ciph_len+BLOCK_SIZE, final_cipher); 
-        outfile.write((char *)final_cipher,BLOCK_SIZE + ciph_len);
+        mleEncrypt(mlekey,(unsigned char *)&recovdata[0],mlecipher,ciph_len,msg_len);                
+        outfile.write((char *)mlecipher,ciph_len);
     }
     else
     {
@@ -199,9 +197,7 @@ int main(int argc, char** argv)
         //initialize MLE ciphertext lenth
         unsigned char *mlecipher=new unsigned char[msg_len+BLOCK_SIZE];
         mleEncrypt(mlekey,(unsigned char *)&inputdata[0],mlecipher,ciph_len,msg_len);
-        final_cipher = new unsigned char [BLOCK_SIZE + ciph_len]; 
-        std::copy(mlecipher, mlecipher+ciph_len+BLOCK_SIZE, final_cipher); 
-        outfile.write((char *)final_cipher,BLOCK_SIZE + ciph_len);
+        outfile.write((char *)mlecipher,ciph_len);
            
     }
     // CPA encrypt the offset file 
@@ -212,11 +208,11 @@ int main(int argc, char** argv)
     cpacipher=new unsigned char[cpa_msg_len+BLOCK_SIZE];  
     cpaEncrypt(cpakey,cpaiv,(unsigned char *)&offsetdata[0],cpacipher,cpa_ciph_len,cpa_msg_len);  
     // cancatenate cpaiv cpacipher  == final cipher
-    final_cipher = new unsigned char [BLOCK_SIZE + cpa_ciph_len+BLOCK_SIZE];
+    final_cipher = new unsigned char [BLOCK_SIZE + cpa_ciph_len];
     std::copy(cpaiv, cpaiv+BLOCK_SIZE, final_cipher);
-    std::copy(cpacipher, cpacipher+cpa_ciph_len+BLOCK_SIZE, final_cipher + BLOCK_SIZE);
+    std::copy(cpacipher, cpacipher+cpa_ciph_len, final_cipher +BLOCK_SIZE);
     // write offset file
-    offsetfile.write((char *)final_cipher,BLOCK_SIZE + cpa_ciph_len+BLOCK_SIZE);
+    offsetfile.write((char *)final_cipher,BLOCK_SIZE + cpa_ciph_len);
     //cpa encrypt mle key
     //---------------------------------------------------------------------   
     //                   KEY ENCRYPTION
@@ -225,10 +221,10 @@ int main(int argc, char** argv)
     cpacipher=new unsigned char[cpa_msg_len+BLOCK_SIZE];  
     cpaEncrypt(cpakey,cpaiv,mlekey,cpacipher,cpa_ciph_len,cpa_msg_len); 
     // cancatenate cpaiv cpacipher  == final cipher
-    final_cipher = new unsigned char [BLOCK_SIZE + cpa_ciph_len+BLOCK_SIZE];
+    final_cipher = new unsigned char [BLOCK_SIZE + cpa_ciph_len];
     std::copy(cpaiv, cpaiv+BLOCK_SIZE, final_cipher);
-    std::copy(cpacipher, cpacipher+cpa_ciph_len+BLOCK_SIZE, final_cipher + BLOCK_SIZE);
-    stormlekey.write((char *)final_cipher,BLOCK_SIZE + cpa_ciph_len+BLOCK_SIZE);   
+    std::copy(cpacipher, cpacipher+cpa_ciph_len, final_cipher + BLOCK_SIZE);
+    stormlekey.write((char *)final_cipher,BLOCK_SIZE + cpa_ciph_len);   
 
     //---------------------------------------------------------------------   
     //                    IO CLOSE
