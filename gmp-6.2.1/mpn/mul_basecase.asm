@@ -1,1 +1,1 @@
-../mpn/x86_64/coreibwl/mul_basecase.asm
+../mpn/x86_64/coreisbr/mul_basecase.asm

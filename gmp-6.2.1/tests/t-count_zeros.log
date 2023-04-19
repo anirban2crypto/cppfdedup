@@ -1,1 +1,1 @@
-PASS t-count_zeros (exit status: 0)
+FAIL t-count_zeros (exit status: 132)

@@ -13,16 +13,16 @@ int main(int argc, char** argv)
     char cht;
     char *a = argv[1];
     int num = atoi(a);
-    if (num > 0)
+    if (num >= 0)
     {        
-        filename= "randfile_" + std::to_string(num);
+        filename= "randifile";
         ofstream outfile(filename, ios::out | ios::trunc);
         if (!outfile)
         {
               cerr << "Could not open file for writing!\n";
               return -1;
         }
-        simname= "randsim_" + std::to_string(num);
+        simname= "randsfile";
         ofstream simfile(simname, ios::out | ios::trunc);
         if (!simfile)
         {
@@ -30,19 +30,19 @@ int main(int argc, char** argv)
               return -1;
         }
         size=num;    
-        count=size*1024;
+        count=pow(2,size)*1024;
         for (i = 0; i < count; i++)
         {
             asciiVal=33+(rand()%92);
             cht = char(asciiVal);		
             outfile <<cht; 
-            if (i==11)
+            if (i%243==11)
                 cht='A';   
-            if (i==98)
+            if (i%243==98)
                 cht='B';   
-            if (i==150)
+            if (i%243==150)
                 cht='C';
-            if (i==959)
+            if (i%243==229)
                 cht='D';   
             simfile <<cht;                            
         }

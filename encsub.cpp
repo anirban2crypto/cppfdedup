@@ -226,13 +226,13 @@ int decrypt(unsigned char *ciphertext, int ciphertext_len, unsigned char *key,
 }
 uint8_t* mleKeygen(vector<uint8_t> &message)
 {
-    int size = message.size() + SALT_SIZE;
-    uint8_t array[size];
+    int size = message.size();
+    uint8_t *array = new uint8_t[size+SALT_SIZE];
     uint8_t *hashString = new uint8_t[SHA256_DIGEST_LENGTH];
     uint8_t *mlekey = new uint8_t[HKEY_SIZE];
     copy(message.begin(), message.end(), array);
-    memcpy(&array[size-SALT_SIZE], "YodaSaid,DoOrDoNot.ThereIsNoTry.",SALT_SIZE);
-    SHA256(array, size, hashString);
+    memcpy(array+size, "YodaSaid,DoOrDoNot.ThereIsNoTry.",SALT_SIZE);
+    SHA256(array, size+SALT_SIZE, hashString);
     memcpy(mlekey,hashString,HKEY_SIZE);
     return mlekey;
 }

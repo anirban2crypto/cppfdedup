@@ -3,12 +3,27 @@
 ========================================
 
 # TOTAL: 8
-# PASS:  8
+# PASS:  5
 # SKIP:  0
 # XFAIL: 0
-# FAIL:  0
+# FAIL:  3
 # XPASS: 0
 # ERROR: 0
 
 .. contents:: :depth: 2
+
+FAIL: t-count_zeros
+===================
+
+FAIL t-count_zeros (exit status: 132)
+
+FAIL: t-popc
+============
+
+FAIL t-popc (exit status: 132)
+
+FAIL: t-parity
+==============
+
+FAIL t-parity (exit status: 132)
 

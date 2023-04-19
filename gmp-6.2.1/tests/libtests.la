@@ -17,7 +17,7 @@ old_library='libtests.a'
 inherited_linker_flags=''
 
 # Libraries that this one depends upon.
-dependency_libs=' /home/anirban/cppfdedup/gmp-6.2.1/libgmp.la'
+dependency_libs=' /home/anirban/cpprsdedup/cppfdedup/gmp-6.2.1/libgmp.la'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
@@ -39,4 +39,4 @@ dlpreopen=''
 
 # Directory that this library needs to be installed in:
 libdir=''
-relink_command="(cd /home/anirban/cppfdedup/gmp-6.2.1/tests; /bin/bash \"/home/anirban/cppfdedup/gmp-6.2.1/libtool\"  --tag CC --mode=relink gcc -O2 -pedantic -fomit-frame-pointer -m64 -mtune=skylake -march=broadwell -no-install -o libtests.la memory.lo misc.lo refmpf.lo refmpn.lo refmpq.lo refmpz.lo spinner.lo trace.lo amd64call.lo amd64check.lo ../libgmp.la @inst_prefix_dir@)"
+relink_command="(cd /home/anirban/cpprsdedup/cppfdedup/gmp-6.2.1/tests; /bin/bash \"/home/anirban/cpprsdedup/cppfdedup/gmp-6.2.1/libtool\"  --tag CC --mode=relink gcc -O2 -pedantic -fomit-frame-pointer -m64 -mtune=sandybridge -march=sandybridge -no-install -o libtests.la memory.lo misc.lo refmpf.lo refmpn.lo refmpq.lo refmpz.lo spinner.lo trace.lo amd64call.lo amd64check.lo ../libgmp.la @inst_prefix_dir@)"

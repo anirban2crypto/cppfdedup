@@ -1,1 +1,1 @@
-../mpn/x86_64/coreibwl/mul_1.asm
+../mpn/x86_64/coreisbr/mul_1.asm

@@ -1,6 +1,6 @@
 #! /bin/bash
 # Generated automatically by config.status (gmp) 6.2.1
-# Libtool was configured on host anirban-UX430UQ:
+# Libtool was configured on host anirban-To-be-filled-by-O-E-M:
 # NOTE: Changes made to this file will be lost: look at ltmain.sh.
 
 # Provide generalized library-building support services.
@@ -79,12 +79,12 @@ PATH_SEPARATOR=":"
 
 # The host system.
 host_alias=
-host=kabylake-pc-linux-gnu
+host=ivybridge-pc-linux-gnu
 host_os=linux-gnu
 
 # The build system.
 build_alias=
-build=kabylake-pc-linux-gnu
+build=ivybridge-pc-linux-gnu
 build_os=linux-gnu
 
 # A sed program that does not truncate output.
@@ -168,7 +168,7 @@ lock_old_archive_extraction=no
 LTCC="gcc"
 
 # LTCC compiler flags.
-LTCFLAGS="-O2 -pedantic -fomit-frame-pointer -m64 -mtune=skylake -march=broadwell"
+LTCFLAGS="-O2 -pedantic -fomit-frame-pointer -m64 -mtune=sandybridge -march=sandybridge"
 
 # Take the output of nm and produce a listing of raw symbols and C names.
 global_symbol_pipe="sed -n -e 's/^.*[	 ]\\([ABCDGIRSTW][ABCDGIRSTW]*\\)[	 ][	 ]*\\([_A-Za-z][_A-Za-z0-9]*\\)\$/\\1 \\2 \\2/p' | sed '/ __gnu_lto/d'"

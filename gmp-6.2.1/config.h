@@ -37,7 +37,7 @@ see https://www.gnu.org/licenses/.
 
 /* The gmp-mparam.h file (a string) the tune program should suggest updating.
    */
-#define GMP_MPARAM_H_SUGGEST "./mpn/x86_64/skylake/gmp-mparam.h"
+#define GMP_MPARAM_H_SUGGEST "./mpn/x86_64/coreisbr/gmp-mparam.h"
 
 /* Define to 1 if you have the `alarm' function. */
 #define HAVE_ALARM 1
@@ -181,7 +181,7 @@ see https://www.gnu.org/licenses/.
 /* #undef HAVE_HOST_CPU_nehalem */
 /* #undef HAVE_HOST_CPU_westmere */
 /* #undef HAVE_HOST_CPU_sandybridge */
-/* #undef HAVE_HOST_CPU_ivybridge */
+#define HAVE_HOST_CPU_ivybridge 1
 /* #undef HAVE_HOST_CPU_haswell */
 /* #undef HAVE_HOST_CPU_broadwell */
 /* #undef HAVE_HOST_CPU_skylake */
@@ -264,7 +264,7 @@ see https://www.gnu.org/licenses/.
 #define HAVE_NATIVE_mpn_addlsh_n 1
 #define HAVE_NATIVE_mpn_addlsh1_nc 1
 #define HAVE_NATIVE_mpn_addlsh2_nc 1
-/* #undef HAVE_NATIVE_mpn_addlsh_nc */
+#define HAVE_NATIVE_mpn_addlsh_nc 1
 /* #undef HAVE_NATIVE_mpn_addlsh1_n_ip1 */
 /* #undef HAVE_NATIVE_mpn_addlsh2_n_ip1 */
 /* #undef HAVE_NATIVE_mpn_addlsh_n_ip1 */
@@ -322,7 +322,7 @@ see https://www.gnu.org/licenses/.
 #define HAVE_NATIVE_mpn_modexact_1_odd 1
 #define HAVE_NATIVE_mpn_modexact_1c_odd 1
 #define HAVE_NATIVE_mpn_mul_1 1
-/* #undef HAVE_NATIVE_mpn_mul_1c */
+#define HAVE_NATIVE_mpn_mul_1c 1
 #define HAVE_NATIVE_mpn_mul_2 1
 /* #undef HAVE_NATIVE_mpn_mul_3 */
 /* #undef HAVE_NATIVE_mpn_mul_4 */
@@ -637,7 +637,7 @@ see https://www.gnu.org/licenses/.
 #endif
 
 /* Define to 1 if the assembler understands the mulx instruction */
-#define X86_ASM_MULX 1
+/* #undef X86_ASM_MULX */
 
 /* Define to 1 if `lex' declares `yytext' as a `char *' by default, not a
    `char[]'. */

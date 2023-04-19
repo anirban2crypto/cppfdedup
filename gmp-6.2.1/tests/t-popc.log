@@ -1,1 +1,1 @@
-PASS t-popc (exit status: 0)
+FAIL t-popc (exit status: 132)

@@ -1,1 +1,1 @@
-../mpn/x86_64/coreihwl/gcd_22.asm
+../mpn/x86_64/core2/gcd_22.asm

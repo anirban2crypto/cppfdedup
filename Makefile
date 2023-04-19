@@ -3,7 +3,7 @@ CXXFLAGS = -I  ezpwd-reed-solomon/c++
 
 
 
-all:	rstest randFile rsencode rsdecode dedup dbsetup cryptoalgo
+all:	rstest randFile rsencode rsdecode dedup dbsetup cryptoalgo decrypt
 
 rstest: rstest.cpp
 	g++ $(CXXFLAGS)  rstest.cpp -o rstest
@@ -20,7 +20,8 @@ cryptoalgo: cryptoalgo.cpp encsub.cpp
 dedup: dedup.cpp sqlsimdtct.cpp rsgenparity.cpp reconstruct.cpp
 	g++ $(CXXFLAGS) encsub.cpp sqlsimdtct.cpp rsgenparity.cpp reconstruct.cpp dedup.cpp -lsqlite3 -lssl -lcrypto -o dedup
 decrypt: encsub.cpp  decrypt.cpp
-g++ $(CXXFLAGS) encsub.cpp  decrypt.cpp  -lssl -lcrypto -o decrypt	
+	g++ $(CXXFLAGS) encsub.cpp  decrypt.cpp  -lssl -lcrypto -o decrypt	
 
 clean:
-	rm  rsencode.o rsdecode.o randFile.o  upload.o rstest.o  sqlsimdtct.o
+	rm  rsencode.o rsdecode.o randFile.o  upload.o rstest.o  sqlsimdtct.o cryptoalgo.o dedup.o decrypt.o
+	

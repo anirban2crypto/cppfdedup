@@ -1,1 +1,1 @@
-PASS t-parity (exit status: 0)
+FAIL t-parity (exit status: 132)
