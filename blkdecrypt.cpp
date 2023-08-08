@@ -38,20 +38,20 @@ int main(int argc, char** argv)
     //                    IO OPEN
     //---------------------------------------------------------------------   
     // open the file for read   - input message file -close message file
-    std::string mapfname="./mapping/"+std::string(argv[1]);
+    std::string mapfname="./../blkexact/mapping/"+std::string(argv[1]);
     ifstream mapfile (mapfname);
     if (!mapfile){
         cerr << "Could not open map file for reading!\n";
         return -1;
     }
-    std::string keyfname="./keystore/"+std::string(argv[1]);
+    std::string keyfname="./../blkexact/keystore/"+std::string(argv[1]);
     ifstream keyfile (keyfname, ios::binary);
     if (!keyfile){
         cerr << "Could not open key file for reading!\n";
         return -1;
     }
 
-    std::string decfname="./decstore/"+std::string(argv[1]);
+    std::string decfname="./../blkexact/decstore/"+std::string(argv[1]);
     ofstream decfile(decfname,  ios::out | ios::trunc);
     if (!decfile) {
         cerr << "Could not open decrypted file for writing!\n";
@@ -89,7 +89,7 @@ int main(int argc, char** argv)
     for ( auto i = 0; i < chunk_cnt; i++)
     {
         std::string chunk_name=mapdata.substr(i*chunk_name_size,chunk_name_size);
-        std::string ciphfname="./output/"+chunk_name;
+        std::string ciphfname="./../blkexact/encstore/"+chunk_name;
         cerr << "\nFile name: " << ciphfname <<"\n";
         ifstream ciphfile (ciphfname, ios::binary);
         if (!ciphfile){

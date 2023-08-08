@@ -395,7 +395,7 @@ on `(hostname || uname -n) 2>/dev/null | sed 1q`
 # Files that config.status was made for.
 config_files=" demos/pexpr-config.h:demos/pexpr-config-h.in demos/calc/calc-config.h:demos/calc/calc-config-h.in Makefile mpf/Makefile mpn/Makefile mpq/Makefile mpz/Makefile printf/Makefile scanf/Makefile rand/Makefile cxx/Makefile tests/Makefile tests/devel/Makefile tests/mpf/Makefile tests/mpn/Makefile tests/mpq/Makefile tests/mpz/Makefile tests/rand/Makefile tests/misc/Makefile tests/cxx/Makefile doc/Makefile tune/Makefile demos/Makefile demos/calc/Makefile demos/expr/Makefile gmp.h:gmp-h.in gmp.pc:gmp.pc.in gmpxx.pc:gmpxx.pc.in"
 config_headers=" config.h:config.in"
-config_links=" mpn/invert_limb_table.asm:mpn/x86_64/invert_limb_table.asm mpn/add.c:mpn/generic/add.c mpn/add_1.c:mpn/generic/add_1.c mpn/add_n.asm:mpn/x86_64/coreisbr/aors_n.asm mpn/sub.c:mpn/generic/sub.c mpn/sub_1.c:mpn/generic/sub_1.c mpn/sub_n.asm:mpn/x86_64/coreisbr/aors_n.asm mpn/cnd_add_n.asm:mpn/x86_64/coreisbr/cnd_add_n.asm mpn/cnd_sub_n.asm:mpn/x86_64/coreisbr/cnd_sub_n.asm mpn/cnd_swap.c:mpn/generic/cnd_swap.c mpn/neg.c:mpn/generic/neg.c mpn/com.asm:mpn/x86_64/core2/com.asm mpn/mul_1.asm:mpn/x86_64/coreisbr/mul_1.asm mpn/addmul_1.asm:mpn/x86_64/coreisbr/aorsmul_1.asm mpn/submul_1.asm:mpn/x86_64/coreisbr/aorsmul_1.asm mpn/add_err1_n.asm:mpn/x86_64/core2/aors_err1_n.asm mpn/add_err2_n.asm:mpn/x86_64/aors_err2_n.asm mpn/add_err3_n.asm:mpn/x86_64/aors_err3_n.asm mpn/sub_err1_n.asm:mpn/x86_64/core2/aors_err1_n.asm mpn/sub_err2_n.asm:mpn/x86_64/aors_err2_n.asm mpn/sub_err3_n.asm:mpn/x86_64/aors_err3_n.asm mpn/lshift.asm:mpn/x86_64/coreisbr/lshift.asm mpn/rshift.asm:mpn/x86_64/coreisbr/rshift.asm mpn/dive_1.asm:mpn/x86_64/dive_1.asm mpn/diveby3.c:mpn/generic/diveby3.c mpn/divis.c:mpn/generic/divis.c mpn/divrem.c:mpn/generic/divrem.c mpn/divrem_1.asm:mpn/x86_64/coreisbr/divrem_1.asm mpn/divrem_2.asm:mpn/x86_64/divrem_2.asm mpn/fib2_ui.c:mpn/generic/fib2_ui.c mpn/fib2m.c:mpn/generic/fib2m.c mpn/mod_1.c:mpn/generic/mod_1.c mpn/mod_34lsub1.asm:mpn/x86_64/mod_34lsub1.asm mpn/mode1o.asm:mpn/x86_64/mode1o.asm mpn/pre_mod_1.c:mpn/generic/pre_mod_1.c mpn/dump.c:mpn/generic/dump.c mpn/mod_1_1.asm:mpn/x86_64/mod_1_1.asm mpn/mod_1_2.asm:mpn/x86_64/mod_1_2.asm mpn/mod_1_3.c:mpn/generic/mod_1_3.c mpn/mod_1_4.asm:mpn/x86_64/mod_1_4.asm mpn/lshiftc.asm:mpn/x86_64/coreisbr/lshiftc.asm mpn/mul.c:mpn/generic/mul.c mpn/mul_fft.c:mpn/generic/mul_fft.c mpn/mul_n.c:mpn/generic/mul_n.c mpn/sqr.c:mpn/generic/sqr.c mpn/mul_basecase.asm:mpn/x86_64/coreisbr/mul_basecase.asm mpn/sqr_basecase.asm:mpn/x86_64/coreisbr/sqr_basecase.asm mpn/nussbaumer_mul.c:mpn/generic/nussbaumer_mul.c mpn/mulmid_basecase.c:mpn/generic/mulmid_basecase.c mpn/toom42_mulmid.c:mpn/generic/toom42_mulmid.c mpn/mulmid_n.c:mpn/generic/mulmid_n.c mpn/mulmid.c:mpn/generic/mulmid.c mpn/random.c:mpn/generic/random.c mpn/random2.c:mpn/generic/random2.c mpn/pow_1.c:mpn/generic/pow_1.c mpn/rootrem.c:mpn/generic/rootrem.c mpn/sqrtrem.c:mpn/generic/sqrtrem.c mpn/sizeinbase.c:mpn/generic/sizeinbase.c mpn/get_str.c:mpn/generic/get_str.c mpn/set_str.c:mpn/generic/set_str.c mpn/compute_powtab.c:mpn/generic/compute_powtab.c mpn/scan0.c:mpn/generic/scan0.c mpn/scan1.c:mpn/generic/scan1.c mpn/popcount.asm:mpn/x86_64/coreinhm/popcount.asm mpn/hamdist.asm:mpn/x86_64/coreinhm/hamdist.asm mpn/cmp.c:mpn/generic/cmp.c mpn/zero_p.c:mpn/generic/zero_p.c mpn/perfsqr.c:mpn/generic/perfsqr.c mpn/perfpow.c:mpn/generic/perfpow.c mpn/strongfibo.c:mpn/generic/strongfibo.c mpn/gcd_11.asm:mpn/x86_64/coreisbr/gcd_11.asm mpn/gcd_22.asm:mpn/x86_64/core2/gcd_22.asm mpn/gcd_1.c:mpn/generic/gcd_1.c mpn/gcd.c:mpn/generic/gcd.c mpn/gcdext_1.c:mpn/generic/gcdext_1.c mpn/gcdext.c:mpn/generic/gcdext.c mpn/gcd_subdiv_step.c:mpn/generic/gcd_subdiv_step.c mpn/gcdext_lehmer.c:mpn/generic/gcdext_lehmer.c mpn/div_q.c:mpn/generic/div_q.c mpn/tdiv_qr.c:mpn/generic/tdiv_qr.c mpn/jacbase.c:mpn/generic/jacbase.c mpn/jacobi_2.c:mpn/generic/jacobi_2.c mpn/jacobi.c:mpn/generic/jacobi.c mpn/get_d.c:mpn/generic/get_d.c mpn/matrix22_mul.c:mpn/generic/matrix22_mul.c mpn/matrix22_mul1_inverse_vector.c:mpn/generic/matrix22_mul1_inverse_vector.c mpn/hgcd_matrix.c:mpn/generic/hgcd_matrix.c mpn/hgcd2.c:mpn/generic/hgcd2.c mpn/hgcd_step.c:mpn/generic/hgcd_step.c mpn/hgcd_reduce.c:mpn/generic/hgcd_reduce.c mpn/hgcd.c:mpn/generic/hgcd.c mpn/hgcd_appr.c:mpn/generic/hgcd_appr.c mpn/hgcd2_jacobi.c:mpn/generic/hgcd2_jacobi.c mpn/hgcd_jacobi.c:mpn/generic/hgcd_jacobi.c mpn/mullo_n.c:mpn/generic/mullo_n.c mpn/mullo_basecase.asm:mpn/x86_64/coreisbr/mullo_basecase.asm mpn/sqrlo.c:mpn/generic/sqrlo.c mpn/sqrlo_basecase.c:mpn/generic/sqrlo_basecase.c mpn/toom22_mul.c:mpn/generic/toom22_mul.c mpn/toom32_mul.c:mpn/generic/toom32_mul.c mpn/toom42_mul.c:mpn/generic/toom42_mul.c mpn/toom52_mul.c:mpn/generic/toom52_mul.c mpn/toom62_mul.c:mpn/generic/toom62_mul.c mpn/toom33_mul.c:mpn/generic/toom33_mul.c mpn/toom43_mul.c:mpn/generic/toom43_mul.c mpn/toom53_mul.c:mpn/generic/toom53_mul.c mpn/toom54_mul.c:mpn/generic/toom54_mul.c mpn/toom63_mul.c:mpn/generic/toom63_mul.c mpn/toom44_mul.c:mpn/generic/toom44_mul.c mpn/toom6h_mul.c:mpn/generic/toom6h_mul.c mpn/toom6_sqr.c:mpn/generic/toom6_sqr.c mpn/toom8h_mul.c:mpn/generic/toom8h_mul.c mpn/toom8_sqr.c:mpn/generic/toom8_sqr.c mpn/toom_couple_handling.c:mpn/generic/toom_couple_handling.c mpn/toom2_sqr.c:mpn/generic/toom2_sqr.c mpn/toom3_sqr.c:mpn/generic/toom3_sqr.c mpn/toom4_sqr.c:mpn/generic/toom4_sqr.c mpn/toom_eval_dgr3_pm1.c:mpn/generic/toom_eval_dgr3_pm1.c mpn/toom_eval_dgr3_pm2.c:mpn/generic/toom_eval_dgr3_pm2.c mpn/toom_eval_pm1.c:mpn/generic/toom_eval_pm1.c mpn/toom_eval_pm2.c:mpn/generic/toom_eval_pm2.c mpn/toom_eval_pm2exp.c:mpn/generic/toom_eval_pm2exp.c mpn/toom_eval_pm2rexp.c:mpn/generic/toom_eval_pm2rexp.c mpn/toom_interpolate_5pts.c:mpn/generic/toom_interpolate_5pts.c mpn/toom_interpolate_6pts.c:mpn/generic/toom_interpolate_6pts.c mpn/toom_interpolate_7pts.c:mpn/generic/toom_interpolate_7pts.c mpn/toom_interpolate_8pts.c:mpn/generic/toom_interpolate_8pts.c mpn/toom_interpolate_12pts.c:mpn/generic/toom_interpolate_12pts.c mpn/toom_interpolate_16pts.c:mpn/generic/toom_interpolate_16pts.c mpn/invertappr.c:mpn/generic/invertappr.c mpn/invert.c:mpn/generic/invert.c mpn/binvert.c:mpn/generic/binvert.c mpn/mulmod_bnm1.c:mpn/generic/mulmod_bnm1.c mpn/sqrmod_bnm1.c:mpn/generic/sqrmod_bnm1.c mpn/div_qr_1.c:mpn/generic/div_qr_1.c mpn/div_qr_1n_pi1.asm:mpn/x86_64/div_qr_1n_pi1.asm mpn/div_qr_2.c:mpn/generic/div_qr_2.c mpn/div_qr_2n_pi1.asm:mpn/x86_64/div_qr_2n_pi1.asm mpn/div_qr_2u_pi1.asm:mpn/x86_64/div_qr_2u_pi1.asm mpn/sbpi1_div_q.c:mpn/generic/sbpi1_div_q.c mpn/sbpi1_div_qr.c:mpn/generic/sbpi1_div_qr.c mpn/sbpi1_divappr_q.c:mpn/generic/sbpi1_divappr_q.c mpn/dcpi1_div_q.c:mpn/generic/dcpi1_div_q.c mpn/dcpi1_div_qr.c:mpn/generic/dcpi1_div_qr.c mpn/dcpi1_divappr_q.c:mpn/generic/dcpi1_divappr_q.c mpn/mu_div_qr.c:mpn/generic/mu_div_qr.c mpn/mu_divappr_q.c:mpn/generic/mu_divappr_q.c mpn/mu_div_q.c:mpn/generic/mu_div_q.c mpn/bdiv_q_1.asm:mpn/x86_64/bdiv_q_1.asm mpn/sbpi1_bdiv_q.c:mpn/generic/sbpi1_bdiv_q.c mpn/sbpi1_bdiv_qr.c:mpn/generic/sbpi1_bdiv_qr.c mpn/sbpi1_bdiv_r.c:mpn/generic/sbpi1_bdiv_r.c mpn/dcpi1_bdiv_q.c:mpn/generic/dcpi1_bdiv_q.c mpn/dcpi1_bdiv_qr.c:mpn/generic/dcpi1_bdiv_qr.c mpn/mu_bdiv_q.c:mpn/generic/mu_bdiv_q.c mpn/mu_bdiv_qr.c:mpn/generic/mu_bdiv_qr.c mpn/bdiv_q.c:mpn/generic/bdiv_q.c mpn/bdiv_qr.c:mpn/generic/bdiv_qr.c mpn/broot.c:mpn/generic/broot.c mpn/brootinv.c:mpn/generic/brootinv.c mpn/bsqrt.c:mpn/generic/bsqrt.c mpn/bsqrtinv.c:mpn/generic/bsqrtinv.c mpn/divexact.c:mpn/generic/divexact.c mpn/bdiv_dbm1c.asm:mpn/x86_64/bdiv_dbm1c.asm mpn/redc_1.asm:mpn/x86_64/coreisbr/redc_1.asm mpn/redc_2.c:mpn/generic/redc_2.c mpn/redc_n.c:mpn/generic/redc_n.c mpn/powm.c:mpn/generic/powm.c mpn/powlo.c:mpn/generic/powlo.c mpn/sec_powm.c:mpn/generic/sec_powm.c mpn/sec_mul.c:mpn/generic/sec_mul.c mpn/sec_sqr.c:mpn/generic/sec_sqr.c mpn/sec_div_qr.c:mpn/generic/sec_div.c mpn/sec_div_r.c:mpn/generic/sec_div.c mpn/sec_pi1_div_qr.c:mpn/generic/sec_pi1_div.c mpn/sec_pi1_div_r.c:mpn/generic/sec_pi1_div.c mpn/sec_add_1.c:mpn/generic/sec_aors_1.c mpn/sec_sub_1.c:mpn/generic/sec_aors_1.c mpn/sec_invert.c:mpn/generic/sec_invert.c mpn/trialdiv.c:mpn/generic/trialdiv.c mpn/remove.c:mpn/generic/remove.c mpn/and_n.asm:mpn/x86_64/core2/logops_n.asm mpn/andn_n.asm:mpn/x86_64/core2/logops_n.asm mpn/nand_n.asm:mpn/x86_64/core2/logops_n.asm mpn/ior_n.asm:mpn/x86_64/core2/logops_n.asm mpn/iorn_n.asm:mpn/x86_64/core2/logops_n.asm mpn/nior_n.asm:mpn/x86_64/core2/logops_n.asm mpn/xor_n.asm:mpn/x86_64/core2/logops_n.asm mpn/xnor_n.asm:mpn/x86_64/core2/logops_n.asm mpn/copyi.asm:mpn/x86_64/core2/copyi.asm mpn/copyd.asm:mpn/x86_64/core2/copyd.asm mpn/zero.c:mpn/generic/zero.c mpn/sec_tabselect.asm:mpn/x86_64/coreisbr/sec_tabselect.asm mpn/comb_tables.c:mpn/generic/comb_tables.c mpn/invert_limb.asm:mpn/x86_64/invert_limb.asm mpn/sqr_diag_addlsh1.asm:mpn/x86_64/sqr_diag_addlsh1.asm mpn/mul_2.asm:mpn/x86_64/coreisbr/mul_2.asm mpn/addmul_2.asm:mpn/x86_64/coreisbr/addmul_2.asm mpn/addlsh1_n.asm:mpn/x86_64/coreisbr/aorrlsh1_n.asm mpn/sublsh1_n.asm:mpn/x86_64/core2/sublsh1_n.asm mpn/rsblsh1_n.asm:mpn/x86_64/coreisbr/aorrlsh1_n.asm mpn/rsh1add_n.asm:mpn/x86_64/coreisbr/rsh1aors_n.asm mpn/rsh1sub_n.asm:mpn/x86_64/coreisbr/rsh1aors_n.asm mpn/addlsh2_n.asm:mpn/x86_64/coreisbr/aorrlsh2_n.asm mpn/sublsh2_n.asm:mpn/x86_64/core2/sublsh2_n.asm mpn/rsblsh2_n.asm:mpn/x86_64/coreisbr/aorrlsh2_n.asm mpn/addlsh_n.asm:mpn/x86_64/coreisbr/aorrlsh_n.asm mpn/rsblsh_n.asm:mpn/x86_64/coreisbr/aorrlsh_n.asm mpn/add_n_sub_n.c:mpn/generic/add_n_sub_n.c mpn/addaddmul_1msb0.asm:mpn/x86_64/addaddmul_1msb0.asm gmp-mparam.h:mpn/x86_64/coreisbr/gmp-mparam.h"
+config_links=" mpn/invert_limb_table.asm:mpn/x86_64/invert_limb_table.asm mpn/add.c:mpn/generic/add.c mpn/add_1.c:mpn/generic/add_1.c mpn/add_n.asm:mpn/x86_64/coreihwl/aors_n.asm mpn/sub.c:mpn/generic/sub.c mpn/sub_1.c:mpn/generic/sub_1.c mpn/sub_n.asm:mpn/x86_64/coreihwl/aors_n.asm mpn/cnd_add_n.asm:mpn/x86_64/coreisbr/cnd_add_n.asm mpn/cnd_sub_n.asm:mpn/x86_64/coreisbr/cnd_sub_n.asm mpn/cnd_swap.c:mpn/generic/cnd_swap.c mpn/neg.c:mpn/generic/neg.c mpn/com.asm:mpn/x86_64/core2/com.asm mpn/mul_1.asm:mpn/x86_64/coreibwl/mul_1.asm mpn/addmul_1.asm:mpn/x86_64/coreibwl/addmul_1.asm mpn/submul_1.asm:mpn/x86_64/coreihwl/aorsmul_1.asm mpn/add_err1_n.asm:mpn/x86_64/core2/aors_err1_n.asm mpn/add_err2_n.asm:mpn/x86_64/aors_err2_n.asm mpn/add_err3_n.asm:mpn/x86_64/aors_err3_n.asm mpn/sub_err1_n.asm:mpn/x86_64/core2/aors_err1_n.asm mpn/sub_err2_n.asm:mpn/x86_64/aors_err2_n.asm mpn/sub_err3_n.asm:mpn/x86_64/aors_err3_n.asm mpn/lshift.asm:mpn/x86_64/coreisbr/lshift.asm mpn/rshift.asm:mpn/x86_64/coreisbr/rshift.asm mpn/dive_1.asm:mpn/x86_64/dive_1.asm mpn/diveby3.c:mpn/generic/diveby3.c mpn/divis.c:mpn/generic/divis.c mpn/divrem.c:mpn/generic/divrem.c mpn/divrem_1.asm:mpn/x86_64/coreisbr/divrem_1.asm mpn/divrem_2.asm:mpn/x86_64/divrem_2.asm mpn/fib2_ui.c:mpn/generic/fib2_ui.c mpn/fib2m.c:mpn/generic/fib2m.c mpn/mod_1.c:mpn/generic/mod_1.c mpn/mod_34lsub1.asm:mpn/x86_64/mod_34lsub1.asm mpn/mode1o.asm:mpn/x86_64/mode1o.asm mpn/pre_mod_1.c:mpn/generic/pre_mod_1.c mpn/dump.c:mpn/generic/dump.c mpn/mod_1_1.asm:mpn/x86_64/mod_1_1.asm mpn/mod_1_2.asm:mpn/x86_64/mod_1_2.asm mpn/mod_1_3.c:mpn/generic/mod_1_3.c mpn/mod_1_4.asm:mpn/x86_64/mod_1_4.asm mpn/lshiftc.asm:mpn/x86_64/coreisbr/lshiftc.asm mpn/mul.c:mpn/generic/mul.c mpn/mul_fft.c:mpn/generic/mul_fft.c mpn/mul_n.c:mpn/generic/mul_n.c mpn/sqr.c:mpn/generic/sqr.c mpn/mul_basecase.asm:mpn/x86_64/coreibwl/mul_basecase.asm mpn/sqr_basecase.asm:mpn/x86_64/coreibwl/sqr_basecase.asm mpn/nussbaumer_mul.c:mpn/generic/nussbaumer_mul.c mpn/mulmid_basecase.c:mpn/generic/mulmid_basecase.c mpn/toom42_mulmid.c:mpn/generic/toom42_mulmid.c mpn/mulmid_n.c:mpn/generic/mulmid_n.c mpn/mulmid.c:mpn/generic/mulmid.c mpn/random.c:mpn/generic/random.c mpn/random2.c:mpn/generic/random2.c mpn/pow_1.c:mpn/generic/pow_1.c mpn/rootrem.c:mpn/generic/rootrem.c mpn/sqrtrem.c:mpn/generic/sqrtrem.c mpn/sizeinbase.c:mpn/generic/sizeinbase.c mpn/get_str.c:mpn/generic/get_str.c mpn/set_str.c:mpn/generic/set_str.c mpn/compute_powtab.c:mpn/generic/compute_powtab.c mpn/scan0.c:mpn/generic/scan0.c mpn/scan1.c:mpn/generic/scan1.c mpn/popcount.asm:mpn/x86_64/coreinhm/popcount.asm mpn/hamdist.asm:mpn/x86_64/coreinhm/hamdist.asm mpn/cmp.c:mpn/generic/cmp.c mpn/zero_p.c:mpn/generic/zero_p.c mpn/perfsqr.c:mpn/generic/perfsqr.c mpn/perfpow.c:mpn/generic/perfpow.c mpn/strongfibo.c:mpn/generic/strongfibo.c mpn/gcd_11.asm:mpn/x86_64/coreisbr/gcd_11.asm mpn/gcd_22.asm:mpn/x86_64/coreihwl/gcd_22.asm mpn/gcd_1.c:mpn/generic/gcd_1.c mpn/gcd.c:mpn/generic/gcd.c mpn/gcdext_1.c:mpn/generic/gcdext_1.c mpn/gcdext.c:mpn/generic/gcdext.c mpn/gcd_subdiv_step.c:mpn/generic/gcd_subdiv_step.c mpn/gcdext_lehmer.c:mpn/generic/gcdext_lehmer.c mpn/div_q.c:mpn/generic/div_q.c mpn/tdiv_qr.c:mpn/generic/tdiv_qr.c mpn/jacbase.c:mpn/generic/jacbase.c mpn/jacobi_2.c:mpn/generic/jacobi_2.c mpn/jacobi.c:mpn/generic/jacobi.c mpn/get_d.c:mpn/generic/get_d.c mpn/matrix22_mul.c:mpn/generic/matrix22_mul.c mpn/matrix22_mul1_inverse_vector.c:mpn/generic/matrix22_mul1_inverse_vector.c mpn/hgcd_matrix.c:mpn/generic/hgcd_matrix.c mpn/hgcd2.c:mpn/generic/hgcd2.c mpn/hgcd_step.c:mpn/generic/hgcd_step.c mpn/hgcd_reduce.c:mpn/generic/hgcd_reduce.c mpn/hgcd.c:mpn/generic/hgcd.c mpn/hgcd_appr.c:mpn/generic/hgcd_appr.c mpn/hgcd2_jacobi.c:mpn/generic/hgcd2_jacobi.c mpn/hgcd_jacobi.c:mpn/generic/hgcd_jacobi.c mpn/mullo_n.c:mpn/generic/mullo_n.c mpn/mullo_basecase.asm:mpn/x86_64/coreibwl/mullo_basecase.asm mpn/sqrlo.c:mpn/generic/sqrlo.c mpn/sqrlo_basecase.c:mpn/generic/sqrlo_basecase.c mpn/toom22_mul.c:mpn/generic/toom22_mul.c mpn/toom32_mul.c:mpn/generic/toom32_mul.c mpn/toom42_mul.c:mpn/generic/toom42_mul.c mpn/toom52_mul.c:mpn/generic/toom52_mul.c mpn/toom62_mul.c:mpn/generic/toom62_mul.c mpn/toom33_mul.c:mpn/generic/toom33_mul.c mpn/toom43_mul.c:mpn/generic/toom43_mul.c mpn/toom53_mul.c:mpn/generic/toom53_mul.c mpn/toom54_mul.c:mpn/generic/toom54_mul.c mpn/toom63_mul.c:mpn/generic/toom63_mul.c mpn/toom44_mul.c:mpn/generic/toom44_mul.c mpn/toom6h_mul.c:mpn/generic/toom6h_mul.c mpn/toom6_sqr.c:mpn/generic/toom6_sqr.c mpn/toom8h_mul.c:mpn/generic/toom8h_mul.c mpn/toom8_sqr.c:mpn/generic/toom8_sqr.c mpn/toom_couple_handling.c:mpn/generic/toom_couple_handling.c mpn/toom2_sqr.c:mpn/generic/toom2_sqr.c mpn/toom3_sqr.c:mpn/generic/toom3_sqr.c mpn/toom4_sqr.c:mpn/generic/toom4_sqr.c mpn/toom_eval_dgr3_pm1.c:mpn/generic/toom_eval_dgr3_pm1.c mpn/toom_eval_dgr3_pm2.c:mpn/generic/toom_eval_dgr3_pm2.c mpn/toom_eval_pm1.c:mpn/generic/toom_eval_pm1.c mpn/toom_eval_pm2.c:mpn/generic/toom_eval_pm2.c mpn/toom_eval_pm2exp.c:mpn/generic/toom_eval_pm2exp.c mpn/toom_eval_pm2rexp.c:mpn/generic/toom_eval_pm2rexp.c mpn/toom_interpolate_5pts.c:mpn/generic/toom_interpolate_5pts.c mpn/toom_interpolate_6pts.c:mpn/generic/toom_interpolate_6pts.c mpn/toom_interpolate_7pts.c:mpn/generic/toom_interpolate_7pts.c mpn/toom_interpolate_8pts.c:mpn/generic/toom_interpolate_8pts.c mpn/toom_interpolate_12pts.c:mpn/generic/toom_interpolate_12pts.c mpn/toom_interpolate_16pts.c:mpn/generic/toom_interpolate_16pts.c mpn/invertappr.c:mpn/generic/invertappr.c mpn/invert.c:mpn/generic/invert.c mpn/binvert.c:mpn/generic/binvert.c mpn/mulmod_bnm1.c:mpn/generic/mulmod_bnm1.c mpn/sqrmod_bnm1.c:mpn/generic/sqrmod_bnm1.c mpn/div_qr_1.c:mpn/generic/div_qr_1.c mpn/div_qr_1n_pi1.asm:mpn/x86_64/div_qr_1n_pi1.asm mpn/div_qr_2.c:mpn/generic/div_qr_2.c mpn/div_qr_2n_pi1.asm:mpn/x86_64/div_qr_2n_pi1.asm mpn/div_qr_2u_pi1.asm:mpn/x86_64/div_qr_2u_pi1.asm mpn/sbpi1_div_q.c:mpn/generic/sbpi1_div_q.c mpn/sbpi1_div_qr.c:mpn/generic/sbpi1_div_qr.c mpn/sbpi1_divappr_q.c:mpn/generic/sbpi1_divappr_q.c mpn/dcpi1_div_q.c:mpn/generic/dcpi1_div_q.c mpn/dcpi1_div_qr.c:mpn/generic/dcpi1_div_qr.c mpn/dcpi1_divappr_q.c:mpn/generic/dcpi1_divappr_q.c mpn/mu_div_qr.c:mpn/generic/mu_div_qr.c mpn/mu_divappr_q.c:mpn/generic/mu_divappr_q.c mpn/mu_div_q.c:mpn/generic/mu_div_q.c mpn/bdiv_q_1.asm:mpn/x86_64/bdiv_q_1.asm mpn/sbpi1_bdiv_q.c:mpn/generic/sbpi1_bdiv_q.c mpn/sbpi1_bdiv_qr.c:mpn/generic/sbpi1_bdiv_qr.c mpn/sbpi1_bdiv_r.c:mpn/generic/sbpi1_bdiv_r.c mpn/dcpi1_bdiv_q.c:mpn/generic/dcpi1_bdiv_q.c mpn/dcpi1_bdiv_qr.c:mpn/generic/dcpi1_bdiv_qr.c mpn/mu_bdiv_q.c:mpn/generic/mu_bdiv_q.c mpn/mu_bdiv_qr.c:mpn/generic/mu_bdiv_qr.c mpn/bdiv_q.c:mpn/generic/bdiv_q.c mpn/bdiv_qr.c:mpn/generic/bdiv_qr.c mpn/broot.c:mpn/generic/broot.c mpn/brootinv.c:mpn/generic/brootinv.c mpn/bsqrt.c:mpn/generic/bsqrt.c mpn/bsqrtinv.c:mpn/generic/bsqrtinv.c mpn/divexact.c:mpn/generic/divexact.c mpn/bdiv_dbm1c.asm:mpn/x86_64/bdiv_dbm1c.asm mpn/redc_1.asm:mpn/x86_64/coreihwl/redc_1.asm mpn/redc_2.c:mpn/generic/redc_2.c mpn/redc_n.c:mpn/generic/redc_n.c mpn/powm.c:mpn/generic/powm.c mpn/powlo.c:mpn/generic/powlo.c mpn/sec_powm.c:mpn/generic/sec_powm.c mpn/sec_mul.c:mpn/generic/sec_mul.c mpn/sec_sqr.c:mpn/generic/sec_sqr.c mpn/sec_div_qr.c:mpn/generic/sec_div.c mpn/sec_div_r.c:mpn/generic/sec_div.c mpn/sec_pi1_div_qr.c:mpn/generic/sec_pi1_div.c mpn/sec_pi1_div_r.c:mpn/generic/sec_pi1_div.c mpn/sec_add_1.c:mpn/generic/sec_aors_1.c mpn/sec_sub_1.c:mpn/generic/sec_aors_1.c mpn/sec_invert.c:mpn/generic/sec_invert.c mpn/trialdiv.c:mpn/generic/trialdiv.c mpn/remove.c:mpn/generic/remove.c mpn/and_n.asm:mpn/x86_64/core2/logops_n.asm mpn/andn_n.asm:mpn/x86_64/core2/logops_n.asm mpn/nand_n.asm:mpn/x86_64/core2/logops_n.asm mpn/ior_n.asm:mpn/x86_64/core2/logops_n.asm mpn/iorn_n.asm:mpn/x86_64/core2/logops_n.asm mpn/nior_n.asm:mpn/x86_64/core2/logops_n.asm mpn/xor_n.asm:mpn/x86_64/core2/logops_n.asm mpn/xnor_n.asm:mpn/x86_64/core2/logops_n.asm mpn/copyi.asm:mpn/x86_64/core2/copyi.asm mpn/copyd.asm:mpn/x86_64/core2/copyd.asm mpn/zero.c:mpn/generic/zero.c mpn/sec_tabselect.asm:mpn/x86_64/coreisbr/sec_tabselect.asm mpn/comb_tables.c:mpn/generic/comb_tables.c mpn/invert_limb.asm:mpn/x86_64/invert_limb.asm mpn/sqr_diag_addlsh1.asm:mpn/x86_64/sqr_diag_addlsh1.asm mpn/mul_2.asm:mpn/x86_64/coreihwl/mul_2.asm mpn/addmul_2.asm:mpn/x86_64/coreihwl/addmul_2.asm mpn/addlsh1_n.asm:mpn/x86_64/coreisbr/aorrlsh1_n.asm mpn/sublsh1_n.asm:mpn/x86_64/core2/sublsh1_n.asm mpn/rsblsh1_n.asm:mpn/x86_64/coreisbr/aorrlsh1_n.asm mpn/rsh1add_n.asm:mpn/x86_64/coreisbr/rsh1aors_n.asm mpn/rsh1sub_n.asm:mpn/x86_64/coreisbr/rsh1aors_n.asm mpn/addlsh2_n.asm:mpn/x86_64/coreisbr/aorrlsh2_n.asm mpn/sublsh2_n.asm:mpn/x86_64/core2/sublsh2_n.asm mpn/rsblsh2_n.asm:mpn/x86_64/coreisbr/aorrlsh2_n.asm mpn/addlsh_n.asm:mpn/x86_64/coreihwl/aorrlsh_n.asm mpn/rsblsh_n.asm:mpn/x86_64/coreihwl/aorrlsh_n.asm mpn/add_n_sub_n.c:mpn/generic/add_n_sub_n.c mpn/addaddmul_1msb0.asm:mpn/x86_64/addaddmul_1msb0.asm gmp-mparam.h:mpn/x86_64/skylake/gmp-mparam.h"
 config_commands=" libtool"
 
 ac_cs_usage="\
@@ -443,7 +443,7 @@ Copyright (C) 2012 Free Software Foundation, Inc.
 This config.status script is free software; the Free Software Foundation
 gives unlimited permission to copy, distribute and modify it."
 
-ac_pwd='/home/anirban/cpprsdedup/cppfdedup/gmp-6.2.1'
+ac_pwd='/home/anirban/crypto/cppfdedup/gmp-6.2.1'
 srcdir='.'
 INSTALL='/usr/bin/install -c'
 MKDIR_P='/usr/bin/mkdir -p'
@@ -569,10 +569,10 @@ SHELL='/bin/bash'
 ECHO='printf %s\n'
 PATH_SEPARATOR=':'
 host_alias=''
-host='ivybridge-pc-linux-gnu'
+host='kabylake-pc-linux-gnu'
 host_os='linux-gnu'
 build_alias=''
-build='ivybridge-pc-linux-gnu'
+build='kabylake-pc-linux-gnu'
 build_os='linux-gnu'
 SED='/usr/bin/sed'
 Xsed='/usr/bin/sed -e 1s/^X//'
@@ -606,7 +606,7 @@ old_postuninstall_cmds=''
 old_archive_cmds='$AR $AR_FLAGS $oldlib$oldobjs~$RANLIB $tool_oldlib'
 lock_old_archive_extraction='no'
 CC='gcc'
-CFLAGS='-O2 -pedantic -fomit-frame-pointer -m64 -mtune=sandybridge -march=sandybridge'
+CFLAGS='-O2 -pedantic -fomit-frame-pointer -m64 -mtune=skylake -march=broadwell'
 compiler='gcc'
 GCC='yes'
 lt_cv_sys_global_symbol_pipe='sed -n -e '\''s/^.*[	 ]\([ABCDGIRSTW][ABCDGIRSTW]*\)[	 ][	 ]*\([_A-Za-z][_A-Za-z0-9]*\)$/\1 \2 \2/p'\'' | sed '\''/ __gnu_lto/d'\'''
@@ -749,7 +749,7 @@ postdeps_CXX=''
 compiler_lib_search_path_CXX=''
 
 LTCC='gcc'
-LTCFLAGS='-O2 -pedantic -fomit-frame-pointer -m64 -mtune=sandybridge -march=sandybridge'
+LTCFLAGS='-O2 -pedantic -fomit-frame-pointer -m64 -mtune=skylake -march=broadwell'
 compiler='gcc'
 
 # A function that is used when there is no print builtin or printf.
@@ -912,7 +912,7 @@ S["LTLIBOBJS"]=""
 S["LIBOBJS"]=""
 S["LEXLIB"]=""
 S["LEX_OUTPUT_ROOT"]=""
-S["LEX"]="${SHELL} /home/anirban/cpprsdedup/cppfdedup/gmp-6.2.1/missing flex"
+S["LEX"]="${SHELL} /home/anirban/crypto/cppfdedup/gmp-6.2.1/missing flex"
 S["YFLAGS"]=""
 S["YACC"]="yacc"
 S["LIBREADLINE"]=""
@@ -1050,7 +1050,7 @@ S["EXEEXT"]=""
 S["ac_ct_CC"]="gcc"
 S["CPPFLAGS"]=""
 S["LDFLAGS"]=""
-S["CFLAGS"]="-O2 -pedantic -fomit-frame-pointer -m64 -mtune=sandybridge -march=sandybridge"
+S["CFLAGS"]="-O2 -pedantic -fomit-frame-pointer -m64 -mtune=skylake -march=broadwell"
 S["CC"]="gcc"
 S["DEFN_LONG_LONG_LIMB"]="/* #undef _LONG_LONG_LIMB */"
 S["CALLING_CONVENTIONS_OBJS"]="amd64call.lo amd64check$U.lo"
@@ -1079,12 +1079,12 @@ S["mkdir_p"]="$(MKDIR_P)"
 S["MKDIR_P"]="/usr/bin/mkdir -p"
 S["INSTALL_STRIP_PROGRAM"]="$(install_sh) -c -s"
 S["STRIP"]="strip"
-S["install_sh"]="${SHELL} /home/anirban/cpprsdedup/cppfdedup/gmp-6.2.1/install-sh"
-S["MAKEINFO"]="${SHELL} /home/anirban/cpprsdedup/cppfdedup/gmp-6.2.1/missing makeinfo"
-S["AUTOHEADER"]="${SHELL} /home/anirban/cpprsdedup/cppfdedup/gmp-6.2.1/missing autoheader"
-S["AUTOMAKE"]="${SHELL} /home/anirban/cpprsdedup/cppfdedup/gmp-6.2.1/missing automake-1.15"
-S["AUTOCONF"]="${SHELL} /home/anirban/cpprsdedup/cppfdedup/gmp-6.2.1/missing autoconf"
-S["ACLOCAL"]="${SHELL} /home/anirban/cpprsdedup/cppfdedup/gmp-6.2.1/missing aclocal-1.15"
+S["install_sh"]="${SHELL} /home/anirban/crypto/cppfdedup/gmp-6.2.1/install-sh"
+S["MAKEINFO"]="${SHELL} /home/anirban/crypto/cppfdedup/gmp-6.2.1/missing makeinfo"
+S["AUTOHEADER"]="${SHELL} /home/anirban/crypto/cppfdedup/gmp-6.2.1/missing autoheader"
+S["AUTOMAKE"]="${SHELL} /home/anirban/crypto/cppfdedup/gmp-6.2.1/missing automake-1.15"
+S["AUTOCONF"]="${SHELL} /home/anirban/crypto/cppfdedup/gmp-6.2.1/missing autoconf"
+S["ACLOCAL"]="${SHELL} /home/anirban/crypto/cppfdedup/gmp-6.2.1/missing aclocal-1.15"
 S["VERSION"]="6.2.1"
 S["PACKAGE"]="gmp"
 S["CYGPATH_W"]="echo"
@@ -1094,12 +1094,12 @@ S["INSTALL_SCRIPT"]="${INSTALL}"
 S["INSTALL_PROGRAM"]="${INSTALL}"
 S["host_os"]="linux-gnu"
 S["host_vendor"]="pc"
-S["host_cpu"]="ivybridge"
-S["host"]="ivybridge-pc-linux-gnu"
+S["host_cpu"]="kabylake"
+S["host"]="kabylake-pc-linux-gnu"
 S["build_os"]="linux-gnu"
 S["build_vendor"]="pc"
-S["build_cpu"]="ivybridge"
-S["build"]="ivybridge-pc-linux-gnu"
+S["build_cpu"]="kabylake"
+S["build"]="kabylake-pc-linux-gnu"
 S["target_alias"]=""
 S["host_alias"]=""
 S["build_alias"]=""
@@ -1188,7 +1188,7 @@ D["PACKAGE_URL"]=" \"http://www.gnu.org/software/gmp/\""
 D["PACKAGE"]=" \"gmp\""
 D["VERSION"]=" \"6.2.1\""
 D["WANT_FFT"]=" 1"
-D["HAVE_HOST_CPU_ivybridge"]=" 1"
+D["HAVE_HOST_CPU_kabylake"]=" 1"
 D["HAVE_SPEED_CYCLECOUNTER"]=" 2"
 D["HAVE_CALLING_CONVENTIONS"]=" 1"
 D["STDC_HEADERS"]=" 1"
@@ -1271,24 +1271,21 @@ D["HAVE_NATIVE_mpn_add_n"]=" 1"
 D["HAVE_NATIVE_mpn_add_nc"]=" 1"
 D["HAVE_NATIVE_mpn_sub_n"]=" 1"
 D["HAVE_NATIVE_mpn_sub_nc"]=" 1"
-D["HAVE_NATIVE_func"]=" 1"
 D["HAVE_NATIVE_func_nc"]=" 1"
+D["HAVE_NATIVE_func"]=" 1"
 D["HAVE_NATIVE_mpn_add_n"]=" 1"
 D["HAVE_NATIVE_mpn_add_nc"]=" 1"
 D["HAVE_NATIVE_mpn_sub_n"]=" 1"
 D["HAVE_NATIVE_mpn_sub_nc"]=" 1"
-D["HAVE_NATIVE_func"]=" 1"
 D["HAVE_NATIVE_func_nc"]=" 1"
+D["HAVE_NATIVE_func"]=" 1"
 D["HAVE_NATIVE_mpn_cnd_add_n"]=" 1"
 D["HAVE_NATIVE_mpn_cnd_add_n"]=" 1"
 D["HAVE_NATIVE_mpn_cnd_sub_n"]=" 1"
 D["HAVE_NATIVE_func"]=" 1"
 D["HAVE_NATIVE_mpn_com"]=" 1"
 D["HAVE_NATIVE_mpn_mul_1"]=" 1"
-D["HAVE_NATIVE_mpn_mul_1c"]=" 1"
 D["HAVE_NATIVE_mpn_addmul_1"]=" 1"
-D["HAVE_NATIVE_mpn_submul_1"]=" 1"
-D["HAVE_NATIVE_func"]=" 1"
 D["HAVE_NATIVE_mpn_addmul_1"]=" 1"
 D["HAVE_NATIVE_mpn_submul_1"]=" 1"
 D["HAVE_NATIVE_func"]=" 1"
@@ -1468,19 +1465,14 @@ D["HAVE_NATIVE_mpn_addlsh2_n"]=" 1"
 D["HAVE_NATIVE_mpn_addlsh2_nc"]=" 1"
 D["HAVE_NATIVE_mpn_rsblsh2_n"]=" 1"
 D["HAVE_NATIVE_mpn_addlsh_n"]=" 1"
-D["HAVE_NATIVE_mpn_addlsh_nc"]=" 1"
 D["HAVE_NATIVE_mpn_rsblsh_n"]=" 1"
-D["HAVE_NATIVE_func_n"]=" 1"
-D["HAVE_NATIVE_func_nc"]=" 1"
 D["HAVE_NATIVE_mpn_addlsh_n"]=" 1"
-D["HAVE_NATIVE_mpn_addlsh_nc"]=" 1"
 D["HAVE_NATIVE_mpn_rsblsh_n"]=" 1"
-D["HAVE_NATIVE_func_n"]=" 1"
-D["HAVE_NATIVE_func_nc"]=" 1"
 D["HAVE_NATIVE_mpn_addaddmul_1msb0"]=" 1"
 D["LSYM_PREFIX"]=" \".L\""
+D["X86_ASM_MULX"]=" 1"
 D["HAVE_HOST_CPU_FAMILY_x86_64"]=" 1"
-D["GMP_MPARAM_H_SUGGEST"]=" \"./mpn/x86_64/coreisbr/gmp-mparam.h\""
+D["GMP_MPARAM_H_SUGGEST"]=" \"./mpn/x86_64/skylake/gmp-mparam.h\""
 D["SIZEOF_VOID_P"]=" 8"
 D["SIZEOF_UNSIGNED_SHORT"]=" 2"
 D["SIZEOF_UNSIGNED"]=" 4"

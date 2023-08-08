@@ -1,1 +1,1 @@
-../mpn/x86_64/coreisbr/addmul_2.asm
+../mpn/x86_64/coreihwl/addmul_2.asm

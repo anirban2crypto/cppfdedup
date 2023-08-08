@@ -1,1 +1,1 @@
-../mpn/x86_64/coreisbr/mullo_basecase.asm
+../mpn/x86_64/coreibwl/mullo_basecase.asm

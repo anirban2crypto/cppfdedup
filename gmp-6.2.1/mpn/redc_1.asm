@@ -1,1 +1,1 @@
-../mpn/x86_64/coreisbr/redc_1.asm
+../mpn/x86_64/coreihwl/redc_1.asm
