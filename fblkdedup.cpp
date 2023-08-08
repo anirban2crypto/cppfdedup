@@ -89,20 +89,6 @@ int main(int argc, char** argv)
     } 
     std::string mapfname=mapdir+std::string(argv[2]);
     std::ofstream mapfile(mapfname);
-    //---------------------------------------------------------------------   
-    //                   LABEL GENERATION - FIXED SUBSAMPLING
-    //---------------------------------------------------------------------     
-
-    // Create fingerprint of the file using subsampling. Fixed subsample used. Location of subsample is in parfile   
-    int index = 0;
-    while ( index < locatn.size() && (!infile.eof())) {
-        loc = locatn.at(index);
-        infile.seekg(loc, ios::beg);
-        subsample.push_back(infile.get());
-        index++;
-    }
-    infile.clear();   
-	infile.seekg( 0, std::ios_base::beg );
 
 
     //---------------------------------------------------------------------   
@@ -141,6 +127,21 @@ int main(int argc, char** argv)
         {        
             chunkdata.push_back(inputdata[inp_data_ptr++]);                 
         } 
+            
+        //---------------------------------------------------------------------   
+        //                   LABEL GENERATION - FIXED SUBSAMPLING
+        //---------------------------------------------------------------------     
+        // Create fingerprint of the file using subsampling. Fixed subsample used. Location of subsample is in parfile   
+        int index = 0;
+        while ( index < locatn.size() && (!infile.eof())) {
+            loc = locatn.at(index);
+            infile.seekg(loc, ios::beg);
+            subsample.push_back(infile.get());
+            index++;
+        }
+        infile.clear();   
+	    infile.seekg( 0, std::ios_base::beg );
+
 
             checkSimilarity((unsigned char *)&subsample[0],(int)subsample.size(),&rowfound,paritydata);        
             if (rowfound ==true)
