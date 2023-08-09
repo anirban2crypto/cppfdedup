@@ -35,7 +35,19 @@ void reconst(vector<uint8_t> &erronsdata,vector<uint8_t> &paritydata,vector<uint
             data[rs_k+i]=paritydata[pdata_cnt];
             pdata_cnt++;            
         }
+            /*cerr <<"Before Decode "<< endl;            
+            for (int j=0; j<data.size();j++)
+            {
+                 cerr << data[j];
+            }
+            cerr <<endl;*/   
         int fixed = rs.decode(data,erasures,&position );
+            /*cerr <<"After decode: "<< endl;            
+            for (int j=0; j<data.size();j++)
+            {
+                 cerr << data[j];
+            }
+            cerr <<endl;*/    
         for (i=0;i<data_size;i++)
         {
             recovdata.push_back(data[i]);
