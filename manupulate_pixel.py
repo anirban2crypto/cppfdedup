@@ -11,15 +11,17 @@ pixel_map = input_image.load()
 width, height = input_image.size
 print("Mode",input_image.mode)
 print("Widhth ",width,"height ",height)
-# getting the RGB pixel value.
+
+# getting the RGB pixel value.  
 for i in range(height):
-        print(i)    
-        row=[ input_image.getpixel((i, j)) for j in range(width)]
-        if(sum(row) !=0 ):
-            a=5
+    for j in range(width):      
+        print("height,width:",i,j)      
+        print(input_image.getpixel((j, i)))                 
+        #if(sum(row) !=0 ):
+        #    a=5
 # Saving the final output
-input_image.putpixel((38, 100), 250)
-file_out = f1_name[:-4]+"_modify.bmp"
-print(file_out)
-input_image.save(file_out)
+#input_image.putpixel((38, 100), 250)
+#file_out = f1_name[:-4]+"_modify.bmp"
+#print(file_out)
+#input_image.save(file_out)
 
