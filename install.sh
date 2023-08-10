@@ -7,4 +7,5 @@ sudo make install
 cd ..
 sudo apt-get install libsqlite3-dev
 sudo apt-get install libssl-dev
+pip install pip
 make -B
