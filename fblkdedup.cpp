@@ -39,6 +39,7 @@ int main(int argc, char** argv)
     vector<uint8_t> subsample;
     vector<uint8_t> offsetdata;
     vector<uint8_t> chunkdata;
+    vector<uint8_t> mlekeydata;
     vector<int> intoffset;
     bool rowfound=false;
     char c;
@@ -184,6 +185,7 @@ int main(int argc, char** argv)
             //---------------------------------------------------------------------         
             // MLE KEY GENERATION
             mlekey = mleKeygen(recovdata);
+            mlekeydata.insert(mlekeydata.end(), mlekey, mlekey+HKEY_SIZE);
             //initialize MLE ciphertext lenth   
             unsigned char *mlecipher=new unsigned char[data_size+BLOCK_SIZE];
             //MLE ENCRYPT
@@ -234,6 +236,7 @@ int main(int argc, char** argv)
             insertParity((unsigned char *)&subsample[0],(int)subsample.size(), (unsigned char *)&paritydata[0],(int)paritydata.size());
             // generate MLE KEY
             mlekey = mleKeygen(chunkdata);
+            mlekeydata.insert(mlekeydata.end(), mlekey, mlekey+HKEY_SIZE);
             //initialize MLE ciphertext lenth
             unsigned char *mlecipher=new unsigned char[data_size+BLOCK_SIZE];
             mleEncrypt(mlekey,(unsigned char *)&chunkdata[0],mlecipher,ciph_len,data_size);
@@ -274,11 +277,12 @@ int main(int argc, char** argv)
     //---------------------------------------------------------------------   
     //                   OFFSET ENCRYPTION - CPA encrypt the offset file 
     //---------------------------------------------------------------------        
-    /*cerr <<"Offset data: "<< endl;
+    cerr <<"Offset data: "<< endl;
     for (int j=0; j<offsetdata.size();j++)
     {
              cerr << offsetdata[j];
-    }*/
+    }
+    cerr << endl;
     cpa_msg_len=offsetdata.size(); 
     cpacipher=new unsigned char[cpa_msg_len+BLOCK_SIZE];  
     cpaEncrypt(cpakey,cpaiv,(unsigned char *)&offsetdata[0],cpacipher,cpa_ciph_len,cpa_msg_len);  
@@ -291,9 +295,15 @@ int main(int argc, char** argv)
     //---------------------------------------------------------------------   
     //                  CHUNK KEY ENCRYPTION - cpa encrypt mle key
     //--------------------------------------------------------------------- 
-    cpa_msg_len=KEY_SIZE;
+    cpa_msg_len=mlekeydata.size();
+    cerr <<"MLE KEY data: "<< endl;
+    for (int j=0; j<mlekeydata.size();j++)
+    {
+             cerr << mlekeydata[j];
+    }
+    cerr << endl;
     cpacipher=new unsigned char[cpa_msg_len+BLOCK_SIZE];  
-    cpaEncrypt(cpakey,cpaiv,mlekey,cpacipher,cpa_ciph_len,cpa_msg_len); 
+    cpaEncrypt(cpakey,cpaiv,(unsigned char *)&mlekeydata[0],cpacipher,cpa_ciph_len,cpa_msg_len); 
     // cancatenate cpaiv cpacipher  == final cipher
     final_cipher = new unsigned char [BLOCK_SIZE + cpa_ciph_len];
     std::copy(cpaiv, cpaiv+BLOCK_SIZE, final_cipher);
