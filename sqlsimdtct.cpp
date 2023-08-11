@@ -97,13 +97,13 @@ void  insertParity(unsigned char* fprint,int fsizes, unsigned char *parity,int p
         
         // Commit the binds
 
-        sqlite3_step(stmt);
+        rc=sqlite3_step(stmt);
         sqlite3_finalize(stmt);
 
     }    
-    if (rc != SQLITE_OK)
+    if (rc != SQLITE_OK && rc != SQLITE_DONE) 
     {
-        std::cerr << "Error in inserting Table" << std::endl;
+        std::cerr << "Error in inserting Table: "<< rc << std::endl;
         sqlite3_free(zErrMsg);
     }   
     sqlite3_close(DB);    

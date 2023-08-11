@@ -143,6 +143,7 @@ int main(int argc, char** argv)
         checkSimilarity((unsigned char *)&subsample[0],(int)subsample.size(),&rowfound,paritydata);        
         if (rowfound ==true)
         {
+            //cerr <<"Decode success, similarity found "<< endl;
             //---------------------------------------------------------------------   
             //                   SUBSEQUENT ENCRYPTION
             //---------------------------------------------------------------------  
@@ -213,7 +214,7 @@ int main(int argc, char** argv)
             insertCxt(tag,taginhex.size(),ciph_len);
         }
         else
-        {
+        {            
             //cerr <<"Decode fail, no similarity found "<< endl;
             //---------------------------------------------------------------------   
             //                   INITIAL ENCRYPTION
@@ -274,14 +275,15 @@ int main(int argc, char** argv)
         paritydata.resize(0);
         intoffset.resize(0);   
     }
+     cerr <<"Number of block:" <<chunk_cnt<<endl;
     //---------------------------------------------------------------------   
     //                   OFFSET ENCRYPTION - CPA encrypt the offset file 
     //---------------------------------------------------------------------        
-    cerr <<"Offset data: "<< endl;
+    /*cerr <<"Offset data: "<< endl;
     for (int j=0; j<offsetdata.size();j++)
     {
              cerr << offsetdata[j];
-    }
+    }*/
     cerr << endl;
     cpa_msg_len=offsetdata.size(); 
     cpacipher=new unsigned char[cpa_msg_len+BLOCK_SIZE];  
@@ -296,12 +298,12 @@ int main(int argc, char** argv)
     //                  CHUNK KEY ENCRYPTION - cpa encrypt mle key
     //--------------------------------------------------------------------- 
     cpa_msg_len=mlekeydata.size();
-    cerr <<"MLE KEY data: "<< endl;
+    /*cerr <<"MLE KEY data: "<< endl;
     for (int j=0; j<mlekeydata.size();j++)
     {
-             cerr << mlekeydata[j];
+             cerr << int(mlekeydata[j]);    
     }
-    cerr << endl;
+    cerr << endl;*/
     cpacipher=new unsigned char[cpa_msg_len+BLOCK_SIZE];  
     cpaEncrypt(cpakey,cpaiv,(unsigned char *)&mlekeydata[0],cpacipher,cpa_ciph_len,cpa_msg_len); 
     // cancatenate cpaiv cpacipher  == final cipher

@@ -57,13 +57,13 @@ void  insertCxt(char* tag,int tsizes, int cxtsize)
         
         // Commit the binds
 
-        sqlite3_step(stmt);
+        rc=sqlite3_step(stmt);
         sqlite3_finalize(stmt);
 
     }    
-    if (rc != SQLITE_OK)
+    if (rc != SQLITE_OK && rc != SQLITE_DONE && rc != SQLITE_CONSTRAINT)
     {
-        std::cerr << "Error in inserting Table" << std::endl;
+        std::cerr << "Error in inserting Table:" << rc << std::endl;
         sqlite3_free(zErrMsg);
     }   
     sqlite3_close(DB);    

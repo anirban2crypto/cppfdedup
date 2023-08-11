@@ -57,3 +57,26 @@ command:
 ./decrypt cxt_i_b cxt_i_o cxt_i_k msg_i
 ./decrypt cxt_s_b cxt_s_o cxt_s_k msg_s
 
+
+./dbsetup
+./initcxtdb
+./fblkdedup randifile 155
+./fblkdedup randsfile 155
+
+sqlite3 similarity.db
+select count(*) from HSIMILARITY;
+
+sqlite3 DBCXT.db
+select count(*) from CXTTABLE;
+select sum(size) from CXTTABLE;
+
+
+#rsgenparity.cpp
+#reconstruct.cpp
+#rscode.h
+
+#20 4129392
+#25 4005072
+#30 4181792
+#35 4050656
+#40 3906880

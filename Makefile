@@ -13,8 +13,10 @@ rsencode: rsencode.cpp rsgenparity.cpp
 	g++ $(CXXFLAGS)   rsgenparity.cpp rsencode.cpp -o rsencode	
 rsdecode: rsdecode.cpp reconstruct.cpp
 	g++ $(CXXFLAGS)   reconstruct.cpp rsdecode.cpp -o rsdecode
+initcxtdb: initcxtdb.cpp sqlcxttable.cpp
+	g++ initcxtdb.cpp sqlcxttable.cpp  -lsqlite3 -o initcxtdb 
 dbsetup: dbsetup.cpp sqlsimdtct.cpp 
-	g++ $(CXXFLAGS)  dbsetup.cpp sqlsimdtct.cpp  -lsqlite3 -o dbsetup	
+	g++ $(CXXFLAGS)  dbsetup.cpp sqlsimdtct.cpp  -lsqlite3 -o dbsetup		
 cryptoalgo: cryptoalgo.cpp encsub.cpp
 	g++ encsub.cpp cryptoalgo.cpp  -o cryptoalgo -lssl  -lcrypto
 dedup: dedup.cpp sqlsimdtct.cpp rsgenparity.cpp reconstruct.cpp
@@ -26,5 +28,5 @@ fblkdedup: sqlcxttable.cpp encsub.cpp sqlsimdtct.cpp rsgenparity.cpp reconstruct
 blkdedup: blkdedup.cpp encsub.cpp
 	g++  blkdedup.cpp encsub.cpp -o blkdedup -lssl  -lcrypto 
 clean:
-	rm  rsencode.o rsdecode.o randFile.o  upload.o rstest.o  sqlsimdtct.o cryptoalgo.o dedup.o decrypt.o fblkdedup.o blkdedup.o
+	rm  rsencode.o rsdecode.o randFile.o  upload.o rstest.o  sqlsimdtct.o cryptoalgo.o dedup.o decrypt.o fblkdedup.o blkdedup.o initcxtdb.o
 	
