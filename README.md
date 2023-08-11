@@ -80,3 +80,6 @@ select sum(size) from CXTTABLE;
 #30 4181792
 #35 4050656
 #40 3906880
+#total 5529708
+#key    463294
+#key     94880
