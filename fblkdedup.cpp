@@ -150,7 +150,15 @@ int main(int argc, char** argv)
             //---------------------------------------------------------------------   
             //                   BASE GENERATION - decode algorithm
             //---------------------------------------------------------------------  
-            reconst(chunkdata,paritydata,recovdata,intoffset); 
+            int rc=0;
+            rc=reconst(chunkdata,paritydata,recovdata,intoffset); 
+            if (rc==-1){
+                //generate parity
+                genparity(chunkdata,paritydata);  
+                // update the parity in database
+                insertParity((unsigned char *)&subsample[0],(int)subsample.size(), (unsigned char *)&paritydata[0],(int)paritydata.size());
+
+            }
             //---------------------------------------------------------------------   
             //                   OFFSET GENERATION
             //--------------------------------------------------------------------- 

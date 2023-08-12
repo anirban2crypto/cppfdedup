@@ -30,7 +30,8 @@ int main(int argc, char** argv)
               return -1;
         }
         size=num;    
-        count=pow(2,size)*1024;
+        //count=pow(2,size)*1024;
+        count=size;
         for (i = 0; i < count; i++)
         {
             asciiVal=33+(rand()%92);

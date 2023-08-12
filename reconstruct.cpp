@@ -8,7 +8,7 @@
 
 using namespace std;
 
-void reconst(vector<uint8_t> &erronsdata,vector<uint8_t> &paritydata,vector<uint8_t> &recovdata,vector<int> &intoffset){
+int reconst(vector<uint8_t> &erronsdata,vector<uint8_t> &paritydata,vector<uint8_t> &recovdata,vector<int> &intoffset){
     const int rs_n=255,rs_k=205,dis=(rs_n-rs_k);
     long i=0,data_size,edat_cnt=0,pdata_cnt=0;
     std::vector<int> erasures;
@@ -18,8 +18,9 @@ void reconst(vector<uint8_t> &erronsdata,vector<uint8_t> &paritydata,vector<uint
     data.resize(rs_n);
     int block_no=0;
     long data_remain=erronsdata.size();
-    while(data_remain > 0) 
-    {   
+    int fixed=0;
+    //while(data_remain > 0) 
+    //{   
   
         if (data_remain >= rs_k)        
             data_size=rs_k;
@@ -41,7 +42,7 @@ void reconst(vector<uint8_t> &erronsdata,vector<uint8_t> &paritydata,vector<uint
                  cerr << data[j];
             }
             cerr <<endl;*/   
-        int fixed = rs.decode(data,erasures,&position );
+            fixed = rs.decode(data,erasures,&position );
             /*cerr <<"After decode: "<< endl;            
             for (int j=0; j<data.size();j++)
             {
@@ -62,5 +63,6 @@ void reconst(vector<uint8_t> &erronsdata,vector<uint8_t> &paritydata,vector<uint
         }    
         data_remain=data_remain-rs_k;
         block_no++; 
-    } 
+    //}
+    return fixed; 
 }
