@@ -26,7 +26,7 @@ decrypt: encsub.cpp  decrypt.cpp
 fblkdedup: sqlcxttable.cpp encsub.cpp sqlsimdtct.cpp rsgenparity.cpp reconstruct.cpp fblkdedup.cpp 	
 	g++ $(CXXFLAGS) sqlcxttable.cpp encsub.cpp sqlsimdtct.cpp rsgenparity.cpp reconstruct.cpp fblkdedup.cpp -lsqlite3 -lssl -lcrypto -o fblkdedup	
 blkdedup: blkdedup.cpp encsub.cpp
-	g++  blkdedup.cpp encsub.cpp -o blkdedup -lssl  -lcrypto 
+	g++  blkdedup.cpp encsub.cpp sqlcxttable.cpp -o blkdedup -lsqlite3 -lssl  -lcrypto 
 clean:
 	rm  rsencode.o rsdecode.o randFile.o  upload.o rstest.o  sqlsimdtct.o cryptoalgo.o dedup.o decrypt.o fblkdedup.o blkdedup.o initcxtdb.o
 	

@@ -14,8 +14,7 @@ print("Widhth ",width,"height ",height)
 
 # getting the RGB pixel value.  
 for i in range(height):
-    for j in range(width):      
-        print("height,width:",i,j)      
+    for j in range(width):         
         print(input_image.getpixel((j, i)))                 
         #if(sum(row) !=0 ):
         #    a=5

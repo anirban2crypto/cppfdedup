@@ -9,6 +9,7 @@
 #include<cmath>
 #include <vector>
 #include "mlecrypto.h"
+#include "cxttab.h"
 
 using namespace std;
 
@@ -23,6 +24,7 @@ int main(int argc, char** argv)
 
     vector<uint8_t> inputdata;
     vector<uint8_t> chunkdata;
+    vector<uint8_t> mlekeydata;
     char c;
     long loc;
     int ciph_len,msg_len,cpa_msg_len,cpa_ciph_len;
@@ -94,8 +96,8 @@ int main(int argc, char** argv)
             chunkdata.push_back(inputdata[inp_data_ptr++]);                 
         }   
         //cerr << "Chunk Data Size " <<    chunkdata.size();
-        mlekey = mleKeygen(chunkdata);        
-        keyfile.write((char *)mlekey,HKEY_SIZE);
+        mlekey = mleKeygen(chunkdata);
+        mlekeydata.insert(mlekeydata.end(), mlekey, mlekey+HKEY_SIZE);        
 
 
         //initialize MLE ciphertext lenth   
@@ -111,21 +113,37 @@ int main(int argc, char** argv)
         {   
             oss << std::setfill('0') << std::setw(2) << std::hex << static_cast< int >(chunktag[j]);
         } 
-        mapfile << oss.str();
-        std::string chunkfname=cxtdir+oss.str();                    
+        std::string  taginhex= oss.str();
+        mapfile << taginhex;
+        //std::string chunkfname=cxtdir+oss.str();                    
         //cerr << "Chunk File name " <<   chunkfname << "\n";
         //CHUNK TO FILE MAPPING TABLE
-        ofstream outfile(chunkfname, ios::out | ios::trunc);
+        /*ofstream outfile(chunkfname, ios::out | ios::trunc);
         if (!outfile) {
             cerr << "Could not open file for writing!\n";
             return -1;
         }
         outfile.write((char *)mlecipher,ciph_len);
-        outfile.close();
+        outfile.close();*/
+        char *tag = const_cast<char*>(taginhex.c_str());
+        eInsertCxt(tag,taginhex.size(),ciph_len);
+
+
         data_remain=data_remain-data_size;
         chunk_cnt++; 
         chunkdata.resize(0);    
-    }    
+    }   
+    //---------------------------------------------------------------------   
+    //                  KEY ENCRYPTION - cpa encrypt mle key
+    //--------------------------------------------------------------------- 
+    cpa_msg_len=mlekeydata.size();
+    cpacipher=new unsigned char[cpa_msg_len+BLOCK_SIZE];  
+    cpaEncrypt(cpakey,cpaiv,(unsigned char *)&mlekeydata[0],cpacipher,cpa_ciph_len,cpa_msg_len); 
+    // cancatenate cpaiv cpacipher  == final cipher
+    final_cipher = new unsigned char [BLOCK_SIZE + cpa_ciph_len];
+    std::copy(cpaiv, cpaiv+BLOCK_SIZE, final_cipher);
+    std::copy(cpacipher, cpacipher+cpa_ciph_len, final_cipher + BLOCK_SIZE);
+    keyfile.write((char *)final_cipher,BLOCK_SIZE + cpa_ciph_len);            
     infile.close();
     keyfile.close();
     mapfile.close();

@@ -9,7 +9,7 @@
 using namespace std;
 
 void reconst(vector<uint8_t> &erronsdata,vector<uint8_t> &paritydata,vector<uint8_t> &recovdata,vector<int> &intoffset){
-    const int rs_n=255,rs_k=191,dis=(rs_n-rs_k);
+    const int rs_n=2047,rs_k=1947,dis=(rs_n-rs_k);
     long i=0,data_size,edat_cnt=0,pdata_cnt=0;
     std::vector<int> erasures;
     std::vector<int> position;
