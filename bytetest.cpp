@@ -2,23 +2,22 @@
 #include <stdio.h>
 using namespace std;
 
-const size_t BYTES_PER_INT = sizeof(int); 
-void intToCharArray(char* buffer, int in)
+
+void intToCharArray(unsigned char* buffer, int in,int BYTES_PER_INT)
 {
-	for (size_t i = 0; i < BYTES_PER_INT; i++) {
-		size_t shift = 8 * (BYTES_PER_INT - 1 - i);
-		buffer[i] = (in >> shift) & 0xff;
-	}	
+	int x=in;
+    std::copy(static_cast<const char*>(static_cast<const void*>(&x)),
+          static_cast<const char*>(static_cast<const void*>(&x)) + BYTES_PER_INT,
+          buffer);	
 }
 
 int main()
 {
-	int in=255;
-	char buffer[BYTES_PER_INT];
-	intToCharArray(buffer, in);
-    for(int i=0;i<BYTES_PER_INT;i++){
-        cerr << int(buffer[i]) << endl;
-    }
-
+	int loc=2*65535;
+	unsigned char cbyte[3];
+    intToCharArray(cbyte, loc,3); 
+    cout<<int(cbyte[2])<<endl;
+    cout<<int(cbyte[1])<<endl;
+    cout<<int(cbyte[0])<<endl;
 }
 

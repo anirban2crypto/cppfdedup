@@ -17,12 +17,12 @@
 using namespace std;
 
 //const size_t BYTES_PER_INT = sizeof(int); 
-void intToCharArray(char* buffer, int in,int BYTES_PER_INT)
+void intToCharArray(unsigned char* buffer, int in,int BYTES_PER_INT)
 {
-	for (size_t i = 0; i < BYTES_PER_INT; i++) {
-		size_t shift = 8 * (BYTES_PER_INT - 1 - i);
-		buffer[i] = (in >> shift) & 0xff;
-	}	
+	int x=in;
+    std::copy(static_cast<const char*>(static_cast<const void*>(&x)),
+          static_cast<const char*>(static_cast<const void*>(&x)) + BYTES_PER_INT,
+          buffer);	
 }
 int main(int argc, char** argv)
 {
@@ -51,7 +51,7 @@ int main(int argc, char** argv)
     uint8_t *chunktag;
     unsigned char *cpacipher;
     unsigned char *final_cipher;
-    int CHUNK_SIZE = atoi(argv[2]);
+    int CHUNK_SIZE = atoi(argv[2])*2;
     int BYTE_SIZE_LOC=ceil(ceil(log2(CHUNK_SIZE))/8);
     //int MAX_OFF_LEN=ECC_ERR_LMT*(BYTE_SIZE_LOC+1);
     auto st_start = std::chrono::high_resolution_clock::now();
@@ -63,7 +63,7 @@ int main(int argc, char** argv)
     // read location from param file - subsampling 
     ifstream parfile("param.txt");
     if (!parfile){
-        cerr << "Could not open file for reading!\n";
+        cout << "Could not open file for reading!\n";
         return -1;
     }	
     while(!parfile.eof()){    
@@ -75,14 +75,14 @@ int main(int argc, char** argv)
     std::string inpfname=inpdir+std::string(argv[1]);
     ifstream infile (inpfname, ios::binary);
     if (!infile){
-        cerr << "Could not open input file for reading!\n";
+        cout << "Could not open input file for reading!\n";
         return -1;
     }
     // open offset file - for write
     std::string offfname=offdir+std::string(argv[1]);
     ofstream offsetfile(offfname, ios::out | ios::trunc);
     if (!offsetfile) {
-        cerr << "Could not open file for writing!\n";
+        cout << "Could not open file for writing!\n";
         return -1;
     }  
      
@@ -90,7 +90,7 @@ int main(int argc, char** argv)
     std::string keyfname=keydir+std::string(argv[1]);
     ofstream stormlekey(keyfname, ios::out | ios::trunc);
     if (!stormlekey) {
-        cerr << "Could not open file for writing!\n";
+        cout << "Could not open file for writing!\n";
         return -1;
     } 
     std::string mapfname=mapdir+std::string(argv[1]);
@@ -143,7 +143,7 @@ int main(int argc, char** argv)
         checkSimilarity((unsigned char *)&subsample[0],(int)subsample.size(),&rowfound,paritydata);        
         if (rowfound ==true)
         {
-            //cerr <<"Decode success, similarity found "<< endl;
+            cout <<" similarity found "<< endl;
             //---------------------------------------------------------------------   
             //                   SUBSEQUENT ENCRYPTION
             //---------------------------------------------------------------------  
@@ -151,7 +151,13 @@ int main(int argc, char** argv)
             //                   BASE GENERATION - decode algorithm
             //---------------------------------------------------------------------  
             int rc=0;
+            // cout <<"final paritydata data: "<< endl;
+            // for (int j=0; j<paritydata.size();j++)
+            // {
+            //      cout << paritydata[j];
+            // }
             rc=reconst(chunkdata,paritydata,recovdata,intoffset); 
+            cout <<" Decode return code "<< rc<<endl;
             if (rc==-1){
                 //generate parity
                 genparity(chunkdata,paritydata);  
@@ -165,10 +171,13 @@ int main(int argc, char** argv)
             int offsize=intoffset.size();
             //Include the size of the offset in offset data
             char str_offsize[12];
-            sprintf(str_offsize, "%03d", offsize);
+            sprintf(str_offsize, "%06d", offsize);
             offsetdata.push_back(str_offsize[0]);
             offsetdata.push_back(str_offsize[1]);
             offsetdata.push_back(str_offsize[2]);
+            offsetdata.push_back(str_offsize[3]);
+            offsetdata.push_back(str_offsize[4]);
+            offsetdata.push_back(str_offsize[5]);
             // read offset for block by block
             // read offset block by block, block length is EC parameter - message length   
             int ix=0;
@@ -180,7 +189,7 @@ int main(int argc, char** argv)
                     //get the position
                     int loc=intoffset[ix++];        
                     //convert the position from int to byte
-                    char cbyte[BYTE_SIZE_LOC];
+                    unsigned char cbyte[BYTE_SIZE_LOC];
                     intToCharArray(cbyte, loc,BYTE_SIZE_LOC);                    
                     for(int i=0;i<BYTE_SIZE_LOC;i++){
                         offsetdata.push_back(cbyte[i]);
@@ -213,7 +222,7 @@ int main(int argc, char** argv)
             //std::string cxtfname=cxtdir+taginhex;  
             //ofstream cxtfile(cxtfname, ios::out | ios::trunc);
             //if (!cxtfile) {
-            //    cerr << "Could not open file for writing!\n";
+            //    cout << "Could not open file for writing!\n";
             //     return -1;
             //}
             //cxtfile.write((char *)mlecipher,ciph_len);
@@ -223,7 +232,7 @@ int main(int argc, char** argv)
         }
         else
         {            
-            //cerr <<"Decode fail, no similarity found "<< endl;
+            //cout <<"Decode fail, no similarity found "<< endl;
             //---------------------------------------------------------------------   
             //                   INITIAL ENCRYPTION
             //---------------------------------------------------------------------  
@@ -232,16 +241,24 @@ int main(int argc, char** argv)
             //---------------------------------------------------------------------
             // add offset size  as zero 
             char str_offsize[12];
-            sprintf(str_offsize, "%03d", 0);
+            sprintf(str_offsize, "%06d", 0);
             offsetdata.push_back(str_offsize[0]);
             offsetdata.push_back(str_offsize[1]);
             offsetdata.push_back(str_offsize[2]);
+            offsetdata.push_back(str_offsize[3]);
+            offsetdata.push_back(str_offsize[4]);
+            offsetdata.push_back(str_offsize[5]);
             //---------------------------------------------------------------------   
             //                   BASE ENCRYPTION - when no parity exists
             //--------------------------------------------------------------------- 
             //generate parity
             genparity(chunkdata,paritydata);  
             // update the parity in database
+            // cout << "initial paritydata"<<endl;
+            // for (int j=0; j<paritydata.size();j++)
+            // {
+            //      cout << paritydata[j];
+            // }
             insertParity((unsigned char *)&subsample[0],(int)subsample.size(), (unsigned char *)&paritydata[0],(int)paritydata.size());
             // generate MLE KEY
             mlekey = mleKeygen(chunkdata);
@@ -264,7 +281,7 @@ int main(int argc, char** argv)
             /*std::string cxtfname=cxtdir+taginhex;  
             ofstream cxtfile(cxtfname, ios::out | ios::trunc);
             if (!cxtfile) {
-                cerr << "Could not open file for writing!\n";
+                cout << "Could not open file for writing!\n";
                 return -1;
             }
             cxtfile.write((char *)mlecipher,ciph_len);
@@ -283,16 +300,16 @@ int main(int argc, char** argv)
         paritydata.resize(0);
         intoffset.resize(0);   
     }
-     cerr <<"Number of block:" <<chunk_cnt<<endl;
+     cout <<"Number of block:" <<chunk_cnt<<endl;
     //---------------------------------------------------------------------   
     //                   OFFSET ENCRYPTION - CPA encrypt the offset file 
     //---------------------------------------------------------------------        
-    /*cerr <<"Offset data: "<< endl;
+    /*cout <<"Offset data: "<< endl;
     for (int j=0; j<offsetdata.size();j++)
     {
-             cerr << offsetdata[j];
+             cout << offsetdata[j];
     }*/
-    cerr << endl;
+    cout << endl;
     cpa_msg_len=offsetdata.size(); 
     cpacipher=new unsigned char[cpa_msg_len+BLOCK_SIZE];  
     cpaEncrypt(cpakey,cpaiv,(unsigned char *)&offsetdata[0],cpacipher,cpa_ciph_len,cpa_msg_len);  
@@ -306,12 +323,12 @@ int main(int argc, char** argv)
     //                  CHUNK KEY ENCRYPTION - cpa encrypt mle key
     //--------------------------------------------------------------------- 
     cpa_msg_len=mlekeydata.size();
-    /*cerr <<"MLE KEY data: "<< endl;
+    /*cout <<"MLE KEY data: "<< endl;
     for (int j=0; j<mlekeydata.size();j++)
     {
-             cerr << int(mlekeydata[j]);    
+             cout << int(mlekeydata[j]);    
     }
-    cerr << endl;*/
+    cout << endl;*/
     cpacipher=new unsigned char[cpa_msg_len+BLOCK_SIZE];  
     cpaEncrypt(cpakey,cpaiv,(unsigned char *)&mlekeydata[0],cpacipher,cpa_ciph_len,cpa_msg_len); 
     // cancatenate cpaiv cpacipher  == final cipher

@@ -1,0 +1,4 @@
+after encode 2byte parity
+583700101400128Number of block:1
+
+Total  elapsed time is 36256.7 milliseconds

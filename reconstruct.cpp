@@ -5,64 +5,59 @@
 #include <fstream>
 #include <ezpwd/rs>
 #include <chrono>
+#include <iomanip>
 
 using namespace std;
 
 int reconst(vector<uint8_t> &erronsdata,vector<uint8_t> &paritydata,vector<uint8_t> &recovdata,vector<int> &intoffset){
-    const int rs_n=255,rs_k=205,dis=(rs_n-rs_k);
-    long i=0,data_size,edat_cnt=0,pdata_cnt=0;
+    const int rs_n=65535,rs_k=35535,dis=(rs_n-rs_k);
+    long i=0,string_size,edat_cnt=0,pdata_cnt=0;
     std::vector<int> erasures;
     std::vector<int> position;
-    std::vector<uint8_t> data;
+    std::vector<uint16_t> rs_data;
     ezpwd::RS<rs_n,rs_k> rs;
-    data.resize(rs_n);
+    rs_data.resize(rs_n);
     int block_no=0;
-    long data_remain=erronsdata.size();
+    long input_size=erronsdata.size();
     int fixed=0;
-    //while(data_remain > 0) 
-    //{   
-  
-        if (data_remain >= rs_k)        
-            data_size=rs_k;
-        else
-            data_size=data_remain;
-        for(i=0;i<data_size;i++)
-        {        
-            data[i]=erronsdata[edat_cnt];
-            edat_cnt++;                                
-        }    
-        for(i=0;i<dis;i++)
-        {
-            data[rs_k+i]=paritydata[pdata_cnt];
-            pdata_cnt++;            
-        }
+    if (input_size < rs_k*2)                
+        string_size=ceil(input_size/2);
+    else
+        string_size=rs_k;
+    for(i=0;i<string_size;i++)
+    {        
+        rs_data[i]=int(erronsdata[2*i+1])+256*int(erronsdata[2*i]);                       
+    }    
+    for(i=0;i<dis;i++)
+    {        
+        rs_data[rs_k+i]=int(paritydata[2*i+1])+256*int(paritydata[2*i]);                                                         
+    }
             /*cerr <<"Before Decode "<< endl;            
             for (int j=0; j<data.size();j++)
             {
                  cerr << data[j];
             }
-            cerr <<endl;*/   
-            fixed = rs.decode(data,erasures,&position );
+            cerr <<endl;*/               
+    fixed = rs.decode(rs_data,erasures,&position );
             /*cerr <<"After decode: "<< endl;            
             for (int j=0; j<data.size();j++)
             {
                  cerr << data[j];
             }
             cerr <<endl;*/    
-        for (i=0;i<data_size;i++)
+    for (i=0;i<string_size;i+=2)
+    {
+        recovdata.push_back(int(int(rs_data[i])/256));
+        recovdata.push_back(int(rs_data[i])%256);
+    }           
+    if(position.size() > 0)
+    {            
+        intoffset.push_back(2*position.size());
+        for (i=0;i<position.size();i++)
         {
-            recovdata.push_back(data[i]);
-        }        
-        if(position.size() > 0)
-        {            
-            intoffset.push_back(position.size());
-            for (i=0;i<position.size();i++)
-            {
-                intoffset.push_back((block_no*rs_k) + position[i]);
-            }    
+            intoffset.push_back(2*position[i]);
+            intoffset.push_back(2*position[i]+1);
         }    
-        data_remain=data_remain-rs_k;
-        block_no++; 
-    //}
+    }    
     return fixed; 
 }

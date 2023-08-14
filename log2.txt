@@ -1,0 +1,8 @@
+ similarity found 
+before reconstruct parity data
+002460022800128000030010000000codeword before decode
+586140089600100 reconst success -1
+after encode 2byte parity
+583700101400128Number of block:1
+
+Total  elapsed time is 167651 milliseconds
