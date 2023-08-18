@@ -115,7 +115,8 @@ int main(int argc, char** argv)
     int data_size=0,chunk_cnt=0,data_remain=msg_len,inp_data_ptr=0;
     while(data_remain > 0)
     {      
-        chunk_cnt++;      
+        chunk_cnt++;    
+             cout <<"block number:" <<chunk_cnt<<endl;  
         if (data_remain >= CHUNK_SIZE)        
             data_size=CHUNK_SIZE;
         else
@@ -130,13 +131,22 @@ int main(int argc, char** argv)
         //---------------------------------------------------------------------     
         // Create fingerprint of the file using subsampling.
         // Fixed subsample used. Location of subsample is in parfile   
-        int index = 0;
-        while ( index < locatn.size()) {
+        long sum = 0;
+        int avg=0;
+        for(int j=0; j<=chunkdata.size(); j++)
+        {
+            sum=sum+int(chunkdata[j]);
+        }
+        avg=sum/chunkdata.size();
+        unsigned char avgchar=avg;
+             cout <<"fingerprint:" <<avg<<endl;
+        subsample.push_back(avgchar);
+        /*while ( index < locatn.size()) {
             loc = locatn.at(index);
             if (loc <= chunkdata.size())
                 subsample.push_back(chunkdata[loc]);
             index++;
-        }
+        }*/
         //---------------------------------------------------------------------   
         // check parity table in database if any parity symbols exists for the file
         //---------------------------------------------------------------------     
@@ -232,7 +242,7 @@ int main(int argc, char** argv)
         }
         else
         {            
-            //cout <<"Decode fail, no similarity found "<< endl;
+            cout <<"Decode fail, no similarity found "<< endl;
             //---------------------------------------------------------------------   
             //                   INITIAL ENCRYPTION
             //---------------------------------------------------------------------  

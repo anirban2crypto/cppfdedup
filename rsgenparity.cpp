@@ -13,7 +13,7 @@ using namespace std;
 
 void genparity(vector<uint8_t> &msgdata,vector<uint8_t> &paritydata){
 
-    const int rs_n=65535,rs_k=35535,dis=(rs_n-rs_k);
+    const int rs_n=65535,rs_k=37535,dis=(rs_n-rs_k);
     ezpwd::RS<rs_n,rs_k> rs;
     std::vector<uint16_t> rs_data;
     rs_data.resize(rs_k);

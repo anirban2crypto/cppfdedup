@@ -8,7 +8,7 @@
 #include <ezpwd/rs>
 #include <vector> 
 #include <chrono>
-#define ECC_ERR_LMT 15000
+#define ECC_ERR_LMT 14000
 #define ECC_BLK_LEN 65535
 using namespace std; 
 void genparity(vector<uint8_t> &msgdata,vector<uint8_t> &paritydata);
