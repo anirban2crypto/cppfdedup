@@ -72,8 +72,8 @@ void checkSimilarity(unsigned char* ofprint, int ofsizes,bool* ofound,vector<uin
         for(long i=0;i<size;i++)
             paritydata.push_back(dbvalue[i]);        
     }
-    if(ret_code != SQLITE_DONE) {
-        std::cerr << "Error in inserting Table" << std::endl;
+    if(ret_code != SQLITE_DONE ) {
+        std::cerr << "Error in Fetching parity " << ret_code << std::endl;
         sqlite3_free(zErrMsg);
     }
 
@@ -103,7 +103,7 @@ void  insertParity(unsigned char* fprint,int fsizes, unsigned char *parity,int p
     }    
     if (rc != SQLITE_OK && rc != SQLITE_DONE) 
     {
-        std::cerr << "Error in inserting Table: "<< rc << std::endl;
+        std::cerr << "Error in inserting Table HSIMILARITY : "<< rc << std::endl;
         sqlite3_free(zErrMsg);
     }   
     sqlite3_close(DB);    

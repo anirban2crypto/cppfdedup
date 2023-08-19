@@ -63,7 +63,7 @@ void  insertCxt(char* tag,int tsizes, int cxtsize)
     }    
     if (rc != SQLITE_OK && rc != SQLITE_DONE && rc != SQLITE_CONSTRAINT)
     {
-        std::cerr << "Error in inserting Table:" << rc << std::endl;
+        std::cerr << "Error in inserting Table CXTTABLE: " << rc << std::endl;
         sqlite3_free(zErrMsg);
     }   
     sqlite3_close(DB);    
@@ -124,7 +124,7 @@ void  eInsertCxt(char* tag,int tsizes, int cxtsize)
     }    
     if (rc != SQLITE_OK && rc != SQLITE_DONE && rc != SQLITE_CONSTRAINT)
     {
-        std::cerr << "Error in inserting Table:" << rc << std::endl;
+        std::cerr << "Error in inserting Table ECXTTABLE :" << rc << std::endl;
         sqlite3_free(zErrMsg);
     }   
     sqlite3_close(DB);    

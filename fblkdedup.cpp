@@ -51,7 +51,9 @@ int main(int argc, char** argv)
     uint8_t *chunktag;
     unsigned char *cpacipher;
     unsigned char *final_cipher;
-    int CHUNK_SIZE = atoi(argv[2])*2;
+    //int CHUNK_SIZE = atoi(argv[2])*2;
+    int CHUNK_SIZE = 37535*2;
+    int PARITY_SIZE = (65535 - 37535)*2;
     int BYTE_SIZE_LOC=ceil(ceil(log2(CHUNK_SIZE))/8);
     //int MAX_OFF_LEN=ECC_ERR_LMT*(BYTE_SIZE_LOC+1);
     auto st_start = std::chrono::high_resolution_clock::now();
@@ -150,10 +152,10 @@ int main(int argc, char** argv)
         //---------------------------------------------------------------------   
         // check parity table in database if any parity symbols exists for the file
         //---------------------------------------------------------------------     
-        checkSimilarity((unsigned char *)&subsample[0],(int)subsample.size(),&rowfound,paritydata);        
+        checkSimilarity((unsigned char *)&subsample[0],(int)subsample.size(),&rowfound,paritydata);    
         if (rowfound ==true)
         {
-            cout <<" similarity found "<< endl;
+            cout <<" similarity found, parity size "<< paritydata.size() << endl;
             //---------------------------------------------------------------------   
             //                   SUBSEQUENT ENCRYPTION
             //---------------------------------------------------------------------  
@@ -166,9 +168,14 @@ int main(int argc, char** argv)
             // {
             //      cout << paritydata[j];
             // }
+            auto decode_s = std::chrono::high_resolution_clock::now();
             rc=reconst(chunkdata,paritydata,recovdata,intoffset); 
+            auto decode_e = std::chrono::high_resolution_clock::now();
+            std::chrono::duration<double, std::milli> st_float_ms = decode_e - decode_s;
+            std::cout << "Decode time is " <<  st_float_ms.count() << " milliseconds" << std::endl;    
             cout <<" Decode return code "<< rc<<endl;
             if (rc==-1){
+                paritydata.resize(0);
                 //generate parity
                 genparity(chunkdata,paritydata);  
                 // update the parity in database
@@ -262,6 +269,7 @@ int main(int argc, char** argv)
             //                   BASE ENCRYPTION - when no parity exists
             //--------------------------------------------------------------------- 
             //generate parity
+            paritydata.resize(0);
             genparity(chunkdata,paritydata);  
             // update the parity in database
             // cout << "initial paritydata"<<endl;
