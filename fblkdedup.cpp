@@ -182,7 +182,7 @@ int main(int argc, char** argv)
                 insertParity((unsigned char *)&subsample[0],(int)subsample.size(), (unsigned char *)&paritydata[0],(int)paritydata.size());
 
             }
-            if (rc > 0){
+            /*if (rc > 0){
                 std::string recfname=inpdir+std::string(argv[1])+"Recovdata";  
                 ofstream recfile(recfname, ios::out | ios::trunc);
                 if (!recfile) {
@@ -191,7 +191,7 @@ int main(int argc, char** argv)
                 }
                 recfile.write((char *)&recovdata[0], recovdata.size());
                 recfile.close();        
-            }    
+            }*/   
             //---------------------------------------------------------------------   
             //                   OFFSET GENERATION
             //--------------------------------------------------------------------- 
