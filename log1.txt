@@ -1,4 +1,6 @@
-after encode 2byte parity
-583700101400128Number of block:1
+block number:1
+fingerprint:70
+Decode fail, no similarity found 
+Number of block:1
 
-Total  elapsed time is 36256.7 milliseconds
+Total  elapsed time is 31872.5 milliseconds

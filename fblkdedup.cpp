@@ -52,8 +52,11 @@ int main(int argc, char** argv)
     unsigned char *cpacipher;
     unsigned char *final_cipher;
     //int CHUNK_SIZE = atoi(argv[2])*2;
-    int CHUNK_SIZE = 37535*2;
-    int PARITY_SIZE = (65535 - 37535)*2;
+    const int RS_BLK_SYM=65535;    
+    const int RS_LMT_SYM=14000;    
+    const int SYM_TO_BYT=2;
+    const int CHUNK_SIZE = (RS_BLK_SYM-(2*RS_LMT_SYM))*SYM_TO_BYT;
+    int PARITY_SIZE = (2*RS_LMT_SYM)*SYM_TO_BYT;
     int BYTE_SIZE_LOC=ceil(ceil(log2(CHUNK_SIZE))/8);
     //int MAX_OFF_LEN=ECC_ERR_LMT*(BYTE_SIZE_LOC+1);
     auto st_start = std::chrono::high_resolution_clock::now();
@@ -168,12 +171,9 @@ int main(int argc, char** argv)
             // {
             //      cout << paritydata[j];
             // }
-            auto decode_s = std::chrono::high_resolution_clock::now();
-            rc=reconst(chunkdata,paritydata,recovdata,intoffset); 
-            auto decode_e = std::chrono::high_resolution_clock::now();
-            std::chrono::duration<double, std::milli> st_float_ms = decode_e - decode_s;
-            std::cout << "Decode time is " <<  st_float_ms.count() << " milliseconds" << std::endl;    
-            cout <<" Decode return code "<< rc<<endl;
+            rc=reconst(chunkdata,paritydata,recovdata,intoffset);                 
+            cout <<" Reconstruction return code "<< rc<<endl;
+
             if (rc==-1){
                 paritydata.resize(0);
                 //generate parity
@@ -182,6 +182,16 @@ int main(int argc, char** argv)
                 insertParity((unsigned char *)&subsample[0],(int)subsample.size(), (unsigned char *)&paritydata[0],(int)paritydata.size());
 
             }
+            if (rc > 0){
+                std::string recfname=inpdir+std::string(argv[1])+"Recovdata";  
+                ofstream recfile(recfname, ios::out | ios::trunc);
+                if (!recfile) {
+                    cout << "Could not open file for writing!\n";
+                    return -1;
+                }
+                recfile.write((char *)&recovdata[0], recovdata.size());
+                recfile.close();        
+            }    
             //---------------------------------------------------------------------   
             //                   OFFSET GENERATION
             //--------------------------------------------------------------------- 

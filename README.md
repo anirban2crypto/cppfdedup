@@ -59,9 +59,10 @@ command:
 
 
 ./dbsetup
-./initcxtdb
-./fblkdedup randifile 71070
-./fblkdedup randsfile 71070
+./initcxtdb 1
+./fblkdedup randifile 75070
+./fblkdedup randsfile 75070
+
 
 sqlite3 similarity.db
 select count(*) from HSIMILARITY;

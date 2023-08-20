@@ -36,9 +36,19 @@ int reconst(vector<uint8_t> &erronsdata,vector<uint8_t> &paritydata,vector<uint8
         for(i=0;i<dis;i++)
         {        
             rs_data[rs_k+i]=int(paritydata[p_st_indx+2*i+1])+256*int(paritydata[p_st_indx+2*i]);                                                         
-        }            
+        }    
+        cout <<"RS Data before decode: "<< endl;
+        for (int j=0; j<string_size;j++)
+        {
+            cout << int(rs_data[j]);
+        }        
         fixed = rs.decode(rs_data,erasures,&position );
         cout <<" Decode return code "<< fixed<<endl;
+        cout <<"RS Data after decode: "<< endl;
+        for (int j=0; j<string_size;j++)
+        {
+            cout << int(rs_data[j]);
+        }
         p_procss++;
     }    
 
@@ -46,7 +56,7 @@ int reconst(vector<uint8_t> &erronsdata,vector<uint8_t> &paritydata,vector<uint8
     {
         return fixed; 
     }
-    for (i=0;i<string_size;i+=2)
+    for (i=0;i<string_size;i++)
     {
         recovdata.push_back(int(int(rs_data[i])/256));
         recovdata.push_back(int(rs_data[i])%256);
