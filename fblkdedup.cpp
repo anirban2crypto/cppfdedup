@@ -129,7 +129,11 @@ int main(int argc, char** argv)
         for(auto i=0;i<data_size;i++)
         {        
             chunkdata.push_back(inputdata[inp_data_ptr++]);                 
-        } 
+        }
+        /*for (int j=0; j<chunkdata.size();j++)
+        {
+            cout << int(chunkdata[j]);
+        }*/ 
             
         //---------------------------------------------------------------------   
         //        LABEL,FINGERPRINT GENERATION - FIXED SUBSAMPLING
@@ -280,7 +284,9 @@ int main(int argc, char** argv)
             //--------------------------------------------------------------------- 
             //generate parity
             paritydata.resize(0);
-            genparity(chunkdata,paritydata);  
+            cout<<"before calling genparity"<<endl;
+            genparity(chunkdata,paritydata);
+            cout<<"after calling genparity"<<endl;  
             // update the parity in database
             // cout << "initial paritydata"<<endl;
             // for (int j=0; j<paritydata.size();j++)

@@ -1,6 +1,6 @@
 block number:1
-fingerprint:70
+fingerprint:68
 Decode fail, no similarity found 
 Number of block:1
 
-Total  elapsed time is 32092 milliseconds
+Total  elapsed time is 34198.5 milliseconds
