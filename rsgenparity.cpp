@@ -35,11 +35,11 @@ void genparity(vector<uint8_t> &msgdata,vector<uint8_t> &paritydata){
         {        
             rs_data[i]=(msgdata[2*i+1])+256*int(msgdata[2*i]);                 
         }
-        for (int j=0; j<string_size;j++)
+        /* for (int j=0; j<string_size;j++)
         {
             std::cout  << std::setfill('0') << std::setw(5) << int(rs_data[j]);
             cout<<endl;
-        }    
+        } */    
         rs.encode(rs_data);        
         for (auto i=0;i<dis;i++){
             paritydata.push_back(int(int(rs_data[rs_k+i])/256));

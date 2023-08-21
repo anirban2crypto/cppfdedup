@@ -65,6 +65,7 @@ void checkSimilarity(unsigned char* ofprint, int ofsizes,bool* ofound,vector<uin
 
     // execute sql statement, and while there are rows returned, print ID
     int ret_code = 0;
+    *ofound=false;  
     while((ret_code = sqlite3_step(stmt)) == SQLITE_ROW) {  
         *ofound=true;  
         long size=sqlite3_column_bytes(stmt, 1);

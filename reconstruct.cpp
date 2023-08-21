@@ -37,15 +37,15 @@ int reconst(vector<uint8_t> &erronsdata,vector<uint8_t> &paritydata,vector<uint8
         {        
             rs_data[rs_k+i]=int(paritydata[p_st_indx+2*i+1])+256*int(paritydata[p_st_indx+2*i]);                                                         
         }    
-        cout <<"RS Data before decode: "<< endl;
+       /*cout <<"RS Data before decode: "<< endl;
         for (int j=0; j<string_size;j++)
         {
             std::cout  << std::setfill('0') << std::setw(5) << int(rs_data[j]);
             cout<<endl;
-        }        
+        }*/       
         fixed = rs.decode(rs_data,erasures,&position );
         cout <<" Decode return code "<< fixed<<endl;
-        cout <<"RS Data after decode: "<< endl;
+        //cout <<"RS Data after decode: "<< endl;
         /*for (int j=0; j<string_size;j++)
         {
             cout << int(rs_data[j]);

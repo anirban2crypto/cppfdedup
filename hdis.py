@@ -27,18 +27,18 @@ if f1_size == f2_size :
 
     data_remain=f1_size
     block_cnt=0
-    while(data_remain >= 0):
+    while(data_remain > 0):
         block_cnt+=1
         #print("block count: ",block_cnt)
         data1 = f1.read(BLOCK_SIZE)
         data2 = f2.read(BLOCK_SIZE)
         hamming_distance = hamming(list(data1),list(data2)) * len(list(data1))
+        print(hamming_distance)
         if (hamming_distance == 0):
             t1+=1
         elif (hamming_distance <= limit):
             t2+=1            
-        else:
-            print(hamming_distance)
+        else:            
             t3+=1                                
         data_remain-=BLOCK_SIZE        
     print("Total block: ",block_cnt)
