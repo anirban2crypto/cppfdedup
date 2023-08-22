@@ -53,10 +53,10 @@ int reconst(vector<uint8_t> &erronsdata,vector<uint8_t> &paritydata,vector<uint8
         p_procss++;
     }    
 
-    if (fixed == -1)
+    /*if (fixed == -1)
     {
         return fixed; 
-    }
+    }*/
     for (i=0;i<string_size;i++)
     {
         recovdata.push_back(int(int(rs_data[i])/256));
