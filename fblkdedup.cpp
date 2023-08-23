@@ -53,7 +53,7 @@ int main(int argc, char** argv)
     unsigned char *final_cipher;
     //int CHUNK_SIZE = atoi(argv[2])*2;
     const int RS_BLK_SYM=65535;    
-    const int RS_LMT_SYM=14000;    
+    const int RS_LMT_SYM=15000;    
     const int SYM_TO_BYT=2;
     const int CHUNK_SIZE = (RS_BLK_SYM-(2*RS_LMT_SYM))*SYM_TO_BYT;
     int PARITY_SIZE = (2*RS_LMT_SYM)*SYM_TO_BYT;

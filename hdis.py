@@ -12,12 +12,13 @@ symbol2=list()
 #     print("Enter two file name")
 #     print("Usage: file_name_1, file_name_2, blocksize, tollerance ")
 #     exit(1)
-f1_name = "img2.bmp"
-f2_name = "img3.bmp"
+f1_name = "~/crypto/img_dedup/input_bitmap/img2.bmp"
+f2_name = "~/crypto/img_dedup/input_bitmap/img3.bmp"
 #f1_name = "alpha1.txt"
 #f2_name = "alpha2.txt"
 limit = 18000
 BLOCK_SIZE=59070
+SYM_SIZE=2
 
 f1_size = os.stat(f1_name).st_size
 f2_size = os.stat(f2_name).st_size
@@ -39,17 +40,16 @@ if f1_size == f2_size :
 
         data1 = list(f1.read(BLOCK_SIZE))
         data2 = list(f2.read(BLOCK_SIZE))
-        #print(data1)
-        #print(data2)
-        #print("length ",len(data1))
+
         symbol1=list()
         symbol2=list()
-        for i in range(int(len(data1)/2)):
-            #print("Index",(2*i+1),(2*i))
-            symbol1.append(int(data1[2*i+1])+256*int(data1[2*i]))
-            symbol2.append(int(data2[2*i+1])+256*int(data2[2*i]))
-        #print(symbol1)
-        #print(symbol2)            
+
+        if SYM_SIZE ==2:
+            for i in range(int(len(data1)/2)):
+                symbol1.append(int(data1[2*i+1])+256*int(data1[2*i]))
+                symbol2.append(int(data2[2*i+1])+256*int(data2[2*i]))
+
+
         hamming_distance = hamming(symbol1,symbol2) * len(symbol1)        
         print("hamming distance",hamming_distance)
         if (hamming_distance == 0):
