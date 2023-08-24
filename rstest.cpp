@@ -107,11 +107,6 @@ int main(int argc, char** argv)
         {        
             chunkdata.push_back(inputdata[inp_data_ptr++]);                 
         }
-        /*for (int j=0; j<chunkdata.size();j++)
-        {
-            cout << int(chunkdata[j]);
-        }*/ 
-            
         //---------------------------------------------------------------------   
         //        LABEL,FINGERPRINT GENERATION - FIXED SUBSAMPLING
         //---------------------------------------------------------------------     
@@ -125,14 +120,8 @@ int main(int argc, char** argv)
         }
         avg=sum/chunkdata.size();
         unsigned char avgchar=avg;
-             cout <<"fingerprint:" <<avg<<endl;
+        cout <<"fingerprint:" <<avg<<endl;
         subsample.push_back(avgchar);
-        /*while ( index < locatn.size()) {
-            loc = locatn.at(index);
-            if (loc <= chunkdata.size())
-                subsample.push_back(chunkdata[loc]);
-            index++;
-        }*/
         //---------------------------------------------------------------------   
         // check parity table in database if any parity symbols exists for the file
         //---------------------------------------------------------------------     
@@ -147,18 +136,38 @@ int main(int argc, char** argv)
             //                   BASE GENERATION - decode algorithm
             //---------------------------------------------------------------------  
             int rc=0;
-            // cout <<"final paritydata data: "<< endl;
-            // for (int j=0; j<paritydata.size();j++)
-            // {
-            //      cout << paritydata[j];
-            // }
+            /*ofstream ctpfile("temp_pairy.dat.gz", ios::out | ios::trunc);
+            ctpfile.write((char *)&paritydata[0],paritydata.size());
+            ctpfile.close();
+            paritydata.resize(0);
+            system("gunzip temp_pairy.dat.gz");
+            ifstream tpfile ("temp_pairy.dat", ios::binary);
+            while (true) {
+                c = tpfile.get();
+                if (!tpfile) 
+                    break;
+                paritydata.push_back(c);
+            }
+            tpfile.close(); */  
             rc=reconst(chunkdata,paritydata,recovdata,intoffset);                 
             cout <<" Reconstruction return code "<< rc<<endl;
-
             if (rc==-1){
                 paritydata.resize(0);
                 //generate parity
                 genparity(chunkdata,paritydata);  
+                /*ofstream tpfile("temp_pairy.dat", ios::out | ios::trunc);
+                tpfile.write((char *)&paritydata[0],paritydata.size());
+                tpfile.close();
+                paritydata.resize(0);
+                system("gzip temp_pairy.dat");
+                ifstream ctpfile ("temp_pairy.dat.gz", ios::binary);
+                while (true) {
+                    c = ctpfile.get();
+                    if (!ctpfile) 
+                        break;
+                    paritydata.push_back(c);
+                }
+                ctpfile.close();  */ 
                 // update the parity in database
                 insertParity((unsigned char *)&subsample[0],(int)subsample.size(), (unsigned char *)&paritydata[0],(int)paritydata.size());
 
@@ -221,15 +230,20 @@ int main(int argc, char** argv)
             //--------------------------------------------------------------------- 
             //generate parity
             paritydata.resize(0);
-            cout<<"before calling genparity"<<endl;
             genparity(chunkdata,paritydata);
-            cout<<"after calling genparity"<<endl;  
-            // update the parity in database
-            // cout << "initial paritydata"<<endl;
-            // for (int j=0; j<paritydata.size();j++)
-            // {
-            //      cout << paritydata[j];
-            // }
+            /*ofstream tpfile("temp_pairy.dat", ios::out | ios::trunc);
+            tpfile.write((char *)&paritydata[0],paritydata.size());
+            tpfile.close();
+            paritydata.resize(0);
+            system("gzip temp_pairy.dat");
+            ifstream ctpfile ("temp_pairy.dat.gz", ios::binary);
+            while (true) {
+                c = ctpfile.get();
+                if (!ctpfile) 
+                    break;
+                paritydata.push_back(c);
+            }
+            ctpfile.close(); */           
             insertParity((unsigned char *)&subsample[0],(int)subsample.size(), (unsigned char *)&paritydata[0],(int)paritydata.size());
             // generate MLE KEY
 
@@ -244,7 +258,20 @@ int main(int argc, char** argv)
         paritydata.resize(0);
         intoffset.resize(0);   
     }
-    cout <<"Number of block:" <<chunk_cnt<<endl;     
+    cout <<"Number of block:" <<chunk_cnt<<endl;
+    ofstream tofile("temp_off.dat", ios::out | ios::trunc);
+    tofile.write((char *)&offsetdata[0],offsetdata.size());
+    tofile.close();
+    offsetdata.resize(0);
+    system("gzip -f temp_off.dat");
+    ifstream ctofile ("temp_off.dat.gz", ios::binary);
+    while (true) {
+        c = ctofile.get();
+        if (!ctofile) 
+            break;
+        offsetdata.push_back(c);
+    }
+    ctofile.close();         
     offsetfile.write((char *)&offsetdata[0],offsetdata.size()); 
     //---------------------------------------------------------------------   
     //                    IO CLOSE

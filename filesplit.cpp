@@ -19,7 +19,7 @@ int main(int argc, char** argv)
     vector<uint8_t> chunkdata;
     char c;    
     int msg_len;
-    int CHUNK_SIZE = 37535*2;    
+    int CHUNK_SIZE = 71070;    
     //---------------------------------------------------------------------   
     //                    IO OPEN
     //---------------------------------------------------------------------   

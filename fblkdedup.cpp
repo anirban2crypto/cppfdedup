@@ -335,15 +335,32 @@ int main(int argc, char** argv)
         intoffset.resize(0);   
     }
      cout <<"Number of block:" <<chunk_cnt<<endl;
-    //---------------------------------------------------------------------   
-    //                   OFFSET ENCRYPTION - CPA encrypt the offset file 
-    //---------------------------------------------------------------------        
+         
     /*cout <<"Offset data: "<< endl;
     for (int j=0; j<offsetdata.size();j++)
     {
              cout << offsetdata[j];
     }*/
-    cout << endl;
+    //cout << endl;
+    //---------------------------------------------------------------------   
+    //                   OFFSET COMPRESSION
+    //---------------------------------------------------------------------   
+    ofstream tofile("temp_off.dat", ios::out | ios::trunc);
+    tofile.write((char *)&offsetdata[0],offsetdata.size());
+    tofile.close();
+    offsetdata.resize(0);
+    system("gzip -f temp_off.dat");
+    ifstream ctofile ("temp_off.dat.gz", ios::binary);
+    while (true) {
+        c = ctofile.get();
+        if (!ctofile) 
+            break;
+        offsetdata.push_back(c);
+    }
+    ctofile.close();  
+    //---------------------------------------------------------------------   
+    //                   OFFSET ENCRYPTION - CPA encrypt the offset file 
+    //---------------------------------------------------------------------   
     cpa_msg_len=offsetdata.size(); 
     cpacipher=new unsigned char[cpa_msg_len+BLOCK_SIZE];  
     cpaEncrypt(cpakey,cpaiv,(unsigned char *)&offsetdata[0],cpacipher,cpa_ciph_len,cpa_msg_len);  
