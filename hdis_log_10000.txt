@@ -1,0 +1,1986 @@
+Symbol size 2
+RS BLK SYMBOL 65535
+RS ERROR LIMIT SYMBOL 10000
+RS BLOCK IN BYT 91070
+PARITY IN BYT 40000
+File number 1 3
+Count  1
+File number 2 3
+Count  0
+File number 3 4
+Count  0
+File number 4 5
+Count  0
+File number 5 6
+Count  0
+File number 6 7
+Count  0
+File number 7 8
+Count  0
+File number 8 9
+Count  0
+File number 9 10
+Count  0
+File number 10 11
+Count  0
+File number 11 13
+Count  1
+File number 12 13
+Count  0
+File number 13 14
+Count  0
+File number 14 15
+Count  0
+File number 15 16
+Count  0
+File number 16 17
+Count  0
+File number 17 18
+Count  0
+File number 18 19
+Count  0
+File number 19 20
+Count  0
+File number 20 21
+Count  0
+File number 21 22
+Count  0
+File number 22 23
+Count  0
+File number 23 24
+Count  0
+File number 24 25
+Count  0
+File number 25 26
+Count  0
+File number 26 28
+Count  1
+File number 27 28
+Count  0
+File number 28 29
+Count  0
+File number 29 30
+Count  0
+File number 30 31
+Count  0
+File number 31 32
+Count  0
+File number 32 33
+Count  0
+File number 33 34
+Count  0
+File number 34 35
+Count  0
+File number 35 37
+Count  1
+File number 36 37
+Count  0
+File number 37 38
+Count  0
+File number 38 39
+Count  0
+File number 39 40
+Count  0
+File number 40 42
+Count  1
+File number 41 42
+Count  0
+File number 42 43
+Count  0
+File number 43 44
+Count  0
+File number 44 45
+Count  0
+File number 45 47
+Count  1
+File number 46 48
+Count  1
+File number 47 48
+Count  0
+File number 48 49
+Count  0
+File number 49 50
+Count  0
+File number 50 52
+Count  1
+File number 51 52
+Count  0
+File number 52 53
+Count  0
+File number 53 54
+Count  0
+File number 54 55
+Count  0
+File number 55 57
+Count  1
+File number 56 57
+Count  0
+File number 57 58
+Count  0
+File number 58 59
+Count  0
+File number 59 60
+Count  0
+File number 60 62
+Count  1
+File number 61 62
+Count  0
+File number 62 63
+Count  0
+File number 63 64
+Count  0
+File number 64 67
+Count  2
+File number 65 68
+Count  2
+File number 66 68
+Count  1
+File number 67 68
+Count  0
+File number 68 70
+Count  1
+File number 69 72
+Count  2
+File number 70 72
+Count  1
+File number 71 72
+Count  0
+File number 72 73
+Count  0
+File number 73 74
+Count  0
+File number 74 75
+Count  0
+File number 75 77
+Count  1
+File number 76 77
+Count  0
+File number 77 78
+Count  0
+File number 78 79
+Count  0
+File number 79 82
+Count  2
+File number 80 83
+Count  2
+File number 81 83
+Count  1
+File number 82 84
+Count  1
+File number 83 84
+Count  0
+File number 84 86
+Count  1
+File number 85 87
+Count  1
+File number 86 87
+Count  0
+File number 87 88
+Count  0
+File number 88 89
+Count  0
+File number 89 90
+Count  0
+File number 90 92
+Count  1
+File number 91 92
+Count  0
+File number 92 93
+Count  0
+File number 93 94
+Count  0
+File number 94 95
+Count  0
+File number 95 97
+Count  1
+File number 96 97
+Count  0
+File number 97 98
+Count  0
+File number 98 99
+Count  0
+File number 99 100
+Count  0
+File number 100 102
+Count  1
+File number 101 102
+Count  0
+File number 102 103
+Count  0
+File number 103 104
+Count  0
+File number 104 105
+Count  0
+File number 105 107
+Count  1
+File number 106 107
+Count  0
+File number 107 108
+Count  0
+File number 108 109
+Count  0
+File number 109 110
+Count  0
+File number 110 112
+Count  1
+File number 111 112
+Count  0
+File number 112 113
+Count  0
+File number 113 114
+Count  0
+File number 114 115
+Count  0
+File number 115 117
+Count  1
+File number 116 117
+Count  0
+File number 117 118
+Count  0
+File number 118 119
+Count  0
+File number 119 120
+Count  0
+File number 120 122
+Count  1
+File number 121 122
+Count  0
+File number 122 123
+Count  0
+File number 123 124
+Count  0
+File number 124 125
+Count  0
+File number 125 127
+Count  1
+File number 126 127
+Count  0
+File number 127 128
+Count  0
+File number 128 129
+Count  0
+File number 129 130
+Count  0
+File number 130 133
+Count  2
+File number 131 133
+Count  1
+File number 132 133
+Count  0
+File number 133 134
+Count  0
+File number 134 135
+Count  0
+File number 135 137
+Count  1
+File number 136 137
+Count  0
+File number 137 138
+Count  0
+File number 138 139
+Count  0
+File number 139 140
+Count  0
+File number 140 142
+Count  1
+File number 141 142
+Count  0
+File number 142 143
+Count  0
+File number 143 144
+Count  0
+File number 144 145
+Count  0
+File number 145 147
+Count  1
+File number 146 147
+Count  0
+File number 147 148
+Count  0
+File number 148 149
+Count  0
+File number 149 150
+Count  0
+File number 150 151
+Count  0
+File number 151 152
+Count  0
+File number 152 153
+Count  0
+File number 153 154
+Count  0
+File number 154 155
+Count  0
+File number 155 157
+Count  1
+File number 156 157
+Count  0
+File number 157 159
+Count  1
+File number 158 159
+Count  0
+File number 159 160
+Count  0
+File number 160 162
+Count  1
+File number 161 162
+Count  0
+File number 162 164
+Count  1
+File number 163 164
+Count  0
+File number 164 165
+Count  0
+File number 165 167
+Count  1
+File number 166 167
+Count  0
+File number 167 168
+Count  0
+File number 168 169
+Count  0
+File number 169 170
+Count  0
+File number 170 172
+Count  1
+File number 171 172
+Count  0
+File number 172 174
+Count  1
+File number 173 174
+Count  0
+File number 174 176
+Count  1
+File number 175 178
+Count  2
+File number 176 178
+Count  1
+File number 177 178
+Count  0
+File number 178 179
+Count  0
+File number 179 180
+Count  0
+File number 180 182
+Count  1
+File number 181 182
+Count  0
+File number 182 183
+Count  0
+File number 183 184
+Count  0
+File number 184 186
+Count  1
+File number 185 187
+Count  1
+File number 186 187
+Count  0
+File number 187 188
+Count  0
+File number 188 189
+Count  0
+File number 189 190
+Count  0
+File number 190 192
+Count  1
+File number 191 192
+Count  0
+File number 192 193
+Count  0
+File number 193 194
+Count  0
+File number 194 195
+Count  0
+File number 195 197
+Count  1
+File number 196 197
+Count  0
+File number 197 198
+Count  0
+File number 198 199
+Count  0
+File number 199 200
+Count  0
+File number 200 202
+Count  1
+File number 201 202
+Count  0
+File number 202 203
+Count  0
+File number 203 204
+Count  0
+File number 204 205
+Count  0
+File number 205 207
+Count  1
+File number 206 207
+Count  0
+File number 207 208
+Count  0
+File number 208 209
+Count  0
+File number 209 210
+Count  0
+File number 210 212
+Count  1
+File number 211 212
+Count  0
+File number 212 213
+Count  0
+File number 213 214
+Count  0
+File number 214 215
+Count  0
+File number 215 217
+Count  1
+File number 216 218
+Count  1
+File number 217 218
+Count  0
+File number 218 219
+Count  0
+File number 219 220
+Count  0
+File number 220 222
+Count  1
+File number 221 222
+Count  0
+File number 222 223
+Count  0
+File number 223 224
+Count  0
+File number 224 225
+Count  0
+File number 225 227
+Count  1
+File number 226 227
+Count  0
+File number 227 228
+Count  0
+File number 228 229
+Count  0
+File number 229 230
+Count  0
+File number 230 232
+Count  1
+File number 231 232
+Count  0
+File number 232 233
+Count  0
+File number 233 234
+Count  0
+File number 234 235
+Count  0
+File number 235 237
+Count  1
+File number 236 237
+Count  0
+File number 237 238
+Count  0
+File number 238 239
+Count  0
+File number 239 240
+Count  0
+File number 240 242
+Count  1
+File number 241 243
+Count  1
+File number 242 243
+Count  0
+File number 243 244
+Count  0
+File number 244 246
+Count  1
+File number 245 247
+Count  1
+File number 246 247
+Count  0
+File number 247 248
+Count  0
+File number 248 249
+Count  0
+File number 249 251
+Count  1
+File number 250 252
+Count  1
+File number 251 252
+Count  0
+File number 252 253
+Count  0
+File number 253 254
+Count  0
+File number 254 255
+Count  0
+File number 255 257
+Count  1
+File number 256 258
+Count  1
+File number 257 259
+Count  1
+File number 258 259
+Count  0
+File number 259 262
+Count  2
+File number 260 263
+Count  2
+File number 261 263
+Count  1
+File number 262 263
+Count  0
+File number 263 264
+Count  0
+File number 264 267
+Count  2
+File number 265 267
+Count  1
+File number 266 267
+Count  0
+File number 267 270
+Count  2
+File number 268 270
+Count  1
+File number 269 270
+Count  0
+File number 270 274
+Count  3
+File number 271 274
+Count  2
+File number 272 274
+Count  1
+File number 273 274
+Count  0
+File number 274 276
+Count  1
+File number 275 277
+Count  1
+File number 276 277
+Count  0
+File number 277 278
+Count  0
+File number 278 279
+Count  0
+File number 279 280
+Count  0
+File number 280 282
+Count  1
+File number 281 282
+Count  0
+File number 282 283
+Count  0
+File number 283 287
+Count  3
+File number 284 287
+Count  2
+File number 285 287
+Count  1
+File number 286 287
+Count  0
+File number 287 288
+Count  0
+File number 288 289
+Count  0
+File number 289 293
+Count  3
+File number 290 293
+Count  2
+File number 291 293
+Count  1
+File number 292 293
+Count  0
+File number 293 294
+Count  0
+File number 294 296
+Count  1
+File number 295 297
+Count  1
+File number 296 297
+Count  0
+File number 297 298
+Count  0
+File number 298 299
+Count  0
+File number 299 301
+Count  1
+File number 300 301
+Count  0
+File number 301 302
+Count  0
+File number 302 303
+Count  0
+File number 303 304
+Count  0
+File number 304 305
+Count  0
+File number 305 306
+Count  0
+File number 306 307
+Count  0
+File number 307 308
+Count  0
+File number 308 309
+Count  0
+File number 309 311
+Count  1
+File number 310 312
+Count  1
+File number 311 312
+Count  0
+File number 312 313
+Count  0
+File number 313 316
+Count  2
+File number 314 317
+Count  2
+File number 315 317
+Count  1
+File number 316 317
+Count  0
+File number 317 319
+Count  1
+File number 318 319
+Count  0
+File number 319 322
+Count  2
+File number 320 322
+Count  1
+File number 321 322
+Count  0
+File number 322 323
+Count  0
+File number 323 325
+Count  1
+File number 324 326
+Count  1
+File number 325 326
+Count  0
+File number 326 327
+Count  0
+File number 327 328
+Count  0
+File number 328 329
+Count  0
+File number 329 331
+Count  1
+File number 330 331
+Count  0
+File number 331 332
+Count  0
+File number 332 333
+Count  0
+File number 333 334
+Count  0
+File number 334 336
+Count  1
+File number 335 336
+Count  0
+File number 336 337
+Count  0
+File number 337 338
+Count  0
+File number 338 339
+Count  0
+File number 339 341
+Count  1
+File number 340 341
+Count  0
+File number 341 342
+Count  0
+File number 342 343
+Count  0
+File number 343 344
+Count  0
+File number 344 346
+Count  1
+File number 345 346
+Count  0
+File number 346 347
+Count  0
+File number 347 348
+Count  0
+File number 348 349
+Count  0
+File number 349 351
+Count  1
+File number 350 351
+Count  0
+File number 351 352
+Count  0
+File number 352 353
+Count  0
+File number 353 354
+Count  0
+File number 354 356
+Count  1
+File number 355 356
+Count  0
+File number 356 357
+Count  0
+File number 357 358
+Count  0
+File number 358 359
+Count  0
+File number 359 361
+Count  1
+File number 360 361
+Count  0
+File number 361 362
+Count  0
+File number 362 363
+Count  0
+File number 363 364
+Count  0
+File number 364 366
+Count  1
+File number 365 367
+Count  1
+File number 366 367
+Count  0
+File number 367 368
+Count  0
+File number 368 370
+Count  1
+File number 369 371
+Count  1
+File number 370 371
+Count  0
+File number 371 372
+Count  0
+File number 372 374
+Count  1
+File number 373 374
+Count  0
+File number 374 376
+Count  1
+File number 375 376
+Count  0
+File number 376 377
+Count  0
+File number 377 378
+Count  0
+File number 378 379
+Count  0
+File number 379 382
+Count  2
+File number 380 382
+Count  1
+File number 381 382
+Count  0
+File number 382 383
+Count  0
+File number 383 384
+Count  0
+File number 384 386
+Count  1
+File number 385 386
+Count  0
+File number 386 387
+Count  0
+File number 387 388
+Count  0
+File number 388 389
+Count  0
+File number 389 390
+Count  0
+File number 390 391
+Count  0
+File number 391 392
+Count  0
+File number 392 393
+Count  0
+File number 393 394
+Count  0
+File number 394 396
+Count  1
+File number 395 396
+Count  0
+File number 396 397
+Count  0
+File number 397 398
+Count  0
+File number 398 399
+Count  0
+File number 399 401
+Count  1
+File number 400 402
+Count  1
+File number 401 402
+Count  0
+File number 402 403
+Count  0
+File number 403 404
+Count  0
+File number 404 406
+Count  1
+File number 405 406
+Count  0
+File number 406 407
+Count  0
+File number 407 408
+Count  0
+File number 408 409
+Count  0
+File number 409 412
+Count  2
+File number 410 412
+Count  1
+File number 411 412
+Count  0
+File number 412 413
+Count  0
+File number 413 414
+Count  0
+File number 414 416
+Count  1
+File number 415 416
+Count  0
+File number 416 417
+Count  0
+File number 417 418
+Count  0
+File number 418 420
+Count  1
+File number 419 421
+Count  1
+File number 420 421
+Count  0
+File number 421 422
+Count  0
+File number 422 423
+Count  0
+File number 423 424
+Count  0
+File number 424 426
+Count  1
+File number 425 426
+Count  0
+File number 426 427
+Count  0
+File number 427 428
+Count  0
+File number 428 429
+Count  0
+File number 429 431
+Count  1
+File number 430 431
+Count  0
+File number 431 432
+Count  0
+File number 432 433
+Count  0
+File number 433 434
+Count  0
+File number 434 436
+Count  1
+File number 435 436
+Count  0
+File number 436 437
+Count  0
+File number 437 438
+Count  0
+File number 438 439
+Count  0
+File number 439 441
+Count  1
+File number 440 441
+Count  0
+File number 441 442
+Count  0
+File number 442 443
+Count  0
+File number 443 444
+Count  0
+File number 444 446
+Count  1
+File number 445 446
+Count  0
+File number 446 447
+Count  0
+File number 447 448
+Count  0
+File number 448 449
+Count  0
+File number 449 451
+Count  1
+File number 450 451
+Count  0
+File number 451 452
+Count  0
+File number 452 453
+Count  0
+File number 453 454
+Count  0
+File number 454 456
+Count  1
+File number 455 456
+Count  0
+File number 456 457
+Count  0
+File number 457 458
+Count  0
+File number 458 459
+Count  0
+File number 459 461
+Count  1
+File number 460 461
+Count  0
+File number 461 462
+Count  0
+File number 462 463
+Count  0
+File number 463 464
+Count  0
+File number 464 466
+Count  1
+File number 465 466
+Count  0
+File number 466 467
+Count  0
+File number 467 468
+Count  0
+File number 468 469
+Count  0
+File number 469 471
+Count  1
+File number 470 471
+Count  0
+File number 471 472
+Count  0
+File number 472 473
+Count  0
+File number 473 474
+Count  0
+File number 474 476
+Count  1
+File number 475 476
+Count  0
+File number 476 477
+Count  0
+File number 477 478
+Count  0
+File number 478 479
+Count  0
+File number 479 481
+Count  1
+File number 480 481
+Count  0
+File number 481 482
+Count  0
+File number 482 483
+Count  0
+File number 483 484
+Count  0
+File number 484 486
+Count  1
+File number 485 486
+Count  0
+File number 486 487
+Count  0
+File number 487 488
+Count  0
+File number 488 489
+Count  0
+File number 489 491
+Count  1
+File number 490 491
+Count  0
+File number 491 492
+Count  0
+File number 492 493
+Count  0
+File number 493 494
+Count  0
+File number 494 496
+Count  1
+File number 495 496
+Count  0
+File number 496 497
+Count  0
+File number 497 498
+Count  0
+File number 498 499
+Count  0
+File number 499 501
+Count  1
+File number 500 501
+Count  0
+File number 501 502
+Count  0
+File number 502 503
+Count  0
+File number 503 504
+Count  0
+File number 504 506
+Count  1
+File number 505 506
+Count  0
+File number 506 507
+Count  0
+File number 507 508
+Count  0
+File number 508 509
+Count  0
+File number 509 510
+Count  0
+File number 510 511
+Count  0
+File number 511 512
+Count  0
+File number 512 513
+Count  0
+File number 513 514
+Count  0
+File number 514 516
+Count  1
+File number 515 516
+Count  0
+File number 516 517
+Count  0
+File number 517 518
+Count  0
+File number 518 519
+Count  0
+File number 519 521
+Count  1
+File number 520 521
+Count  0
+File number 521 522
+Count  0
+File number 522 523
+Count  0
+File number 523 524
+Count  0
+File number 524 526
+Count  1
+File number 525 526
+Count  0
+File number 526 527
+Count  0
+File number 527 528
+Count  0
+File number 528 529
+Count  0
+File number 529 531
+Count  1
+File number 530 531
+Count  0
+File number 531 532
+Count  0
+File number 532 533
+Count  0
+File number 533 535
+Count  1
+File number 534 535
+Count  0
+File number 535 536
+Count  0
+File number 536 537
+Count  0
+File number 537 538
+Count  0
+File number 538 539
+Count  0
+File number 539 541
+Count  1
+File number 540 541
+Count  0
+File number 541 542
+Count  0
+File number 542 543
+Count  0
+File number 543 544
+Count  0
+File number 544 546
+Count  1
+File number 545 546
+Count  0
+File number 546 547
+Count  0
+File number 547 548
+Count  0
+File number 548 550
+Count  1
+File number 549 550
+Count  0
+File number 550 551
+Count  0
+File number 551 552
+Count  0
+File number 552 553
+Count  0
+File number 553 555
+Count  1
+File number 554 555
+Count  0
+File number 555 556
+Count  0
+File number 556 557
+Count  0
+File number 557 558
+Count  0
+File number 558 559
+Count  0
+File number 559 560
+Count  0
+File number 560 561
+Count  0
+File number 561 562
+Count  0
+File number 562 563
+Count  0
+File number 563 565
+Count  1
+File number 564 565
+Count  0
+File number 565 566
+Count  0
+File number 566 567
+Count  0
+File number 567 568
+Count  0
+File number 568 570
+Count  1
+File number 569 570
+Count  0
+File number 570 571
+Count  0
+File number 571 572
+Count  0
+File number 572 573
+Count  0
+File number 573 574
+Count  0
+File number 574 575
+Count  0
+File number 575 576
+Count  0
+File number 576 577
+Count  0
+File number 577 578
+Count  0
+File number 578 580
+Count  1
+File number 579 580
+Count  0
+File number 580 581
+Count  0
+File number 581 582
+Count  0
+File number 582 583
+Count  0
+File number 583 585
+Count  1
+File number 584 585
+Count  0
+File number 585 586
+Count  0
+File number 586 587
+Count  0
+File number 587 588
+Count  0
+File number 588 589
+Count  0
+File number 589 590
+Count  0
+File number 590 591
+Count  0
+File number 591 592
+Count  0
+File number 592 593
+Count  0
+File number 593 595
+Count  1
+File number 594 595
+Count  0
+File number 595 596
+Count  0
+File number 596 597
+Count  0
+File number 597 598
+Count  0
+File number 598 600
+Count  1
+File number 599 600
+Count  0
+File number 600 601
+Count  0
+File number 601 602
+Count  0
+File number 602 603
+Count  0
+File number 603 604
+Count  0
+File number 604 606
+Count  1
+File number 605 606
+Count  0
+File number 606 607
+Count  0
+File number 607 608
+Count  0
+File number 608 610
+Count  1
+File number 609 610
+Count  0
+File number 610 611
+Count  0
+File number 611 612
+Count  0
+File number 612 613
+Count  0
+File number 613 615
+Count  1
+File number 614 615
+Count  0
+File number 615 616
+Count  0
+File number 616 617
+Count  0
+File number 617 618
+Count  0
+File number 618 619
+Count  0
+File number 619 620
+Count  0
+File number 620 621
+Count  0
+File number 621 622
+Count  0
+File number 622 623
+Count  0
+File number 623 625
+Count  1
+File number 624 625
+Count  0
+File number 625 626
+Count  0
+File number 626 627
+Count  0
+File number 627 628
+Count  0
+File number 628 630
+Count  1
+File number 629 630
+Count  0
+File number 630 631
+Count  0
+File number 631 632
+Count  0
+File number 632 633
+Count  0
+File number 633 634
+Count  0
+File number 634 635
+Count  0
+File number 635 636
+Count  0
+File number 636 638
+Count  1
+File number 637 638
+Count  0
+File number 638 640
+Count  1
+File number 639 640
+Count  0
+File number 640 641
+Count  0
+File number 641 642
+Count  0
+File number 642 643
+Count  0
+File number 643 645
+Count  1
+File number 644 645
+Count  0
+File number 645 646
+Count  0
+File number 646 647
+Count  0
+File number 647 648
+Count  0
+File number 648 649
+Count  0
+File number 649 650
+Count  0
+File number 650 651
+Count  0
+File number 651 652
+Count  0
+File number 652 653
+Count  0
+File number 653 655
+Count  1
+File number 654 655
+Count  0
+File number 655 656
+Count  0
+File number 656 657
+Count  0
+File number 657 658
+Count  0
+File number 658 660
+Count  1
+File number 659 660
+Count  0
+File number 660 661
+Count  0
+File number 661 662
+Count  0
+File number 662 663
+Count  0
+File number 663 664
+Count  0
+File number 664 665
+Count  0
+File number 665 666
+Count  0
+File number 666 667
+Count  0
+File number 667 668
+Count  0
+File number 668 670
+Count  1
+File number 669 670
+Count  0
+File number 670 671
+Count  0
+File number 671 672
+Count  0
+File number 672 673
+Count  0
+File number 673 675
+Count  1
+File number 674 675
+Count  0
+File number 675 676
+Count  0
+File number 676 677
+Count  0
+File number 677 678
+Count  0
+File number 678 679
+Count  0
+File number 679 680
+Count  0
+File number 680 681
+Count  0
+File number 681 682
+Count  0
+File number 682 683
+Count  0
+File number 683 685
+Count  1
+File number 684 685
+Count  0
+File number 685 686
+Count  0
+File number 686 687
+Count  0
+File number 687 688
+Count  0
+File number 688 690
+Count  1
+File number 689 690
+Count  0
+File number 690 691
+Count  0
+File number 691 693
+Count  1
+File number 692 693
+Count  0
+File number 693 694
+Count  0
+File number 694 695
+Count  0
+File number 695 696
+Count  0
+File number 696 697
+Count  0
+File number 697 698
+Count  0
+File number 698 700
+Count  1
+File number 699 700
+Count  0
+File number 700 701
+Count  0
+File number 701 702
+Count  0
+File number 702 703
+Count  0
+File number 703 705
+Count  1
+File number 704 705
+Count  0
+File number 705 706
+Count  0
+File number 706 707
+Count  0
+File number 707 708
+Count  0
+File number 708 709
+Count  0
+File number 709 710
+Count  0
+File number 710 711
+Count  0
+File number 711 712
+Count  0
+File number 712 713
+Count  0
+File number 713 715
+Count  1
+File number 714 715
+Count  0
+File number 715 716
+Count  0
+File number 716 717
+Count  0
+File number 717 718
+Count  0
+File number 718 720
+Count  1
+File number 719 720
+Count  0
+File number 720 721
+Count  0
+File number 721 722
+Count  0
+File number 722 723
+Count  0
+File number 723 724
+Count  0
+File number 724 725
+Count  0
+File number 725 726
+Count  0
+File number 726 727
+Count  0
+File number 727 728
+Count  0
+File number 728 730
+Count  1
+File number 729 730
+Count  0
+File number 730 731
+Count  0
+File number 731 732
+Count  0
+File number 732 733
+Count  0
+File number 733 735
+Count  1
+File number 734 735
+Count  0
+File number 735 736
+Count  0
+File number 736 737
+Count  0
+File number 737 738
+Count  0
+File number 738 739
+Count  0
+File number 739 740
+Count  0
+File number 740 741
+Count  0
+File number 741 742
+Count  0
+File number 742 743
+Count  0
+File number 743 745
+Count  1
+File number 744 745
+Count  0
+File number 745 746
+Count  0
+File number 746 747
+Count  0
+File number 747 748
+Count  0
+File number 748 750
+Count  1
+File number 749 750
+Count  0
+File number 750 751
+Count  0
+File number 751 752
+Count  0
+File number 752 753
+Count  0
+File number 753 754
+Count  0
+File number 754 755
+Count  0
+File number 755 756
+Count  0
+File number 756 757
+Count  0
+File number 757 759
+Count  1
+File number 758 760
+Count  1
+File number 759 760
+Count  0
+File number 760 761
+Count  0
+File number 761 762
+Count  0
+File number 762 763
+Count  0
+File number 763 765
+Count  1
+File number 764 765
+Count  0
+File number 765 766
+Count  0
+File number 766 767
+Count  0
+File number 767 768
+Count  0
+File number 768 769
+Count  0
+File number 769 770
+Count  0
+File number 770 771
+Count  0
+File number 771 772
+Count  0
+File number 772 773
+Count  0
+File number 773 774
+Count  0
+File number 774 775
+Count  0
+File number 775 776
+Count  0
+File number 776 777
+Count  0
+File number 777 778
+Count  0
+File number 778 780
+Count  1
+File number 779 780
+Count  0
+File number 780 781
+Count  0
+File number 781 782
+Count  0
+File number 782 783
+Count  0
+File number 783 784
+Count  0
+File number 784 785
+Count  0
+File number 785 786
+Count  0
+File number 786 787
+Count  0
+File number 787 788
+Count  0
+File number 788 790
+Count  1
+File number 789 790
+Count  0
+File number 790 791
+Count  0
+File number 791 792
+Count  0
+File number 792 793
+Count  0
+File number 793 795
+Count  1
+File number 794 795
+Count  0
+File number 795 796
+Count  0
+File number 796 797
+Count  0
+File number 797 798
+Count  0
+File number 798 799
+Count  0
+File number 799 800
+Count  0
+File number 800 801
+Count  0
+File number 801 803
+Count  1
+File number 802 804
+Count  1
+File number 803 804
+Count  0
+File number 804 805
+Count  0
+File number 805 806
+Count  0
+File number 806 807
+Count  0
+File number 807 809
+Count  1
+File number 808 809
+Count  0
+File number 809 810
+Count  0
+File number 810 811
+Count  0
+File number 811 812
+Count  0
+File number 812 813
+Count  0
+File number 813 814
+Count  0
+File number 814 815
+Count  0
+File number 815 816
+Count  0
+File number 816 817
+Count  0
+File number 817 819
+Count  1
+File number 818 819
+Count  0
+File number 819 820
+Count  0
+File number 820 821
+Count  0
+File number 821 822
+Count  0
+File number 822 823
+Count  0
+File number 823 824
+Count  0
+File number 824 825
+Count  0
+File number 825 826
+Count  0
+File number 826 827
+Count  0
+File number 827 828
+Count  0
+File number 828 829
+Count  0
+File number 829 830
+Count  0
+File number 830 831
+Count  0
+File number 831 832
+Count  0
+File number 832 834
+Count  1
+File number 833 834
+Count  0
+File number 834 835
+Count  0
+File number 835 836
+Count  0
+File number 836 837
+Count  0
+File number 837 839
+Count  1
+File number 838 839
+Count  0
+File number 839 840
+Count  0
+File number 840 841
+Count  0
+File number 841 842
+Count  0
+File number 842 843
+Count  0
+File number 843 844
+Count  0
+File number 844 845
+Count  0
+File number 845 846
+Count  0
+File number 846 847
+Count  0
+File number 847 849
+Count  1
+File number 848 849
+Count  0
+File number 849 850
+Count  0
+File number 850 851
+Count  0
+File number 851 852
+Count  0
+File number 852 854
+Count  1
+File number 853 854
+Count  0
+File number 854 855
+Count  0
+File number 855 856
+Count  0
+File number 856 857
+Count  0
+File number 857 858
+Count  0
+File number 858 859
+Count  0
+File number 859 860
+Count  0
+File number 860 861
+Count  0
+File number 861 862
+Count  0
+File number 862 864
+Count  1
+File number 863 864
+Count  0
+File number 864 865
+Count  0
+File number 865 866
+Count  0
+File number 866 867
+Count  0
+File number 867 869
+Count  1
+File number 868 869
+Count  0
+File number 869 870
+Count  0
+File number 870 871
+Count  0
+File number 871 872
+Count  0
+File number 872 874
+Count  1
+File number 873 874
+Count  0
+File number 874 876
+Count  1
+File number 875 876
+Count  0
+File number 876 879
+Count  2
+File number 877 879
+Count  1
+File number 878 879
+Count  0
+File number 879 880
+Count  0
+File number 880 881
+Count  0
+File number 881 882
+Count  0
+File number 882 884
+Count  1
+File number 883 884
+Count  0
+File number 884 885
+Count  0
+File number 885 886
+Count  0
+File number 886 887
+Count  0
+File number 887 889
+Count  1
+File number 888 889
+Count  0
+File number 889 890
+Count  0
+File number 890 891
+Count  0
+File number 891 893
+Count  1
+File number 892 894
+Count  1
+File number 893 895
+Count  1
+File number 894 895
+Count  0
+File number 895 897
+Count  1
+File number 896 899
+Count  2
+File number 897 899
+Count  1
+File number 898 900
+Count  1
+File number 899 900
+Count  0
+File number 900 901
+Count  0
+File number 901 902
+Count  0
+File number 902 904
+Count  1
+File number 903 904
+Count  0
+File number 904 905
+Count  0
+File number 905 906
+Count  0
+File number 906 907
+Count  0
+File number 907 909
+Count  1
+File number 908 909
+Count  0
+File number 909 910
+Count  0
+File number 910 911
+Count  0
+File number 911 912
+Count  0
+File number 912 914
+Count  1
+File number 913 914
+Count  0
+File number 914 915
+Count  0
+File number 915 916
+Count  0
+File number 916 918
+Count  1
+File number 917 918
+Count  0
+File number 918 919
+Count  0
+File number 919 921
+Count  1
+File number 920 921
+Count  0
+File number 921 922
+Count  0
+File number 922 925
+Count  2
+File number 923 925
+Count  1
+File number 924 925
+Count  0
+File number 925 926
+Count  0
+File number 926 928
+Count  1
+File number 927 929
+Count  1
+File number 928 929
+Count  0
+File number 929 930
+Count  0
+File number 930 931
+Count  0
+File number 931 932
+Count  0
+File number 932 934
+Count  1
+File number 933 934
+Count  0
+File number 934 935
+Count  0
+File number 935 936
+Count  0
+File number 936 937
+Count  0
+File number 937 939
+Count  1
+File number 938 939
+Count  0
+File number 939 940
+Count  0
+File number 940 941
+Count  0
+File number 941 942
+Count  0
+File number 942 944
+Count  1
+File number 943 944
+Count  0
+File number 944 945
+Count  0
+File number 945 946
+Count  0
+File number 946 947
+Count  0
+File number 947 949
+Count  1
+File number 948 949
+Count  0
+File number 949 950
+Count  0
+File number 950 951
+Count  0
+File number 951 952
+Count  0
+File number 952 954
+Count  1
+File number 953 954
+Count  0
+File number 954 955
+Count  0
+File number 955 956
+Count  0
+File number 956 957
+Count  0
+File number 957 959
+Count  1
+File number 958 959
+Count  0
+File number 959 960
+Count  0
+File number 960 961
+Count  0
+File number 961 962
+Count  0
+File number 962 963
+Count  0
+File number 963 964
+Count  0
+File number 964 965
+Count  0
+File number 965 966
+Count  0
+File number 966 967
+Count  0
+File number 967 969
+Count  1
+File number 968 969
+Count  0
+File number 969 970
+Count  0
+File number 970 971
+Count  0
+File number 971 972
+Count  0
+File number 972 974
+Count  1
+File number 973 974
+Count  0
+File number 974 975
+Count  0
+File number 975 976
+Count  0
+File number 976 977
+Count  0
+File number 977 979
+Count  1
+File number 978 979
+Count  0
+File number 979 980
+Count  0
+File number 980 981
+Count  0
+File number 981 982
+Count  0
+File number 982 984
+Count  1
+File number 983 984
+Count  0
+File number 984 985
+Count  0
+File number 985 986
+Count  0
+File number 986 987
+Count  0
+File number 987 989
+Count  1
+File number 988 989
+Count  0
+File number 989 990
+Count  0
+File number 990 991
+Count  0
+3 270
