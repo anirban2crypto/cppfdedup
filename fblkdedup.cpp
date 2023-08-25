@@ -51,14 +51,12 @@ int main(int argc, char** argv)
     uint8_t *chunktag;
     unsigned char *cpacipher;
     unsigned char *final_cipher;
-    //int CHUNK_SIZE = atoi(argv[2])*2;
     const int RS_BLK_SYM=65535;    
     const int RS_LMT_SYM=15000;    
     const int SYM_TO_BYT=2;
     const int CHUNK_SIZE = (RS_BLK_SYM-(2*RS_LMT_SYM))*SYM_TO_BYT;
     int PARITY_SIZE = (2*RS_LMT_SYM)*SYM_TO_BYT;
     int BYTE_SIZE_LOC=ceil(ceil(log2(CHUNK_SIZE))/8);
-    //int MAX_OFF_LEN=ECC_ERR_LMT*(BYTE_SIZE_LOC+1);
     auto st_start = std::chrono::high_resolution_clock::now();
 
     //---------------------------------------------------------------------   
@@ -89,8 +87,7 @@ int main(int argc, char** argv)
     if (!offsetfile) {
         cout << "Could not open file for writing!\n";
         return -1;
-    }  
-     
+    }       
     // store mlekey file
     std::string keyfname=keydir+std::string(argv[1]);
     ofstream stormlekey(keyfname, ios::out | ios::trunc);
@@ -186,16 +183,6 @@ int main(int argc, char** argv)
                 insertParity((unsigned char *)&subsample[0],(int)subsample.size(), (unsigned char *)&paritydata[0],(int)paritydata.size());
 
             }
-            /*if (rc > 0){
-                std::string recfname=inpdir+std::string(argv[1])+"Recovdata";  
-                ofstream recfile(recfname, ios::out | ios::trunc);
-                if (!recfile) {
-                    cout << "Could not open file for writing!\n";
-                    return -1;
-                }
-                recfile.write((char *)&recovdata[0], recovdata.size());
-                recfile.close();        
-            }*/   
             //---------------------------------------------------------------------   
             //                   OFFSET GENERATION
             //--------------------------------------------------------------------- 
@@ -250,17 +237,19 @@ int main(int argc, char** argv)
             } 
             std::string  taginhex= oss.str();
             mapfile << taginhex;
-            //std::string cxtfname=cxtdir+taginhex;  
-            //ofstream cxtfile(cxtfname, ios::out | ios::trunc);
-            //if (!cxtfile) {
-            //    cout << "Could not open file for writing!\n";
-            //     return -1;
-            //}
-            //cxtfile.write((char *)mlecipher,ciph_len);
-            //cxtfile.close();
-            char *tag = const_cast<char*>(taginhex.c_str());
-            insertCxt(tag,taginhex.size(),ciph_len);
-        }
+
+            //create ciphertext file,file name -hex of tag
+            std::string cxtfname=cxtdir+taginhex;  
+            ofstream cxtfile(cxtfname, ios::out | ios::trunc);
+            if (!cxtfile) {
+                cout << "Could not open file for writing!\n";
+                return -1;
+            }
+            cxtfile.write((char *)mlecipher,ciph_len);
+            cxtfile.close();
+            //char *tag = const_cast<char*>(taginhex.c_str());
+            //insertCxt(tag,taginhex.size(),ciph_len);
+        } //end subsequent encryption
         else
         {            
             cout <<"Decode fail, no similarity found "<< endl;
@@ -283,16 +272,8 @@ int main(int argc, char** argv)
             //                   BASE ENCRYPTION - when no parity exists
             //--------------------------------------------------------------------- 
             //generate parity
-            paritydata.resize(0);
-            cout<<"before calling genparity"<<endl;
+            paritydata.resize(0);            
             genparity(chunkdata,paritydata);
-            cout<<"after calling genparity"<<endl;  
-            // update the parity in database
-            // cout << "initial paritydata"<<endl;
-            // for (int j=0; j<paritydata.size();j++)
-            // {
-            //      cout << paritydata[j];
-            // }
             insertParity((unsigned char *)&subsample[0],(int)subsample.size(), (unsigned char *)&paritydata[0],(int)paritydata.size());
             // generate MLE KEY
             mlekey = mleKeygen(chunkdata);
@@ -311,19 +292,18 @@ int main(int argc, char** argv)
             }             
             std::string  taginhex= oss.str();
             mapfile << taginhex;
-            //create ciphertext file
-            /*std::string cxtfname=cxtdir+taginhex;  
+            //create ciphertext file,file name - hex of tag
+            std::string cxtfname=cxtdir+taginhex;  
             ofstream cxtfile(cxtfname, ios::out | ios::trunc);
             if (!cxtfile) {
                 cout << "Could not open file for writing!\n";
                 return -1;
             }
             cxtfile.write((char *)mlecipher,ciph_len);
-            cxtfile.close();*/
-            char *tag = const_cast<char*>(taginhex.c_str());
-            insertCxt(tag,taginhex.size(),ciph_len);
-
-        }          
+            cxtfile.close();
+            //char *tag = const_cast<char*>(taginhex.c_str())
+            //insertCxt(tag,taginhex.size(),ciph_len);
+        }   // end chunk loop       
         //---------------------------------------------------------------------   
         //                    CHUNK PROCESS END
         //---------------------------------------------------------------------               
@@ -334,8 +314,7 @@ int main(int argc, char** argv)
         paritydata.resize(0);
         intoffset.resize(0);   
     }
-     cout <<"Number of block:" <<chunk_cnt<<endl;
-         
+    cout <<"Number of block:" <<chunk_cnt<<endl;         
     /*cout <<"Offset data: "<< endl;
     for (int j=0; j<offsetdata.size();j++)
     {

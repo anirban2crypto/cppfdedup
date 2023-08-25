@@ -63,6 +63,7 @@ command:
 ./fblkdedup randifile 75070
 ./fblkdedup randsfile 75070
 
+g++ -I  ezpwd-reed-solomon/c++ sqlcxttable.cpp encsub.cpp sqlsimdtct.cpp rsgenparity.cpp reconstruct.cpp fblkdedup.cpp -lsqlite3 -lssl -lcrypto -o fblkdedup	
 
 sqlite3 similarity.db
 select count(*) from HSIMILARITY;
