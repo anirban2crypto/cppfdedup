@@ -48,6 +48,7 @@ int main(int argc, char** argv)
     vector<uint8_t> ocipher; 
     vector<uint8_t> mapdata; 
     vector<uint8_t> offsetdata;
+    vector<uint8_t> tagvec;
     bool rowfound=false;
     char c;
     long loc;
@@ -170,12 +171,21 @@ int main(int argc, char** argv)
     //---------------------------------------------------------------------   
     //                  CHUNK PROCESSING 
     //---------------------------------------------------------------------
-    for()
+    int no_of_chunk=map_len/TAG_HEX_SIZE;
+    for(int ci=0;ci<no_of_chunk;ci++)
     {   
+
+        //---------------------------------------------------------------------   
+        //                  TAG READ
+        //---------------------------------------------------------------------     
+        tagvec = std::vector<uint8_t>(mapdata.begin() + ci*TAG_HEX_SIZE, mapdata.begin()+(ci+1)*TAG_HEX_SIZE );
+        std::string taginhex(tagvec.begin(), tagvec.end());
         //---------------------------------------------------------------------   
         //                  BASE CXT FILE READ
         //---------------------------------------------------------------------     
-        // open the base ciphertext    
+        // open the base ciphertext
+
+        std::string cxtfname=cxtdir+taginhex;      
         ifstream bcfile (argv[1], ios::binary);
         if (!bcfile){
             cerr << "Could not open base cipher file for reading!\n";
@@ -220,12 +230,13 @@ int main(int argc, char** argv)
         //                  WRITE PLAINTEXT
         //---------------------------------------------------------------------  
         outfile.write((char *)recovmsg,dec_len);
+        bcfile.close();
     }    
     //---------------------------------------------------------------------   
     //                   IO CLOSE
     //---------------------------------------------------------------------   
 
-    bcfile.close();
+    mapfile.close();    
     ocfile.close();
     kcfile.close();
     outfile.close();    
