@@ -197,10 +197,12 @@ int main(int argc, char** argv)
             offsetdata.push_back(str_offsize[3]);
             offsetdata.push_back(str_offsize[4]);
             offsetdata.push_back(str_offsize[5]);
+            //cout <<"offset size" <<offsize <<endl;
             // read all offset one by one, offset is position and flip symbol         
             for(auto k=0;k<offsize;k++){
                 //get the position
                 int loc=intoffset[k];        
+                //cout <<"location:" <<loc <<endl;
                 //convert the position from int to byte
                 unsigned char cbyte[BYTE_SIZE_LOC];
                 intToCharArray(cbyte, loc,BYTE_SIZE_LOC);
@@ -210,6 +212,7 @@ int main(int argc, char** argv)
                 }
                 //get the flip symbol
                 offsetdata.push_back(inputdata[loc]);
+                //cout <<"offset value at location" <<int(inputdata[loc]) <<endl;
             }                                                       
             //---------------------------------------------------------------------   
             //                   MLE ENCRYPTION BASE GET FROM DECODE

@@ -17,19 +17,19 @@ int buffToInteger(char *buffer,int BYTES_PER_INT)
             out = int((unsigned char)(buffer[0]));
             break;
         case 2:
-            out = int((unsigned char)(buffer[0]) << 8 |
-              (unsigned char)(buffer[1]));
+            out = int((unsigned char)(buffer[1]) << 8 |
+              (unsigned char)(buffer[0]));
             break;
         case 3:
-            out = int((unsigned char)(buffer[0]) << 16 |
+            out = int((unsigned char)(buffer[2]) << 16 |
               (unsigned char)(buffer[1]) << 8 |
-              (unsigned char)(buffer[2]));
+              (unsigned char)(buffer[0]));
             break;
         case 4:
-            out = int((unsigned char)(buffer[0]) << 24 |
-              (unsigned char)(buffer[1]) << 16 |
-              (unsigned char)(buffer[2]) << 8  |
-              (unsigned char)(buffer[3]));
+            out = int((unsigned char)(buffer[3]) << 24 |
+              (unsigned char)(buffer[2]) << 16 |
+              (unsigned char)(buffer[1]) << 8  |
+              (unsigned char)(buffer[0]));
             break;
     }    
     return out;              
@@ -73,28 +73,28 @@ int main(int argc, char** argv)
     std::string mapfname=mapdir+std::string(argv[1]);
     ifstream mapfile(mapfname, ios::binary);
     if (!mapfile) {
-        cerr << "Could not open offset cipher file for reading!\n";
+        cout << "Could not open map file for reading!\n";
         return -1;
     }  
     // offset cipher file
     std::string offfname=offdir+std::string(argv[1]);
     ifstream ocfile(offfname, ios::binary);
     if (!ocfile) {
-        cerr << "Could not open offset cipher file for reading!\n";
+        cout << "Could not open offset cipher file for reading!\n";
         return -1;
     }  
     // key cipher file
     std::string keyfname=keydir+std::string(argv[1]);
     ifstream kcfile(keyfname, ios::binary);
     if (!kcfile) {
-        cerr << "Could not open key cipher file for reading!\n";
+        cout << "Could not open key cipher file for reading!\n";
         return -1;
     } 
     //plaintext file
     std::string plnfname=outdir+std::string(argv[1]);
     ofstream outfile(plnfname, ios::out | ios::trunc);
     if (!outfile) {
-        cerr << "Could not open output file for writing!\n";
+        cout << "Could not open output file for writing!\n";
         return -1;
     }
     //---------------------------------------------------------------------   
@@ -185,11 +185,11 @@ int main(int argc, char** argv)
         //                  BASE CXT FILE READ
         //---------------------------------------------------------------------     
         // open the base ciphertext
-
+        //cout << "Tag in hex: "<<taginhex<<endl;
         std::string cxtfname=cxtdir+taginhex;      
-        ifstream bcfile (argv[1], ios::binary);
+        ifstream bcfile (cxtfname, ios::binary);
         if (!bcfile){
-            cerr << "Could not open base cipher file for reading!\n";
+            cout << "Could not open base cipher file for reading!\n";
             return -1;
         }
         // Read the base cipher
@@ -216,20 +216,27 @@ int main(int argc, char** argv)
         //Reconstruction original file from basefile and offset file
         int ofidx=0;
         offset_len=offsetdata.size();
+        //cout << "offset length" << offset_len <<endl;
         while(ofidx < offset_len)
         {
             szvec = std::vector<uint8_t>(offsetdata.begin() + ofidx, offsetdata.begin()+ofidx+6 );
             ofidx+=6;
             std::string szstr(szvec.begin(), szvec.end());
             int offsize=stoi(szstr);
+            //cout << "offset size" << offsize <<endl;
             for(int k;k<offsize;k++){
                 char cbyte[BYTE_SIZE_LOC];
                 for(int l=0;l<BYTE_SIZE_LOC;l++){
                     cbyte[l]=offsetdata[ofidx++];
-                }
+                    //cout << "cbyte" << int(cbyte[l]) <<endl;
+                }                
+                //cout << "before:" <<endl;
                 int loc=buffToInteger(cbyte,BYTE_SIZE_LOC);                   
-                if (loc>0)
+                //cout << "after location in integer:"<<loc <<endl;
+                if (loc>0){
                     recovmsg[loc]=offsetdata[ofidx++];            
+                    //cout << "Replace recovmsg:"<<endl;
+                }    
             }
         }
         //---------------------------------------------------------------------   
