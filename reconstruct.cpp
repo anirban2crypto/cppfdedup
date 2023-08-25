@@ -64,7 +64,7 @@ int reconst(vector<uint8_t> &erronsdata,vector<uint8_t> &paritydata,vector<uint8
     }           
     if(position.size() > 0)
     {            
-        intoffset.push_back(2*position.size());
+        //intoffset.push_back(2*position.size());
         for (i=0;i<position.size();i++)
         {
             intoffset.push_back(2*position[i]);

@@ -49,6 +49,7 @@ int main(int argc, char** argv)
     vector<uint8_t> mapdata; 
     vector<uint8_t> offsetdata;
     vector<uint8_t> tagvec;
+    vector<uint8_t> szvec;
     bool rowfound=false;
     char c;
     long loc;
@@ -213,18 +214,23 @@ int main(int argc, char** argv)
         //                  RECONSTRUCTION OF MESSAGE
         //---------------------------------------------------------------------                  
         //Reconstruction original file from basefile and offset file
-        int count=0;
-        while(count < offset_len)
+        int ofidx=0;
+        offset_len=offsetdata.size();
+        while(ofidx < offset_len)
         {
-            char cbyte[BYTE_SIZE_LOC];
-            std::copy(offset+count, offset+count+BYTE_SIZE_LOC, cbyte);
-            int loc=buffToInteger(cbyte,BYTE_SIZE_LOC);        
-            //cerr << "Location : " <<loc <<endl;
-            count=count+BYTE_SIZE_LOC;
-            if (loc>0)
-                recovmsg[loc]=offset[count];
-           // cerr << "Symbol : " <<symbol <<endl;
-            count=count+1;  
+            szvec = std::vector<uint8_t>(offsetdata.begin() + ofidx, offsetdata.begin()+ofidx+6 );
+            ofidx+=6;
+            std::string szstr(szvec.begin(), szvec.end());
+            int offsize=stoi(szstr);
+            for(int k;k<offsize;k++){
+                char cbyte[BYTE_SIZE_LOC];
+                for(int l=0;l<BYTE_SIZE_LOC;l++){
+                    cbyte[l]=offsetdata[ofidx++];
+                }
+                int loc=buffToInteger(cbyte,BYTE_SIZE_LOC);                   
+                if (loc>0)
+                    recovmsg[loc]=offsetdata[ofidx++];            
+            }
         }
         //---------------------------------------------------------------------   
         //                  WRITE PLAINTEXT

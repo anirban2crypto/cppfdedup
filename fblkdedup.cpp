@@ -177,6 +177,7 @@ int main(int argc, char** argv)
 
             if (rc==-1){
                 paritydata.resize(0);
+                intoffset.resize(0);
                 //generate parity
                 genparity(chunkdata,paritydata);  
                 // update the parity in database
@@ -196,26 +197,20 @@ int main(int argc, char** argv)
             offsetdata.push_back(str_offsize[3]);
             offsetdata.push_back(str_offsize[4]);
             offsetdata.push_back(str_offsize[5]);
-            // read offset for block by block
-            // read offset block by block, block length is EC parameter - message length   
-            int ix=0;
-            while( ix < offsize){
-                // number of flip/error symbol of a block bound by EC parameter - correction capability        
-                int noerr=intoffset[ix++];
-                // read all offset one by one, offset is position and flip symbol         
-                for(auto k=0;k<noerr;k++){
-                    //get the position
-                    int loc=intoffset[ix++];        
-                    //convert the position from int to byte
-                    unsigned char cbyte[BYTE_SIZE_LOC];
-                    intToCharArray(cbyte, loc,BYTE_SIZE_LOC);                    
-                    for(int i=0;i<BYTE_SIZE_LOC;i++){
-                        offsetdata.push_back(cbyte[i]);
-                    }
-                    //get the flip symbol
-                    offsetdata.push_back(inputdata[loc]);
-                }                                           
-            }
+            // read all offset one by one, offset is position and flip symbol         
+            for(auto k=0;k<offsize;k++){
+                //get the position
+                int loc=intoffset[k];        
+                //convert the position from int to byte
+                unsigned char cbyte[BYTE_SIZE_LOC];
+                intToCharArray(cbyte, loc,BYTE_SIZE_LOC);
+                //get the position                     
+                for(int i=0;i<BYTE_SIZE_LOC;i++){
+                    offsetdata.push_back(cbyte[i]);
+                }
+                //get the flip symbol
+                offsetdata.push_back(inputdata[loc]);
+            }                                                       
             //---------------------------------------------------------------------   
             //                   MLE ENCRYPTION BASE GET FROM DECODE
             //---------------------------------------------------------------------         
