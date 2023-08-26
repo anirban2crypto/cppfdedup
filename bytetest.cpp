@@ -13,11 +13,14 @@ void intToCharArray(unsigned char* buffer, int in,int BYTES_PER_INT)
 
 int main()
 {
-	int loc=2*65535;
-	unsigned char cbyte[3];
-    intToCharArray(cbyte, loc,3); 
-    cout<<int(cbyte[2])<<endl;
-    cout<<int(cbyte[1])<<endl;
-    cout<<int(cbyte[0])<<endl;
+	for (int i=0;i<54;i++)
+    {
+	    unsigned char cbyte[3];
+        intToCharArray(cbyte,i,3);     
+        cout<<int(cbyte[0])<<endl;
+        cout<<int(cbyte[1])<<endl;
+        cout<<int(cbyte[2])<<endl;
+    }    
+
 }
 

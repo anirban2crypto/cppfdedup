@@ -145,7 +145,7 @@ int main(int argc, char** argv)
         }
         avg=sum/chunkdata.size();
         unsigned char avgchar=avg;
-             cout <<"fingerprint:" <<avg<<endl;
+        cout <<"fingerprint:" <<avg<<endl;
         subsample.push_back(avgchar);
         /*while ( index < locatn.size()) {
             loc = locatn.at(index);
@@ -197,12 +197,10 @@ int main(int argc, char** argv)
             offsetdata.push_back(str_offsize[3]);
             offsetdata.push_back(str_offsize[4]);
             offsetdata.push_back(str_offsize[5]);
-            //cout <<"offset size" <<offsize <<endl;
             // read all offset one by one, offset is position and flip symbol         
             for(auto k=0;k<offsize;k++){
                 //get the position
                 int loc=intoffset[k];        
-                //cout <<"location:" <<loc <<endl;
                 //convert the position from int to byte
                 unsigned char cbyte[BYTE_SIZE_LOC];
                 intToCharArray(cbyte, loc,BYTE_SIZE_LOC);
@@ -211,9 +209,8 @@ int main(int argc, char** argv)
                     offsetdata.push_back(cbyte[i]);
                 }
                 //get the flip symbol
-                offsetdata.push_back(inputdata[loc]);
-                //cout <<"offset value at location" <<int(inputdata[loc]) <<endl;
-            }                                                       
+                offsetdata.push_back(chunkdata[loc]);
+            }                                                 
             //---------------------------------------------------------------------   
             //                   MLE ENCRYPTION BASE GET FROM DECODE
             //---------------------------------------------------------------------         
@@ -313,12 +310,6 @@ int main(int argc, char** argv)
         intoffset.resize(0);   
     }
     cout <<"Number of block:" <<chunk_cnt<<endl;         
-    /*cout <<"Offset data: "<< endl;
-    for (int j=0; j<offsetdata.size();j++)
-    {
-             cout << offsetdata[j];
-    }*/
-    //cout << endl;
     //---------------------------------------------------------------------   
     //                   OFFSET COMPRESSION
     //---------------------------------------------------------------------   
@@ -351,12 +342,6 @@ int main(int argc, char** argv)
     //                  CHUNK KEY ENCRYPTION - cpa encrypt mle key
     //--------------------------------------------------------------------- 
     cpa_msg_len=mlekeydata.size();
-    /*cout <<"MLE KEY data: "<< endl;
-    for (int j=0; j<mlekeydata.size();j++)
-    {
-             cout << int(mlekeydata[j]);    
-    }
-    cout << endl;*/
     cpacipher=new unsigned char[cpa_msg_len+BLOCK_SIZE];  
     cpaEncrypt(cpakey,cpaiv,(unsigned char *)&mlekeydata[0],cpacipher,cpa_ciph_len,cpa_msg_len); 
     // cancatenate cpaiv cpacipher  == final cipher

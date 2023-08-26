@@ -156,12 +156,12 @@ int main(int argc, char** argv)
     //---------------------------------------------------------------------   
     //                   OFFSET UNCOMPRESS
     //---------------------------------------------------------------------       
-    ofstream ctofile("temp_off.dat.gz", ios::out | ios::trunc);
+    ofstream ctofile("temp_d_off.dat.gz", ios::out | ios::trunc);
     ctofile.write((char *)offset,offset_len);
     ctofile.close();
-    system("gunzip -f temp_off.dat.gz");        
+    system("gunzip -f temp_d_off.dat.gz");        
     offsetdata.resize(0);    
-    ifstream tofile ("temp_off.dat", ios::binary);
+    ifstream tofile ("temp_d_off.dat", ios::binary);
     while (true) {
         c = tofile.get();
         if (!tofile) 
@@ -173,9 +173,10 @@ int main(int argc, char** argv)
     //                  CHUNK PROCESSING 
     //---------------------------------------------------------------------
     int no_of_chunk=map_len/TAG_HEX_SIZE;
+    int ofidx=0;
     for(int ci=0;ci<no_of_chunk;ci++)
     {   
-
+        cout << "Block number: "<<(ci+1)<<endl;
         //---------------------------------------------------------------------   
         //                  TAG READ
         //---------------------------------------------------------------------     
@@ -207,38 +208,30 @@ int main(int argc, char** argv)
         //---------------------------------------------------------------------  
         // MLE decrypt the base file
         inpcipher=(unsigned char *)&bcipher[0];
+        unsigned char *blk_mle_key=new unsigned char [HKEY_SIZE];  
         unsigned char *recovmsg=new unsigned char[bciph_len]; 
-        ciph_len=bciph_len; 
-        mleDecrypt(mlekey,inpcipher,recovmsg,ciph_len,dec_len);
+        ciph_len=bciph_len;
+        std::copy(mlekey+(HKEY_SIZE*(ci)), mlekey+(HKEY_SIZE*(ci+1)), blk_mle_key); 
+        mleDecrypt(blk_mle_key,inpcipher,recovmsg,ciph_len,dec_len);
         //---------------------------------------------------------------------   
         //                  RECONSTRUCTION OF MESSAGE
         //---------------------------------------------------------------------                  
         //Reconstruction original file from basefile and offset file
-        int ofidx=0;
-        offset_len=offsetdata.size();
-        //cout << "offset length" << offset_len <<endl;
-        while(ofidx < offset_len)
-        {
-            szvec = std::vector<uint8_t>(offsetdata.begin() + ofidx, offsetdata.begin()+ofidx+6 );
-            ofidx+=6;
-            std::string szstr(szvec.begin(), szvec.end());
-            int offsize=stoi(szstr);
-            //cout << "offset size" << offsize <<endl;
-            for(int k;k<offsize;k++){
-                char cbyte[BYTE_SIZE_LOC];
-                for(int l=0;l<BYTE_SIZE_LOC;l++){
-                    cbyte[l]=offsetdata[ofidx++];
-                    //cout << "cbyte" << int(cbyte[l]) <<endl;
-                }                
-                //cout << "before:" <<endl;
-                int loc=buffToInteger(cbyte,BYTE_SIZE_LOC);                   
-                //cout << "after location in integer:"<<loc <<endl;
-                if (loc>0){
-                    recovmsg[loc]=offsetdata[ofidx++];            
-                    //cout << "Replace recovmsg:"<<endl;
-                }    
-            }
+        szvec = std::vector<uint8_t>(offsetdata.begin() + ofidx, offsetdata.begin()+ofidx+6 );
+        ofidx+=6;
+        std::string szstr(szvec.begin(), szvec.end());
+        int offsize=stoi(szstr);
+        for(int k=0;k<offsize;k++){
+            char cbyte[BYTE_SIZE_LOC];
+            for(int l=0;l<BYTE_SIZE_LOC;l++){
+                cbyte[l]=offsetdata[ofidx++];
+            }                
+            int loc=buffToInteger(cbyte,BYTE_SIZE_LOC);   
+            //cout << "at location: "<< loc << "value: "<< offsetdata[ofidx]<<endl;              
+            recovmsg[loc]=offsetdata[ofidx++];            
+        
         }
+        
         //---------------------------------------------------------------------   
         //                  WRITE PLAINTEXT
         //---------------------------------------------------------------------  

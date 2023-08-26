@@ -67,7 +67,7 @@ int reconst(vector<uint8_t> &erronsdata,vector<uint8_t> &paritydata,vector<uint8
         //intoffset.push_back(2*position.size());
         for (i=0;i<position.size();i++)
         {
-            intoffset.push_back(2*position[i]);
+            intoffset.push_back(2*position[i]);            
             intoffset.push_back(2*position[i]+1);
         }    
     }    
